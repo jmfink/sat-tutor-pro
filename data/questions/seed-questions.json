@@ -1,0 +1,3662 @@
+[
+  {
+    "question_id": "q_m01_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-01",
+    "difficulty": 2,
+    "question_text": "If 3x + 7 = 22, what is the value of x?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "3",
+      "B": "5",
+      "C": "7",
+      "D": "9"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "sign_error",
+      "C": "partial_solution",
+      "D": "calculation_error"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m01_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-01",
+    "difficulty": 3,
+    "question_text": "If 2(x - 3) + 4 = 3x - 1, what is the value of x?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "-3",
+      "B": "1",
+      "C": "3",
+      "D": "5"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "sign_error",
+      "C": "partial_solution",
+      "D": "wrong_variable"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m04_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-04",
+    "difficulty": 3,
+    "question_text": "In the system of equations below, what is the value of y?\n2x + y = 10\nx - y = 2",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "1",
+      "B": "2",
+      "C": "4",
+      "D": "6"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "calculation_error",
+      "C": "solved_for_wrong_variable",
+      "D": "wrong_variable"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m04_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-04",
+    "difficulty": 4,
+    "question_text": "A store sells notebooks for $3 each and pens for $1.50 each. If a student buys a total of 8 items and spends $15, how many notebooks did the student buy?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "2",
+      "B": "3",
+      "C": "4",
+      "D": "6"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "partial_answer",
+      "C": "wrong_variable",
+      "D": "sign_error"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "word_problem"
+    ]
+  },
+  {
+    "question_id": "q_m08_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-08",
+    "difficulty": 3,
+    "question_text": "What are the solutions to x² - 5x + 6 = 0?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "x = 1 and x = 6",
+      "B": "x = 2 and x = 3",
+      "C": "x = -2 and x = -3",
+      "D": "x = -1 and x = 6"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "wrong_factors",
+      "C": "sign_error",
+      "D": "misapplied_formula"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m08_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-08",
+    "difficulty": 4,
+    "question_text": "The function f(x) = x² - 4x + 3. What is the vertex of the parabola?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "(2, -1)",
+      "B": "(-2, 15)",
+      "C": "(2, 1)",
+      "D": "(-4, 3)"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "sign_error",
+      "C": "calculation_error",
+      "D": "wrong_formula"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m08_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-08",
+    "difficulty": 5,
+    "question_text": "If the quadratic equation ax² + 4x + 1 = 0 has exactly one solution, what is the value of a?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "2",
+      "B": "4",
+      "C": "-2",
+      "D": "-4"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "partial_solution",
+      "C": "sign_error",
+      "D": "wrong_variable"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "discriminant"
+    ]
+  },
+  {
+    "question_id": "q_m02_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-02",
+    "difficulty": 2,
+    "question_text": "Which of the following is the equation of a line with slope 3 and y-intercept -2?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "y = -2x + 3",
+      "B": "y = 3x - 2",
+      "C": "y = 3x + 2",
+      "D": "y = 2x - 3"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "swapped_values",
+      "C": "sign_error",
+      "D": "swapped_values"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m10_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-10",
+    "difficulty": 2,
+    "question_text": "A car travels 240 miles in 4 hours. At this rate, how many miles will it travel in 7 hours?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "380",
+      "B": "400",
+      "C": "420",
+      "D": "440"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "calculation_error",
+      "B": "wrong_rate",
+      "D": "extra_step"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "word_problem"
+    ]
+  },
+  {
+    "question_id": "q_m11_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-11",
+    "difficulty": 2,
+    "question_text": "A shirt is originally priced at $40. After a 25% discount, what is the sale price?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "$10",
+      "B": "$25",
+      "C": "$30",
+      "D": "$35"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "found_discount_not_price",
+      "B": "wrong_calculation",
+      "D": "wrong_percentage"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "word_problem"
+    ]
+  },
+  {
+    "question_id": "q_rw01_001",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-01",
+    "difficulty": 2,
+    "question_text": "The following text is from a passage about renewable energy.\n\n\"Solar power has grown dramatically over the past decade. Costs have fallen by more than 80% since 2010, making it competitive with traditional fossil fuels in many markets. In 2023, solar installations worldwide surpassed 1 terawatt of total capacity for the first time.\"\n\nWhat is the main idea of this passage?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Fossil fuels are becoming less popular",
+      "B": "Solar power has become significantly cheaper and more widely used",
+      "C": "Renewable energy is bad for the environment",
+      "D": "Traditional energy sources are still dominant"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "scope_error",
+      "C": "opposite_meaning",
+      "D": "contradicted_by_text"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage"
+    ]
+  },
+  {
+    "question_id": "q_rw04_001",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-04",
+    "difficulty": 3,
+    "question_text": "The following text is from a study on sleep and academic performance.\n\n\"Students who slept fewer than 7 hours on school nights had significantly lower GPA scores compared to students who slept 8 or more hours. The sleep-deprived group also reported higher levels of anxiety and difficulty concentrating during exams.\"\n\nBased on this passage, what can be inferred about the relationship between sleep and academic performance?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "All students who sleep less will fail their exams",
+      "B": "Sleep duration appears to be unrelated to academic success",
+      "C": "Adequate sleep may contribute to better academic outcomes",
+      "D": "Anxiety is the primary cause of poor academic performance"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "overgeneralization",
+      "B": "contradicted_by_text",
+      "D": "scope_error"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage",
+      "inference"
+    ]
+  },
+  {
+    "question_id": "q_rw09_001",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-09",
+    "difficulty": 2,
+    "question_text": "Which choice most logically completes the sentence?\n\nThe researchers collected data from over 1,000 participants. ______, the sample size was large enough to draw statistically significant conclusions.",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "However,",
+      "B": "As a result,",
+      "C": "In contrast,",
+      "D": "Despite this,"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "wrong_relationship",
+      "C": "wrong_relationship",
+      "D": "wrong_relationship"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "transitions"
+    ]
+  },
+  {
+    "question_id": "q_rw10_001",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-10",
+    "difficulty": 2,
+    "question_text": "Which choice correctly combines the two sentences below?\n\nThe experiment was a success. The team celebrated with a dinner.",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "The experiment was a success, the team celebrated with a dinner.",
+      "B": "The experiment was a success; the team celebrated with a dinner.",
+      "C": "The experiment was a success: the team celebrated with a dinner.",
+      "D": "The experiment was a success and, the team celebrated with a dinner."
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "comma_splice",
+      "C": "wrong_punctuation",
+      "D": "extra_comma"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "punctuation",
+      "boundaries"
+    ]
+  },
+  {
+    "question_id": "q_rw05_001",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-05",
+    "difficulty": 3,
+    "question_text": "The following sentence is from an article about architecture.\n\n\"The architect's design was lauded for its innovative use of space, with critics praising the building's capacity to 'breathe' even in an urban environment.\"\n\nAs used in this passage, \"breathe\" most nearly means:",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "exchange oxygen and carbon dioxide",
+      "B": "remain alive",
+      "C": "feel open and unconfined",
+      "D": "make a breathing sound"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "literal_meaning",
+      "B": "literal_meaning",
+      "D": "literal_meaning"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "vocabulary_in_context"
+    ]
+  },
+  {
+    "question_id": "q_m03_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-03",
+    "difficulty": 3,
+    "question_text": "A linear function f(x) passes through the points (0, 4) and (3, 10). What is f(5)?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "12",
+      "B": "14",
+      "C": "16",
+      "D": "18"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "wrong_slope",
+      "C": "calculation_error",
+      "D": "wrong_intercept"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m05_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-05",
+    "difficulty": 3,
+    "question_text": "Which of the following represents the solution to 2x - 3 > 7?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "x > 2",
+      "B": "x > 5",
+      "C": "x < 5",
+      "D": "x > 7"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "calculation_error",
+      "C": "wrong_direction",
+      "D": "forgot_to_solve"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m16_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-16",
+    "difficulty": 2,
+    "question_text": "A rectangle has a length of 12 cm and a width of 7 cm. What is the area of the rectangle?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "19 cm²",
+      "B": "38 cm²",
+      "C": "84 cm²",
+      "D": "144 cm²"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "added_instead_of_multiplied",
+      "B": "found_perimeter",
+      "D": "squared_length_only"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m17_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-17",
+    "difficulty": 3,
+    "question_text": "Two parallel lines are cut by a transversal. If one of the co-interior angles measures 65°, what is the measure of the other co-interior angle?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "65°",
+      "B": "115°",
+      "C": "25°",
+      "D": "90°"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "confused_with_alternate_angles",
+      "C": "wrong_calculation",
+      "D": "assumed_right_angle"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m09_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-09",
+    "difficulty": 3,
+    "question_text": "A bacteria culture starts with 200 bacteria and doubles every 3 hours. Which function models the number of bacteria after t hours?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "f(t) = 200 × 2^t",
+      "B": "f(t) = 200 × 2^(t/3)",
+      "C": "f(t) = 200 + 2t",
+      "D": "f(t) = 200 × 3^t"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "wrong_growth_period",
+      "C": "linear_instead_of_exponential",
+      "D": "wrong_base"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "word_problem"
+    ]
+  },
+  {
+    "question_id": "q_m01_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-01",
+    "difficulty": 1,
+    "question_text": "If x - 4 = 11, what is the value of x?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "7",
+      "B": "15",
+      "C": "44",
+      "D": "-7"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "subtracted_wrong_direction",
+      "C": "multiplied_instead_of_added",
+      "D": "sign_error"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m01_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-01",
+    "difficulty": 4,
+    "question_text": "If (2x − 3)/5 = (x + 7)/3, what is the value of x?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "16",
+      "B": "26",
+      "C": "44",
+      "D": "4"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "forgot_to_distribute_second_factor",
+      "B": "sign_error_when_moving_terms",
+      "D": "equated_x_to_denominator"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "fractions"
+    ]
+  },
+  {
+    "question_id": "q_m01_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-01",
+    "difficulty": 5,
+    "question_text": "A water tank holds a maximum of 500 gallons. The tank is currently 40% full. Water flows in at 8 gallons per minute and out at 3 gallons per minute. How many minutes will it take for the tank to reach its maximum capacity?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "37",
+      "B": "40",
+      "C": "60",
+      "D": "100"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "used_inflow_rate_only",
+      "B": "used_current_volume_as_needed",
+      "D": "used_outflow_rate_only"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "word_problem",
+      "rate"
+    ]
+  },
+  {
+    "question_id": "q_m02_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-02",
+    "difficulty": 1,
+    "question_text": "A line passes through the origin and has a slope of 5. Which equation represents this line?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "y = 5x + 1",
+      "B": "y = x + 5",
+      "C": "y = 5x",
+      "D": "y = 5"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "added_nonzero_y_intercept",
+      "B": "swapped_slope_and_intercept",
+      "D": "wrote_horizontal_line"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m02_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-02",
+    "difficulty": 3,
+    "question_text": "The equation 4x + 2y = 20 models the total cost (in dollars) of buying x adult tickets at $4 each and y child tickets at $2 each. If 3 adult tickets are purchased, how many child tickets were also bought?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "2",
+      "B": "4",
+      "C": "6",
+      "D": "8"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "divided_by_4_instead_of_2",
+      "C": "arithmetic_error",
+      "D": "forgot_to_divide"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "word_problem"
+    ]
+  },
+  {
+    "question_id": "q_m02_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-02",
+    "difficulty": 5,
+    "question_text": "In the xy-plane, line k passes through the points (−3, 1) and (2, −9). At what point does line k cross the x-axis?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "(−5/2, 0)",
+      "B": "(−1/2, 0)",
+      "C": "(5/2, 0)",
+      "D": "(−5, 0)"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "arithmetic_error_solving_for_x",
+      "C": "sign_error_on_x_intercept",
+      "D": "forgot_to_divide_by_slope"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m03_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-03",
+    "difficulty": 1,
+    "question_text": "If f(x) = 3x − 7, what is the value of f(4)?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "5",
+      "B": "−5",
+      "C": "19",
+      "D": "12"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "subtracted_in_wrong_order",
+      "C": "added_instead_of_subtracted",
+      "D": "forgot_to_subtract_7"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m03_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-03",
+    "difficulty": 2,
+    "question_text": "The table below shows values of a linear function g.\n\nx:    0   2   4   6\ng(x): 5   9  13  17\n\nWhat is the slope of g?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "2",
+      "B": "4",
+      "C": "5",
+      "D": "1/2"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "used_delta_y_without_dividing_by_delta_x",
+      "C": "used_y_intercept_as_slope",
+      "D": "inverted_slope"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "table"
+    ]
+  },
+  {
+    "question_id": "q_m03_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-03",
+    "difficulty": 5,
+    "question_text": "A line passes through the points (2, 7) and (5, 1). Which of the following is the equation of the line perpendicular to this line that passes through the point (4, −3)?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "y = 2x − 11",
+      "B": "y = (1/2)x − 5",
+      "C": "y = −(1/2)x − 1",
+      "D": "y = −2x + 5"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "negated_slope_instead_of_taking_negative_reciprocal",
+      "C": "took_reciprocal_but_kept_wrong_sign",
+      "D": "used_original_slope"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "perpendicular_lines"
+    ]
+  },
+  {
+    "question_id": "q_m04_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-04",
+    "difficulty": 1,
+    "question_text": "What is the solution (x, y) to the system of equations below?\ny = 2x + 1\ny = x + 4",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "(3, 7)",
+      "B": "(1, 3)",
+      "C": "(4, 9)",
+      "D": "(−3, −5)"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "substituted_x_equals_1_without_solving",
+      "C": "arithmetic_error_solving_x",
+      "D": "sign_error"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m04_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-04",
+    "difficulty": 2,
+    "question_text": "A jar contains only quarters (worth $0.25 each) and dimes (worth $0.10 each). There are 20 coins in the jar totaling $3.50. How many quarters are in the jar?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "5",
+      "B": "8",
+      "C": "10",
+      "D": "15"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "arithmetic_error_in_substitution",
+      "B": "arithmetic_error_solving_equation",
+      "D": "only_used_one_equation"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "word_problem"
+    ]
+  },
+  {
+    "question_id": "q_m04_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-04",
+    "difficulty": 5,
+    "question_text": "For what value of k does the system of equations below have no solution?\n3x − 2y = 8\n6x − ky = 10",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "4",
+      "B": "2",
+      "C": "−4",
+      "D": "6"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "set_up_wrong_proportionality",
+      "C": "sign_error",
+      "D": "used_wrong_coefficient_ratio"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "no_solution"
+    ]
+  },
+  {
+    "question_id": "q_m05_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-05",
+    "difficulty": 1,
+    "question_text": "Which of the following values of x satisfies the inequality 3x ≤ 12?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "5",
+      "B": "3",
+      "C": "7",
+      "D": "10"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "exceeds_boundary_value",
+      "C": "exceeds_boundary_value",
+      "D": "exceeds_boundary_value"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m05_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-05",
+    "difficulty": 2,
+    "question_text": "A student needs to earn at least 70 points to pass a test. She has already earned 42 points and earns 7 points for each additional question she answers correctly. Which inequality represents the minimum number of additional questions (q) she must answer correctly?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "42 + 7q > 70",
+      "B": "42 + 7q ≥ 70",
+      "C": "7q ≥ 70",
+      "D": "42 + 7q ≤ 70"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "used_strict_inequality_for_at_least",
+      "C": "omitted_existing_points",
+      "D": "reversed_inequality_direction"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "word_problem"
+    ]
+  },
+  {
+    "question_id": "q_m05_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-05",
+    "difficulty": 5,
+    "question_text": "In the xy-plane, a region is defined by the inequalities y ≤ −2x + 6 and y ≥ x − 3. Which of the following points lies inside this region?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "(0, 0)",
+      "B": "(4, 2)",
+      "C": "(1, 5)",
+      "D": "(3, −5)"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "violates_first_inequality",
+      "C": "violates_first_inequality",
+      "D": "violates_second_inequality"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "systems_of_inequalities"
+    ]
+  },
+  {
+    "question_id": "q_m06_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-06",
+    "difficulty": 1,
+    "question_text": "The function g(x) = x² − 4. What is the value of g(3)?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "−1",
+      "B": "5",
+      "C": "9",
+      "D": "3"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "treated_as_linear_3_minus_4",
+      "C": "forgot_to_subtract_4",
+      "D": "substituted_without_evaluating"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m06_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-06",
+    "difficulty": 3,
+    "question_text": "Which of the following equations has NO real solutions?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "x² = 9",
+      "B": "x² + 4 = 0",
+      "C": "x² − 4 = 0",
+      "D": "x² + 4 = 8"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "has_two_real_solutions",
+      "C": "has_two_real_solutions",
+      "D": "equivalent_to_x_squared_equals_4"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m06_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-06",
+    "difficulty": 5,
+    "question_text": "The function f(x) = (x − 3)(x + 5). For what value(s) of x does f(x) = −16?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "x = −1 only",
+      "B": "x = 3 and x = −5",
+      "C": "x = 1 and x = −3",
+      "D": "x = −1 and x = 1"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "found_zeros_of_f_not_where_f_equals_negative_16",
+      "C": "sign_error_when_expanding",
+      "D": "only_checked_one_solution"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m07_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-07",
+    "difficulty": 1,
+    "question_text": "Which of the following is equivalent to 3(2x − 4)?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "6x − 4",
+      "B": "6x − 12",
+      "C": "5x − 1",
+      "D": "2x − 12"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "distributed_to_first_term_only",
+      "C": "added_instead_of_multiplied",
+      "D": "distributed_to_second_term_only"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m07_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-07",
+    "difficulty": 3,
+    "question_text": "Which of the following is equivalent to (x + 3)²?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "x² + 9",
+      "B": "x² + 6x + 9",
+      "C": "x² − 6x + 9",
+      "D": "2x² + 6"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "forgot_middle_term_when_expanding",
+      "C": "sign_error_on_middle_term",
+      "D": "added_coefficients_instead_of_multiplying"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m07_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-07",
+    "difficulty": 5,
+    "question_text": "Which of the following is equivalent to (2x³ − 8x) / (2x), for x ≠ 0?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "x² − 4",
+      "B": "x² − 8",
+      "C": "x³ − 4x",
+      "D": "x² − 4x"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "divided_first_term_only_by_2x",
+      "C": "divided_only_the_coefficient_not_the_variable",
+      "D": "forgot_to_cancel_x_in_denominator"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m09_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-09",
+    "difficulty": 1,
+    "question_text": "A savings account starts with $100 and grows by 10% each year. Which expression gives the value after 3 years?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "100 + 3(0.10)",
+      "B": "100 × 1.10 × 3",
+      "C": "100 × (1.10)³",
+      "D": "100 × (0.10)³"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "computed_linear_growth_not_exponential",
+      "B": "multiplied_by_years_instead_of_using_exponent",
+      "D": "forgot_to_add_1_to_growth_rate"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "word_problem"
+    ]
+  },
+  {
+    "question_id": "q_m09_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-09",
+    "difficulty": 5,
+    "question_text": "A city's population was 50,000 in 2010 and decreases by 4% per year. In which year will the population first fall below 40,000?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "2015",
+      "B": "2016",
+      "C": "2017",
+      "D": "2020"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "rounded_down_one_year_early",
+      "C": "rounded_up_one_year_late",
+      "D": "used_linear_decrease_instead_of_exponential"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "word_problem"
+    ]
+  },
+  {
+    "question_id": "q_m10_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-10",
+    "difficulty": 1,
+    "question_text": "If 4 apples cost $2.00, how much do 10 apples cost?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "$4.00",
+      "B": "$5.00",
+      "C": "$8.00",
+      "D": "$2.50"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "divided_10_by_4_and_multiplied_incorrectly",
+      "C": "multiplied_unit_price_by_total_not_new_quantity",
+      "D": "divided_original_cost_by_new_quantity"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "word_problem"
+    ]
+  },
+  {
+    "question_id": "q_m10_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-10",
+    "difficulty": 4,
+    "question_text": "The ratio of boys to girls in a school is 3:5. If there are 480 students total, how many more girls are there than boys?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "60",
+      "B": "90",
+      "C": "120",
+      "D": "180"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "applied_ratio_difference_directly_without_finding_totals",
+      "B": "arithmetic_error_in_subtraction",
+      "D": "found_number_of_boys_not_the_difference"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "word_problem"
+    ]
+  },
+  {
+    "question_id": "q_m11_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-11",
+    "difficulty": 1,
+    "question_text": "What is 20% of 150?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "20",
+      "B": "25",
+      "C": "30",
+      "D": "35"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "used_percent_value_directly",
+      "B": "divided_by_6_instead_of_multiplying_by_0.20",
+      "D": "arithmetic_error"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m11_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-11",
+    "difficulty": 4,
+    "question_text": "A laptop's price increased by 15% and then decreased by 15%. What is the net percentage change from the original price?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "0%",
+      "B": "−2.25%",
+      "C": "+2.25%",
+      "D": "−15%"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "assumed_increases_and_decreases_of_equal_percent_cancel_out",
+      "C": "calculated_correct_magnitude_but_wrong_direction",
+      "D": "applied_only_one_of_the_two_percent_changes"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "multi_step"
+    ]
+  },
+  {
+    "question_id": "q_m12_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-12",
+    "difficulty": 1,
+    "question_text": "The following data set shows the number of books read by 5 students: 2, 4, 4, 6, 9. What is the median number of books read?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "4",
+      "B": "5",
+      "C": "6",
+      "D": "4.5"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "calculated_mean_instead_of_median",
+      "C": "chose_fourth_value_instead_of_third",
+      "D": "averaged_two_middle_values_as_if_set_had_even_count"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m12_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-12",
+    "difficulty": 3,
+    "question_text": "Which measure of central tendency is most affected by adding a single extreme outlier to a data set?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Mean",
+      "B": "Median",
+      "C": "Mode",
+      "D": "Range"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "median_is_resistant_to_outliers",
+      "C": "mode_is_not_affected_by_a_single_new_non_repeating_value",
+      "D": "range_is_not_a_measure_of_central_tendency"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m12_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-12",
+    "difficulty": 5,
+    "question_text": "A data set of 5 values has a mean of 12. A sixth value of 18 is added to the set. What is the new mean?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "12",
+      "B": "13",
+      "C": "15",
+      "D": "14"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "assumed_adding_one_value_does_not_change_the_mean",
+      "C": "averaged_12_and_18_directly_without_weighting_by_count",
+      "D": "arithmetic_error_dividing_new_sum_by_6"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m13_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-13",
+    "difficulty": 1,
+    "question_text": "A scatterplot shows that as hours studied increase, test scores tend to increase. Which term best describes this relationship?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Negative correlation",
+      "B": "No correlation",
+      "C": "Positive correlation",
+      "D": "Causation"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "describes_opposite_relationship",
+      "B": "describes_no_relationship",
+      "D": "correlation_does_not_establish_causation"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m13_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-13",
+    "difficulty": 3,
+    "question_text": "A line of best fit for a scatterplot has equation y = 2x + 5, where x is hours studied and y is the predicted test score. What score does the model predict for a student who studies 8 hours?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "16",
+      "B": "21",
+      "C": "13",
+      "D": "26"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "forgot_to_add_y_intercept",
+      "C": "added_x_and_intercept_without_multiplying_slope",
+      "D": "doubled_the_y_intercept"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m13_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-13",
+    "difficulty": 5,
+    "question_text": "A researcher finds a correlation coefficient of r = −0.78 between daily TV hours and GPA. Which of the following is the best interpretation?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Watching TV causes lower GPA",
+      "B": "There is a strong negative association between TV hours and GPA",
+      "C": "Students with low GPA watch 78% more TV than those with high GPA",
+      "D": "78% of the variation in GPA is explained by TV hours"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "correlation_does_not_imply_causation",
+      "C": "misinterprets_r_as_a_percent_difference",
+      "D": "confuses_r_with_r_squared"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m14_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-14",
+    "difficulty": 1,
+    "question_text": "A bag contains 3 red marbles, 4 blue marbles, and 5 green marbles. If one marble is selected at random, what is the probability of selecting a blue marble?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "1/4",
+      "B": "1/3",
+      "C": "4/5",
+      "D": "1/2"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "used_wrong_denominator",
+      "C": "used_non_blue_count_as_denominator",
+      "D": "assumed_half_the_marbles_are_blue"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m14_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-14",
+    "difficulty": 3,
+    "question_text": "The table shows data for 100 students.\n\n               | Plays sports | Does not play sports\nEats healthy   |      40      |         20\nDoes not eat   |      30      |         10\n\nIf a student who plays sports is selected at random, what is the probability they eat healthy?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "40/100",
+      "B": "4/7",
+      "C": "40/60",
+      "D": "2/5"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "used_all_students_as_denominator_instead_of_just_sports_players",
+      "C": "used_healthy_students_as_denominator",
+      "D": "calculation_error"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "two_way_table"
+    ]
+  },
+  {
+    "question_id": "q_m14_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-14",
+    "difficulty": 5,
+    "question_text": "Events A and B are independent. P(A) = 0.4 and P(B) = 0.5. What is P(A or B)?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "0.90",
+      "B": "0.70",
+      "C": "0.20",
+      "D": "0.45"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "added_probabilities_without_subtracting_intersection",
+      "C": "found_P_A_and_B_only",
+      "D": "averaged_P_A_and_P_B"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m15_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-15",
+    "difficulty": 1,
+    "question_text": "A researcher surveys 50 randomly selected students from a school of 500 and finds that 30 prefer online learning. Based on this sample, what is the best estimate of the number of students in the whole school who prefer online learning?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "30",
+      "B": "150",
+      "C": "300",
+      "D": "350"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "reported_sample_count_without_scaling_to_population",
+      "B": "divided_population_by_sample_instead_of_scaling_proportion",
+      "D": "arithmetic_error"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "word_problem"
+    ]
+  },
+  {
+    "question_id": "q_m15_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-15",
+    "difficulty": 3,
+    "question_text": "A poll of 400 randomly selected voters finds that 52% plan to vote for Candidate A, with a margin of error of ±3%. Which conclusion is best supported by this data?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Candidate A will definitely win the election",
+      "B": "Between 49% and 55% of all voters likely plan to vote for Candidate A",
+      "C": "Exactly 52% of all voters plan to vote for Candidate A",
+      "D": "The sample of 400 is too small to draw any conclusions"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "overstates_certainty_of_polling_data",
+      "C": "ignores_the_margin_of_error",
+      "D": "400_is_a_statistically_adequate_sample_size"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "word_problem"
+    ]
+  },
+  {
+    "question_id": "q_m15_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-15",
+    "difficulty": 5,
+    "question_text": "A study found that students who ate breakfast scored an average of 12 points higher on a standardized test than students who did not. The study used a randomly selected sample of 200 students. Which of the following is the most appropriate conclusion?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Eating breakfast causes higher test scores",
+      "B": "There is an association between eating breakfast and test scores in this sample that may apply to the broader population",
+      "C": "All students should eat breakfast to raise their test scores by 12 points",
+      "D": "A 12-point difference is too small to be meaningful"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "observational_study_cannot_establish_causation",
+      "C": "prescriptive_policy_not_supported_by_observational_data",
+      "D": "dismisses_finding_without_statistical_justification"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "word_problem"
+    ]
+  },
+  {
+    "question_id": "q_m16_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-16",
+    "difficulty": 1,
+    "question_text": "What is the perimeter of a rectangle with length 8 cm and width 3 cm?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "11 cm",
+      "B": "22 cm",
+      "C": "24 cm",
+      "D": "44 cm"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "added_length_and_width_without_multiplying_by_2",
+      "C": "calculated_area_instead_of_perimeter",
+      "D": "multiplied_sum_by_4_instead_of_2"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m16_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-16",
+    "difficulty": 4,
+    "question_text": "A cylinder has a radius of 3 cm and a height of 10 cm. What is the volume of the cylinder? (Use π ≈ 3.14)",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "94.2 cm³",
+      "B": "188.4 cm³",
+      "C": "282.6 cm³",
+      "D": "565.2 cm³"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "used_radius_without_squaring_it",
+      "B": "used_diameter_6_instead_of_radius_3",
+      "D": "doubled_the_height"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m17_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-17",
+    "difficulty": 1,
+    "question_text": "The three angles of a triangle measure x°, 45°, and 70°. What is the value of x?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "45",
+      "B": "65",
+      "C": "70",
+      "D": "115"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "repeated_one_of_the_given_angles",
+      "C": "repeated_the_other_given_angle",
+      "D": "subtracted_only_one_angle_from_180"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m17_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-17",
+    "difficulty": 5,
+    "question_text": "In triangle ABC, AB = AC and angle ABC = 55°. What is the measure of angle BAC?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "55°",
+      "B": "70°",
+      "C": "110°",
+      "D": "125°"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "assumed_vertex_angle_equals_base_angles",
+      "C": "doubled_the_base_angle_instead_of_subtracting_both_from_180",
+      "D": "subtracted_only_one_base_angle_from_180"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "isosceles_triangle"
+    ]
+  },
+  {
+    "question_id": "q_m18_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-18",
+    "difficulty": 1,
+    "question_text": "In a right triangle, the two legs have lengths 3 and 4. What is the length of the hypotenuse?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "5",
+      "B": "7",
+      "C": "12",
+      "D": "25"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "added_the_two_legs_instead_of_using_pythagorean_theorem",
+      "C": "multiplied_the_two_legs",
+      "D": "calculated_3_squared_plus_4_squared_but_forgot_to_take_square_root"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "pythagorean_theorem"
+    ]
+  },
+  {
+    "question_id": "q_m18_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-18",
+    "difficulty": 3,
+    "question_text": "In a right triangle, the hypotenuse is 10 and one leg is 6. What is the length of the other leg?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "4",
+      "B": "8",
+      "C": "√136",
+      "D": "64"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "subtracted_the_leg_from_the_hypotenuse_directly",
+      "C": "added_squares_instead_of_subtracting",
+      "D": "found_the_missing_leg_squared_but_forgot_to_take_square_root"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "pythagorean_theorem"
+    ]
+  },
+  {
+    "question_id": "q_m18_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-18",
+    "difficulty": 5,
+    "question_text": "In a right triangle, the hypotenuse is 20 and one acute angle measures 30°. What is the length of the side opposite the 30° angle?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "10√3",
+      "B": "10",
+      "C": "20√3",
+      "D": "10√2"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "used_cosine_ratio_and_found_the_adjacent_side",
+      "C": "multiplied_hypotenuse_by_√3_instead_of_1/2",
+      "D": "used_45_45_90_ratios_instead_of_30_60_90"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "trigonometry",
+      "special_triangles"
+    ]
+  },
+  {
+    "question_id": "q_m19_001",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-19",
+    "difficulty": 1,
+    "question_text": "A circle has a radius of 7. What is the circumference of the circle? (Use π ≈ 3.14)",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "21.98",
+      "B": "43.96",
+      "C": "153.86",
+      "D": "14"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "used_pi_times_r_instead_of_2_pi_r",
+      "C": "used_area_formula_pi_r_squared",
+      "D": "found_diameter_without_multiplying_by_pi"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m19_002",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-19",
+    "difficulty": 3,
+    "question_text": "A circle with its center at the origin has the equation x² + y² = 25. What is the area of the circle?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "5π",
+      "B": "10π",
+      "C": "25π",
+      "D": "50π"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "used_radius_r_instead_of_r_squared_in_area_formula",
+      "B": "used_diameter_as_the_radius",
+      "D": "doubled_the_area"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m19_003",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-19",
+    "difficulty": 5,
+    "question_text": "A sector of a circle has a central angle of 120° and a radius of 6. What is the area of the sector?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "4π",
+      "B": "12π",
+      "C": "24π",
+      "D": "36π"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "used_arc_length_formula_instead_of_sector_area_formula",
+      "C": "used_the_reflex_angle_240_degrees_instead_of_120",
+      "D": "computed_full_circle_area_without_applying_the_sector_fraction"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "sector"
+    ]
+  },
+  {
+    "question_id": "q_rw01_002",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-01",
+    "difficulty": 1,
+    "question_text": "The following text is from a science article about polar bears.\n\n\"Polar bears are powerful hunters that rely almost entirely on seals for food. They spend most of their time on sea ice, using it as a platform to hunt. As Arctic sea ice melts due to climate change, polar bears must spend more time on land where food is scarce.\"\n\nWhat is the main idea of this passage?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Polar bears are the largest land carnivores in the world",
+      "B": "Climate change is reducing the sea ice that polar bears depend on for hunting",
+      "C": "Seals are the primary food source for most Arctic animals",
+      "D": "Polar bears prefer living on land to living on sea ice"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "introduces_information_not_stated_in_the_passage",
+      "C": "overgeneralizes_from_a_detail_about_polar_bears_only",
+      "D": "contradicted_by_the_passage"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage"
+    ]
+  },
+  {
+    "question_id": "q_rw01_003",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-01",
+    "difficulty": 4,
+    "question_text": "The following text is from a history passage about the Industrial Revolution.\n\n\"The Industrial Revolution transformed the way goods were produced, shifting from handcraft methods in homes and small workshops to machine-based manufacturing in factories. This shift required large numbers of workers to relocate from rural areas to cities, driving rapid urbanization. By 1850, more than half of England's population lived in cities — the first time this had occurred in any nation's history.\"\n\nWhich of the following best states the central claim of this passage?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "The Industrial Revolution caused widespread environmental damage in England",
+      "B": "The shift to factory production fundamentally reshaped where and how people lived and worked",
+      "C": "England's cities grew faster during the 1800s than those of any other country",
+      "D": "Factory workers in England earned higher wages than farm workers"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "introduces_a_topic_not_mentioned_in_the_passage",
+      "C": "focuses_on_a_single_supporting_detail_rather_than_the_central_claim",
+      "D": "not_stated_or_implied_by_the_passage"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage"
+    ]
+  },
+  {
+    "question_id": "q_rw02_001",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-02",
+    "difficulty": 1,
+    "question_text": "The following text is from an article about honeybees.\n\n\"Honeybees are vital to agriculture. Each year, bees pollinate crops worth over $15 billion in the United States alone. Without bees, many fruits and vegetables simply could not be grown. In recent years, however, bee populations have been declining, largely due to pesticide use and habitat loss.\"\n\nWhich detail from the passage best supports the claim that honeybees have significant economic importance?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Bee populations have been declining in recent years",
+      "B": "Bees pollinate crops worth over $15 billion in the United States each year",
+      "C": "Many fruits and vegetables could not be grown without bees",
+      "D": "Pesticide use and habitat loss are major threats to bees"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "supports_the_threat_to_bees_not_their_economic_importance",
+      "C": "supports_importance_but_less_directly_than_a_specific_dollar_figure",
+      "D": "explains_causes_of_decline_not_economic_value"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage",
+      "evidence"
+    ]
+  },
+  {
+    "question_id": "q_rw02_002",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-02",
+    "difficulty": 3,
+    "question_text": "The following is from an essay arguing that public libraries should receive more government funding.\n\n\"Public libraries serve a critical role in democratic society. They provide free access to information, books, and the internet for all citizens regardless of income. In low-income communities, libraries are often the only place residents can access computers and apply for jobs online. Studies show that for every dollar invested in libraries, communities receive an average return of $4 in economic and educational benefits.\"\n\nThe author's argument that libraries provide a financial return to communities is best supported by which detail?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Libraries provide free access to books and the internet",
+      "B": "Libraries are the only place some residents can apply for jobs",
+      "C": "Studies show libraries return $4 in benefits for every dollar invested",
+      "D": "Libraries serve a critical role in democratic society"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "supports_access_not_financial_return",
+      "B": "supports_economic_opportunity_indirectly_not_a_financial_return_figure",
+      "D": "too_general_to_support_the_specific_financial_return_claim"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage",
+      "evidence"
+    ]
+  },
+  {
+    "question_id": "q_rw02_003",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-02",
+    "difficulty": 5,
+    "question_text": "Read the following two passages.\n\nPassage 1: \"Urban gardens provide fresh produce in food deserts and create community gathering spaces. Studies in Detroit show that urban gardens increased social cohesion by 34% in participating neighborhoods.\"\n\nPassage 2: \"Critics argue that urban gardens occupy valuable land that could be used for affordable housing. In Chicago, three urban farms were cleared to build 250 units of low-income housing, directly addressing the city's housing shortage.\"\n\nA student claims that urban gardens primarily benefit communities. Which quotation from the passages best challenges this claim?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "\"Urban gardens provide fresh produce in food deserts\"",
+      "B": "\"Studies in Detroit show that urban gardens increased social cohesion by 34%\"",
+      "C": "\"Critics argue that urban gardens occupy valuable land that could be used for affordable housing\"",
+      "D": "\"Urban gardens...create community gathering spaces\""
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "supports_the_student_claim_rather_than_challenging_it",
+      "B": "supports_the_student_claim_with_specific_data",
+      "D": "supports_the_student_claim_rather_than_challenging_it"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "dual_passage",
+      "evidence"
+    ]
+  },
+  {
+    "question_id": "q_rw03_001",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-03",
+    "difficulty": 1,
+    "question_text": "The table below shows the percentage of adults who exercise regularly by age group.\n\nAge Group | % Who Exercise Regularly\n18–29     | 54%\n30–44     | 47%\n45–59     | 41%\n60+       | 35%\n\nWhich conclusion is best supported by the data?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Adults under 30 are the healthiest age group",
+      "B": "The percentage of adults who exercise regularly tends to decrease as age increases",
+      "C": "The majority of adults in every age group do not exercise regularly",
+      "D": "Older adults are less healthy than younger adults"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "equates_exercise_with_overall_health_which_the_data_does_not_support",
+      "C": "incorrect_because_54_percent_of_18_to_29_year_olds_do_exercise",
+      "D": "conflates_exercise_frequency_with_overall_health"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "table",
+      "data_interpretation"
+    ]
+  },
+  {
+    "question_id": "q_rw03_002",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-03",
+    "difficulty": 3,
+    "question_text": "The bar chart below shows average monthly rainfall (in inches) for City X.\n\nMonth:      Jan  Feb  Mar  Apr  May  Jun\nRainfall:   3.2  2.8  2.1  1.4  0.6  0.2\n\nA student claims that City X experiences a dry season in summer. Which data point from the chart most directly supports this claim?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "January has the highest rainfall at 3.2 inches",
+      "B": "June has only 0.2 inches of rainfall",
+      "C": "Rainfall decreases steadily from January through June",
+      "D": "February rainfall is 0.4 inches less than January"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "shows_the_wet_season_not_the_dry_season",
+      "C": "describes_a_trend_but_is_less_direct_than_citing_the_specific_summer_value",
+      "D": "shows_a_small_month_to_month_change_unrelated_to_the_dry_season_claim"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "chart",
+      "data_interpretation"
+    ]
+  },
+  {
+    "question_id": "q_rw03_003",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-03",
+    "difficulty": 5,
+    "question_text": "The table below shows average SAT scores by hours of preparation.\n\nHours of Prep | Avg SAT Score\n0             | 980\n10            | 1040\n20            | 1100\n30            | 1140\n40            | 1160\n50+           | 1170\n\nA researcher claims that \"additional preparation beyond 30 hours yields diminishing returns in score improvement.\" Which comparison from the data best supports this claim?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Students who study 0 hours score 980, while those who study 50+ hours score 1170",
+      "B": "The score gain from 0 to 10 hours is 60 points, while the gain from 40 to 50+ hours is only 10 points",
+      "C": "Students who study 20 hours score an average of 1100",
+      "D": "The score gain from 10 to 20 hours (60 points) equals the gain from 0 to 10 hours (60 points)"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "shows_overall_improvement_but_does_not_demonstrate_diminishing_returns",
+      "C": "is_a_single_data_point_that_does_not_show_a_trend",
+      "D": "shows_constant_returns_in_early_hours_which_contradicts_the_claim"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "table",
+      "data_interpretation"
+    ]
+  },
+  {
+    "question_id": "q_rw04_002",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-04",
+    "difficulty": 1,
+    "question_text": "The following text is from an article about coffee.\n\n\"Coffee is the most consumed beverage in the United States after water. Americans drink about 400 million cups of coffee per day. The coffee industry employs over 1.7 million people nationwide.\"\n\nBased on this passage, what can reasonably be inferred?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Coffee is more popular than water in the United States",
+      "B": "Coffee plays a significant role in American daily life and the economy",
+      "C": "All Americans drink at least one cup of coffee every day",
+      "D": "Coffee is healthier than other beverages"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "contradicted_by_the_passage_which_states_water_is_consumed_more",
+      "C": "overgeneralization_not_supported_by_the_passage",
+      "D": "not_stated_or_implied_in_the_passage"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage",
+      "inference"
+    ]
+  },
+  {
+    "question_id": "q_rw04_003",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-04",
+    "difficulty": 5,
+    "question_text": "The following passage is from a biography of Marie Curie.\n\n\"Despite winning two Nobel Prizes, Curie was denied membership in the French Academy of Sciences in 1911, losing the vote by two ballots. Her rival, Édouard Branly, was elected in her place. Some historians believe the rejection was motivated partly by anti-foreign sentiment and partly by prevailing attitudes toward women in science at the time.\"\n\nWhich inference is best supported by this passage?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Marie Curie was a less accomplished scientist than Édouard Branly",
+      "B": "The French Academy of Sciences was composed entirely of men in 1911",
+      "C": "Curie's scientific achievements were not the only factor considered in her rejection",
+      "D": "Curie moved to France specifically to seek recognition from the Academy of Sciences"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "contradicted_by_her_two_Nobel_Prizes_mentioned_in_the_passage",
+      "B": "implied_but_not_explicitly_stated_in_the_passage",
+      "D": "not_stated_or_implied_in_the_passage"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage",
+      "inference"
+    ]
+  },
+  {
+    "question_id": "q_rw05_002",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-05",
+    "difficulty": 1,
+    "question_text": "The following sentence is from a travel review.\n\n\"The café had a warm, inviting atmosphere that made us feel instantly at home.\"\n\nAs used in this sentence, \"atmosphere\" most nearly means:",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "The layer of gases surrounding a planet",
+      "B": "The general mood or feeling of a place",
+      "C": "Weather conditions at a specific location",
+      "D": "A unit of pressure measurement"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "scientific_literal_meaning_of_atmosphere",
+      "C": "related_but_too_narrow_and_refers_to_outdoor_weather",
+      "D": "technical_meaning_unrelated_to_the_context"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "vocabulary_in_context"
+    ]
+  },
+  {
+    "question_id": "q_rw05_003",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-05",
+    "difficulty": 5,
+    "question_text": "The following text is from a literary essay about poetry.\n\n\"The poet's use of fragmented syntax and abrupt line breaks is not careless; rather, these choices are calculated to unsettle the reader, to strip away the comfortable cadences of prose and force a confrontation with the poem's jagged emotional core.\"\n\nAs used in this passage, \"calculated\" most nearly means:",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Determined through mathematical computation",
+      "B": "Deliberately and carefully planned",
+      "C": "Cold and emotionally detached",
+      "D": "Approximately estimated"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "literal_mathematical_meaning_not_applicable_to_artistic_choices",
+      "C": "tempting_connotation_but_the_passage_describes_intent_not_emotional_tone",
+      "D": "different_usage_as_in_a_calculated_risk"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "vocabulary_in_context"
+    ]
+  },
+  {
+    "question_id": "q_rw06_001",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-06",
+    "difficulty": 1,
+    "question_text": "The following is from a science article.\n\n\"Climate change is one of the greatest challenges facing humanity today. Rising temperatures are melting polar ice caps, raising sea levels, and increasing the frequency of extreme weather events. Scientists warn that without significant reductions in carbon emissions, these effects will worsen dramatically over the next century.\"\n\nWhat is the primary purpose of this passage?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "To entertain readers with dramatic stories about extreme weather",
+      "B": "To inform readers about the causes and potential consequences of climate change",
+      "C": "To argue that scientists are exaggerating the risks of climate change",
+      "D": "To persuade readers to stop driving cars immediately"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "misidentifies_genre_as_entertainment",
+      "C": "directly_opposite_to_the_passage_which_supports_scientific_warnings",
+      "D": "too_specific_no_such_call_to_action_appears_in_the_passage"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage",
+      "purpose"
+    ]
+  },
+  {
+    "question_id": "q_rw06_002",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-06",
+    "difficulty": 3,
+    "question_text": "The following excerpt is from an essay about urban planning.\n\n\"Consider for a moment what your city would look like without sidewalks. Pedestrians would compete with cars for road space, crossing streets would be dangerous, and the simple act of walking to the corner store would become a hazard. Sidewalks, often taken for granted, are in fact one of the great public safety innovations of the modern city.\"\n\nThe author begins by asking readers to imagine a city without sidewalks primarily in order to:",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Entertain readers with an unusual thought experiment",
+      "B": "Argue that cars should be banned from city streets",
+      "C": "Help readers appreciate the value of sidewalks by showing what life without them would be like",
+      "D": "Provide a history of how sidewalks were first constructed"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "entertainment_is_not_the_primary_purpose_of_the_rhetorical_question",
+      "B": "the_passage_does_not_argue_for_banning_cars",
+      "D": "no_historical_information_about_sidewalk_construction_is_provided"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage",
+      "structure",
+      "purpose"
+    ]
+  },
+  {
+    "question_id": "q_rw07_001",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-07",
+    "difficulty": 1,
+    "question_text": "Read the following two passages.\n\nPassage 1: \"Regular physical exercise has been shown to improve mood and reduce symptoms of depression. Studies consistently find that even moderate activity, such as a 30-minute walk, can significantly boost mental well-being.\"\n\nPassage 2: \"Mental health researchers have found that sedentary lifestyles are strongly linked to higher rates of anxiety and depression. Incorporating movement into daily routines is one of the most accessible interventions available.\"\n\nBoth passages support which of the following conclusions?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Running is more effective than walking for treating depression",
+      "B": "Physical activity is beneficial for mental health",
+      "C": "Exercise is the only effective treatment for depression and anxiety",
+      "D": "Most people do not get enough exercise"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "neither_passage_distinguishes_between_types_of_exercise",
+      "C": "overgeneralization_neither_passage_claims_exercise_is_the_only_treatment",
+      "D": "not_stated_or_implied_in_either_passage"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "dual_passage"
+    ]
+  },
+  {
+    "question_id": "q_rw07_002",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-07",
+    "difficulty": 3,
+    "question_text": "Read the following two passages.\n\nPassage 1: \"Social media platforms have created unprecedented opportunities for people to connect across distances, share ideas, and organize communities around shared interests. For many, these platforms provide a vital sense of belonging.\"\n\nPassage 2: \"Despite its benefits, excessive social media use has been linked to increased feelings of loneliness and social comparison. Users who spend more than three hours per day on these platforms report lower life satisfaction than those who use them less.\"\n\nHow do these two passages most directly relate to each other?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Passage 2 contradicts every claim made in Passage 1",
+      "B": "Passage 1 highlights benefits of social media while Passage 2 acknowledges those benefits but warns of harms from overuse",
+      "C": "Both passages argue that social media platforms should be more tightly regulated",
+      "D": "Passage 2 provides historical background for the trends described in Passage 1"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "passage_2_opens_by_acknowledging_benefits_so_it_does_not_contradict_all_of_passage_1",
+      "C": "neither_passage_advocates_for_regulation",
+      "D": "passage_2_presents_research_findings_not_historical_context"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "dual_passage"
+    ]
+  },
+  {
+    "question_id": "q_rw07_003",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-07",
+    "difficulty": 5,
+    "question_text": "Read the following two passages.\n\nPassage 1: \"Homework reinforces classroom learning and teaches students time management and self-discipline. Research shows that students who complete their homework regularly perform better on standardized tests than those who do not.\"\n\nPassage 2: \"The correlation between homework completion and test performance may simply reflect that motivated students do both — complete homework and study independently. Assigning more homework does not necessarily improve learning; it may merely identify students who would succeed regardless.\"\n\nThe author of Passage 2 would most likely respond to the research cited in Passage 1 by arguing that:",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Homework has no effect on student performance under any circumstances",
+      "B": "The research mistakes correlation for causation because a third factor — student motivation — may explain both",
+      "C": "Standardized tests are not a valid measure of genuine learning",
+      "D": "Students who complete homework are less creative than those who do not"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "overstates_passage_2_which_says_homework_does_not_necessarily_improve_learning_not_that_it_never_does",
+      "C": "passage_2_does_not_question_the_validity_of_standardized_tests",
+      "D": "not_stated_or_implied_in_passage_2"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "dual_passage"
+    ]
+  },
+  {
+    "question_id": "q_rw08_001",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-08",
+    "difficulty": 1,
+    "question_text": "A student is writing a report about electric vehicles and wants to introduce the main topic and state one key advantage.\n\nNotes:\n• Electric vehicles (EVs) run on battery power instead of gasoline\n• EVs produce zero direct emissions at the point of use\n• The global EV market has grown rapidly since 2015\n• Charging an EV costs less per mile than fueling a gasoline car\n\nWhich choice most effectively introduces the main topic and states one key advantage?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "The global EV market has grown rapidly since 2015, and charging costs are low.",
+      "B": "Electric vehicles run on battery power and produce zero direct emissions, making them cleaner than gasoline cars.",
+      "C": "Electric vehicles were first developed in the late 19th century before gasoline cars became dominant.",
+      "D": "Charging an EV costs less per mile than gasoline, which matters to budget-conscious consumers."
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "mentions_growth_and_cost_but_does_not_introduce_what_EVs_are",
+      "C": "introduces_historical_context_not_present_in_the_notes",
+      "D": "mentions_only_cost_and_does_not_introduce_the_main_topic"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "rhetorical_synthesis",
+      "notes_based"
+    ]
+  },
+  {
+    "question_id": "q_rw08_002",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-08",
+    "difficulty": 3,
+    "question_text": "A student is writing an essay about honeybee decline and wants to emphasize the contrast between bees' importance and the threat they face.\n\nNotes:\n• Honeybees pollinate about one-third of the world's food supply\n• Without bee pollination, many crops cannot reproduce\n• Global honeybee populations have declined by over 30% since 2006\n• Colony collapse disorder is a major cause of bee die-offs\n\nWhich choice most effectively emphasizes the contrast between the importance of honeybees and their declining numbers?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Colony collapse disorder has caused significant bee die-offs, threatening agriculture worldwide.",
+      "B": "Honeybees, which are essential for pollinating one-third of the world's food supply, have nonetheless seen their global populations decline by over 30% since 2006.",
+      "C": "Many crops cannot reproduce without bee pollination, so farmers rely heavily on managed bee colonies.",
+      "D": "Researchers are studying colony collapse disorder to understand why honeybee populations are shrinking."
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "focuses_only_on_the_threat_without_stating_the_importance",
+      "C": "focuses_only_on_importance_without_mentioning_the_decline",
+      "D": "neither_states_the_importance_nor_quantifies_the_decline"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "rhetorical_synthesis",
+      "notes_based"
+    ]
+  },
+  {
+    "question_id": "q_rw08_003",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-08",
+    "difficulty": 5,
+    "question_text": "A student writing a persuasive essay wants to acknowledge a counterargument and then introduce evidence that directly challenges it.\n\nNotes:\n• Some argue that raising the minimum wage causes businesses to lay off workers\n• Studies of Seattle's minimum wage increase found no significant job losses\n• Workers earning higher wages tend to spend more, stimulating local economies\n• Small businesses may face more difficulty than large corporations\n\nWhich choice most effectively acknowledges a counterargument and then introduces evidence that challenges it?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Raising the minimum wage is difficult for small businesses, though large corporations can absorb the costs.",
+      "B": "While some argue that minimum wage increases lead to job losses, studies of Seattle's wage increase found no significant reduction in employment.",
+      "C": "Workers who earn higher wages tend to spend more money locally, which stimulates the broader economy.",
+      "D": "The minimum wage debate involves many stakeholders, including workers, business owners, and policymakers."
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "contrasts_business_types_but_does_not_address_the_job_loss_counterargument",
+      "C": "states_only_a_benefit_without_acknowledging_a_counterargument",
+      "D": "is_too_vague_and_presents_no_specific_argument_or_evidence"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "rhetorical_synthesis",
+      "notes_based",
+      "counterargument"
+    ]
+  },
+  {
+    "question_id": "q_rw09_002",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-09",
+    "difficulty": 1,
+    "question_text": "Which choice most logically completes the sentence?\n\nThe student studied for three hours the night before the exam. ______, she felt confident and well-prepared when she arrived at school.",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Nevertheless,",
+      "B": "In contrast,",
+      "C": "As a result,",
+      "D": "However,"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "implies_an_unexpected_outcome_but_confidence_after_studying_is_expected",
+      "B": "implies_a_comparison_between_two_different_things",
+      "D": "implies_a_contradiction_but_studying_and_confidence_are_not_contradictory"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "transitions"
+    ]
+  },
+  {
+    "question_id": "q_rw09_003",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-09",
+    "difficulty": 4,
+    "question_text": "Which choice most logically completes the sentence?\n\nThe new medication showed promising results in early clinical trials. ______, researchers caution that more extensive testing is needed before it can be approved for widespread use.",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Therefore,",
+      "B": "Similarly,",
+      "C": "For instance,",
+      "D": "Nevertheless,"
+    },
+    "correct_answer": "D",
+    "distractor_analysis": {
+      "A": "implies_the_caution_follows_logically_from_the_promising_results_which_reverses_the_expected_direction",
+      "B": "implies_a_parallel_relationship_between_two_similar_things",
+      "C": "implies_the_second_sentence_is_an_example_of_the_first_which_it_is_not"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "transitions"
+    ]
+  },
+  {
+    "question_id": "q_rw10_002",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-10",
+    "difficulty": 1,
+    "question_text": "Which choice correctly combines the following two sentences?\n\nThe sun set behind the mountains. The sky turned a deep shade of orange.",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "The sun set behind the mountains, the sky turned a deep shade of orange.",
+      "B": "The sun set behind the mountains, and the sky turned a deep shade of orange.",
+      "C": "The sun set behind the mountains; and the sky turned a deep shade of orange.",
+      "D": "The sun set behind the mountains: the sky turned a deep shade of orange."
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "comma_splice_two_independent_clauses_cannot_be_joined_by_a_comma_alone",
+      "C": "a_semicolon_should_not_be_followed_by_a_coordinating_conjunction_like_and",
+      "D": "a_colon_introduces_explanation_or_a_list_not_a_parallel_coordinate_clause"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "punctuation",
+      "boundaries"
+    ]
+  },
+  {
+    "question_id": "q_rw10_003",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-10",
+    "difficulty": 4,
+    "question_text": "Which of the following is punctuated correctly?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Scientists have discovered a new species of deep-sea fish, it lives at depths of over 3,000 meters.",
+      "B": "Scientists have discovered a new species of deep-sea fish that lives at depths of over 3,000 meters.",
+      "C": "Scientists have discovered a new species of deep-sea fish; that lives at depths of over 3,000 meters.",
+      "D": "Scientists have discovered a new species of deep-sea fish, that lives at depths of over 3,000 meters."
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "comma_splice_joining_two_independent_clauses_with_only_a_comma",
+      "C": "semicolon_cannot_precede_a_dependent_relative_clause",
+      "D": "a_comma_should_not_separate_a_restrictive_relative_clause_from_the_noun_it_modifies"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "punctuation",
+      "boundaries",
+      "relative_clause"
+    ]
+  },
+  {
+    "question_id": "q_rw11_001",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-11",
+    "difficulty": 1,
+    "question_text": "Which choice correctly completes the sentence?\n\nEach of the students ______ expected to submit their essay by Friday.",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "are",
+      "B": "is",
+      "C": "were",
+      "D": "have been"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "treats_each_as_plural_but_each_takes_a_singular_verb",
+      "C": "past_tense_plural_both_tense_and_number_are_wrong",
+      "D": "plural_auxiliary_and_shifts_to_present_perfect_tense_unnecessarily"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "subject_verb_agreement"
+    ]
+  },
+  {
+    "question_id": "q_rw11_002",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-11",
+    "difficulty": 3,
+    "question_text": "Which choice correctly completes the sentence?\n\nThe committee, along with several outside consultants, ______ the proposal at last week's meeting.",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "review",
+      "B": "reviews",
+      "C": "reviewed",
+      "D": "were reviewing"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "present_tense_plural_wrong_tense_and_treats_subject_as_plural",
+      "B": "present_tense_wrong_tense_for_a_past_event",
+      "D": "treats_singular_committee_as_plural_because_of_the_intervening_phrase"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "subject_verb_agreement",
+      "intervening_phrase"
+    ]
+  },
+  {
+    "question_id": "q_rw11_003",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-11",
+    "difficulty": 5,
+    "question_text": "Which choice most effectively revises the sentence to eliminate the ambiguous pronoun reference?\n\n\"After the manager spoke with the employee, he decided to resign.\"",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "After the manager spoke with the employee, the manager decided to resign.",
+      "B": "After the manager spoke with the employee, they decided to resign.",
+      "C": "After the manager spoke with the employee, he decided to resign from his position.",
+      "D": "After speaking with the employee, he decided to resign."
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "replaces_he_with_they_but_still_does_not_clarify_which_person_resigned",
+      "C": "adds_from_his_position_but_the_pronoun_he_remains_ambiguous",
+      "D": "restructures_the_opening_clause_but_the_pronoun_he_is_still_ambiguous"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "pronoun_reference",
+      "ambiguity"
+    ]
+  },
+  {
+    "question_id": "q_rw06_003",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-06",
+    "difficulty": 5,
+    "question_text": "The following passage is adapted from a speech.\n\n\"We speak often of progress, but progress without equity is merely speed. We can build faster trains, smarter phones, and taller buildings, yet if these advances do not reach those who need them most, we have only raced ahead while leaving others behind. True progress lifts everyone — not just those already standing on high ground.\"\n\nThe author most likely structures this passage by:",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Presenting a social problem and then proposing a specific legislative solution",
+      "B": "Introducing a widely used concept and then redefining it with an essential qualification",
+      "C": "Comparing two historical periods to argue that society has regressed",
+      "D": "Citing data and statistics to support a central economic claim"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "no_specific_policy_or_legislation_is_proposed_in_the_passage",
+      "C": "no_historical_time_periods_are_compared",
+      "D": "no_data_or_statistics_are_used_in_the_passage"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage",
+      "structure",
+      "rhetorical_analysis"
+    ]
+  },
+  {
+    "question_id": "q_m06_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-06",
+    "difficulty": 2,
+    "question_text": "If f(x) = 2x² + 1, what is f(−3)?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "−17",
+      "B": "−5",
+      "C": "19",
+      "D": "7"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "computes_2_times_negative_9_plus_1_keeping_negative_sign",
+      "B": "treats_quadratic_as_linear_2x_plus_1",
+      "D": "evaluates_at_positive_3_then_uses_wrong_coefficient"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m06_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-06",
+    "difficulty": 4,
+    "question_text": "The function f(x) = x² + 2x − 8. For what values of x is f(x) = 7?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "x = 3 and x = −5",
+      "B": "x = 3 and x = 5",
+      "C": "x = −3 and x = 5",
+      "D": "x = −1 and x = 3"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "finds_x_squared_plus_2x_equals_15_but_uses_wrong_signs_for_factors",
+      "C": "flips_signs_of_both_solutions",
+      "D": "solves_original_equation_f_x_equals_0_instead_of_7"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m07_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-07",
+    "difficulty": 2,
+    "question_text": "Which of the following is equivalent to 4(x + 2) − 3(x − 1)?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "x + 11",
+      "B": "x + 5",
+      "C": "7x + 5",
+      "D": "x − 5"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "subtracts_instead_of_adding_the_1_when_distributing_negative_3",
+      "C": "adds_coefficients_instead_of_combining_like_terms",
+      "D": "applies_wrong_sign_to_both_distribution_terms"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m07_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-07",
+    "difficulty": 4,
+    "question_text": "Which of the following is equivalent to (2x + 3)(x − 4) − (x² − 2)?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "x² − 5x − 10",
+      "B": "x² − 5x − 14",
+      "C": "x² + 5x − 10",
+      "D": "2x² − 5x − 10"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "forgets_to_add_2_when_distributing_the_subtraction",
+      "C": "uses_wrong_sign_for_middle_term_of_FOIL",
+      "D": "forgets_to_subtract_x_squared_term"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m08_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-08",
+    "difficulty": 1,
+    "question_text": "What is the positive solution to (x − 3)² = 25?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "8",
+      "B": "2",
+      "C": "22",
+      "D": "28"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "takes_3_minus_5_ignoring_that_the_positive_root_is_plus_5",
+      "C": "adds_25_to_3_instead_of_taking_square_root",
+      "D": "adds_25_to_3_without_taking_square_root_and_applies_wrong_operation"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m08_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-08",
+    "difficulty": 2,
+    "question_text": "Which of the following is a factor of x² − 9?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "(x − 3)",
+      "B": "(x − 9)",
+      "C": "(x + 9)",
+      "D": "(x² − 3)"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "factors_out_the_constant_instead_of_its_square_root",
+      "C": "uses_wrong_sign_and_wrong_value",
+      "D": "applies_a_non-standard_factoring_form"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m09_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-09",
+    "difficulty": 2,
+    "question_text": "A population of 500 rabbits triples every 2 years. Which expression represents the population after t years?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "500 · 3^(t/2)",
+      "B": "500 · 3^(2t)",
+      "C": "500 · 2^(3t)",
+      "D": "1500^t"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "inverts_the_exponent_fraction_making_growth_far_too_fast",
+      "C": "swaps_the_growth_factor_and_period_values",
+      "D": "combines_initial_value_and_growth_rate_incorrectly_into_base"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m09_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-09",
+    "difficulty": 4,
+    "question_text": "A radioactive substance has a half-life of 5 years. Which function gives the amount remaining after t years if you start with 800 grams?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "A(t) = 800(0.5)^(t/5)",
+      "B": "A(t) = 800(0.5)^(5t)",
+      "C": "A(t) = 800(2)^(t/5)",
+      "D": "A(t) = 800 − 80t"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "inverts_the_exponent_causing_decay_to_be_far_too_rapid",
+      "C": "uses_growth_base_2_instead_of_decay_base_0.5",
+      "D": "models_linear_decay_instead_of_exponential_decay"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m10_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-10",
+    "difficulty": 3,
+    "question_text": "A recipe calls for 2 cups of flour for every 3 cups of sugar. How many cups of sugar are needed if a baker uses 8 cups of flour?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "12",
+      "B": "10",
+      "C": "6",
+      "D": "16"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "adds_2_to_8_then_adds_2_more_rather_than_scaling_the_ratio",
+      "C": "inverts_the_ratio_dividing_8_by_the_flour_amount",
+      "D": "multiplies_8_by_2_instead_of_scaling_by_3_over_2"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m10_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-10",
+    "difficulty": 5,
+    "question_text": "A train travels from City A to City B at 60 mph and returns at 40 mph. What is the average speed for the entire round trip?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "48 mph",
+      "B": "50 mph",
+      "C": "52 mph",
+      "D": "45 mph"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "takes_simple_arithmetic_mean_60_plus_40_divided_by_2_ignoring_time_weighting",
+      "C": "overestimates_by_using_incorrect_weighted_average",
+      "D": "underestimates_by_taking_ratio_of_speeds_incorrectly"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m11_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-11",
+    "difficulty": 3,
+    "question_text": "A store marks up the wholesale price of an item by 40%. If the wholesale price is $60, what is the retail price?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "$24",
+      "B": "$84",
+      "C": "$96",
+      "D": "$100"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "calculates_only_the_markup_amount_not_the_final_price",
+      "C": "multiplies_60_by_1.6_confusing_40%_markup_with_60%",
+      "D": "adds_40_directly_to_60_treating_percent_as_a_dollar_amount"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m11_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-11",
+    "difficulty": 5,
+    "question_text": "A price increased by 20%, and then the new price increased by 25%. What is the overall percentage increase from the original price?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "45%",
+      "B": "48%",
+      "C": "50%",
+      "D": "55%"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "adds_the_two_percentages_directly_ignoring_compounding",
+      "B": "applies_a_partial_compound_calculation_with_arithmetic_error",
+      "D": "overestimates_by_applying_the_second_increase_to_the_wrong_base"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m12_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-12",
+    "difficulty": 2,
+    "question_text": "The ages of 6 people are: 14, 15, 15, 16, 17, 21. What is the median age?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "15",
+      "B": "15.5",
+      "C": "16",
+      "D": "16.3"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "picks_the_3rd_value_instead_of_averaging_the_3rd_and_4th",
+      "C": "picks_the_4th_value_instead_of_averaging_the_middle_two",
+      "D": "calculates_the_mean_rather_than_the_median"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m12_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-12",
+    "difficulty": 4,
+    "question_text": "A data set has a mean of 20 and a standard deviation of 4. A new value of 32 is added to the set. Which of the following must be true?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "The new mean is greater than 20",
+      "B": "The new mean is less than 20",
+      "C": "The standard deviation decreases",
+      "D": "The new mean equals 22"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "reverses_direction_of_change_since_32_is_above_the_mean",
+      "C": "adding_an_outlier_above_the_mean_increases_standard_deviation",
+      "D": "assumes_fixed_number_of_values_and_specific_dataset_not_given"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m13_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-13",
+    "difficulty": 2,
+    "question_text": "A line of best fit passes through the points (0, 3) and (5, 13). What is the slope of this line?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "0.5",
+      "B": "2",
+      "C": "3",
+      "D": "5"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "inverts_the_rise_over_run_calculation",
+      "C": "uses_the_y_intercept_value_as_the_slope",
+      "D": "uses_the_horizontal_distance_as_the_slope_instead_of_the_ratio"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m13_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-13",
+    "difficulty": 4,
+    "question_text": "A line of best fit is y = −3x + 45, where x is years since 2000 and y is average test score. Which interpretation is best?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "For each additional year, the average test score increases by 3 points",
+      "B": "For each additional year, the average test score decreases by 3 points",
+      "C": "The test score starts at −3 and grows by 45 each year",
+      "D": "In 2000, the test score was −3"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "ignores_the_negative_sign_on_the_slope_reversing_the_direction",
+      "C": "swaps_the_roles_of_slope_and_y_intercept",
+      "D": "confuses_the_slope_with_the_y_intercept_value"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m14_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-14",
+    "difficulty": 2,
+    "question_text": "A standard six-sided die is rolled once. What is the probability of rolling an even number?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "1/6",
+      "B": "1/3",
+      "C": "1/2",
+      "D": "2/3"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "probability_of_rolling_one_specific_even_number_not_any_even",
+      "B": "counts_only_two_even_numbers_instead_of_three",
+      "D": "counts_four_numbers_out_of_six_using_an_incorrect_set"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m14_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-14",
+    "difficulty": 4,
+    "question_text": "A box has 4 red cards and 6 blue cards. Two cards are drawn without replacement. What is the probability that both cards are red?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "2/5",
+      "B": "4/25",
+      "C": "1/6",
+      "D": "2/15"
+    },
+    "correct_answer": "D",
+    "distractor_analysis": {
+      "A": "calculates_only_the_probability_of_the_first_card_being_red",
+      "B": "multiplies_as_if_drawing_with_replacement",
+      "C": "arithmetic_error_when_simplifying_the_product_of_fractions"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m15_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-15",
+    "difficulty": 2,
+    "question_text": "A random sample of 100 households finds the average number of cars is 1.8 with a margin of error of 0.2. Which is the best estimate for the true population average?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Exactly 1.8",
+      "B": "Between 1.6 and 2.0",
+      "C": "Between 1.7 and 1.9",
+      "D": "At least 2.0"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "treats_sample_mean_as_exact_population_value_ignoring_margin_of_error",
+      "C": "uses_half_the_margin_of_error_instead_of_the_full_value",
+      "D": "misinterprets_margin_of_error_as_a_lower_bound"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m15_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-15",
+    "difficulty": 4,
+    "question_text": "A researcher wants to estimate the average height of students in a school. Which sampling method produces the most reliable estimate?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Randomly selecting from the school's complete enrollment list",
+      "B": "Asking for student volunteers",
+      "C": "Selecting students from sports teams only",
+      "D": "Surveying the first 50 students to arrive each morning"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "volunteer_samples_are_self_selected_and_likely_biased",
+      "C": "athletes_are_not_representative_of_the_full_student_population",
+      "D": "convenience_sampling_introduces_systematic_bias_toward_early_arrivals"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m16_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-16",
+    "difficulty": 3,
+    "question_text": "A triangular prism has a triangular base with base 6 cm and height 4 cm. The prism has a length of 10 cm. What is the volume?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "60 cm³",
+      "B": "120 cm³",
+      "C": "180 cm³",
+      "D": "240 cm³"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "only_calculates_the_triangular_base_area_without_multiplying_by_length",
+      "C": "multiplies_all_three_dimensions_without_the_one_half_factor",
+      "D": "forgets_to_halve_the_triangular_area_doubling_the_correct_answer"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m16_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-16",
+    "difficulty": 5,
+    "question_text": "A cone has a radius of 4 cm and a height of 9 cm. What is the volume? (Use π ≈ 3.14)",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "100.48 cm³",
+      "B": "150.72 cm³",
+      "C": "200.96 cm³",
+      "D": "452.16 cm³"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "uses_radius_4_instead_of_radius_squared_16_in_the_formula",
+      "C": "divides_by_2_instead_of_3_in_the_cone_volume_formula",
+      "D": "omits_the_one_third_factor_computing_full_cylinder_volume"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m17_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-17",
+    "difficulty": 2,
+    "question_text": "Two lines intersect to form vertical angles. One angle measures 47°. What is the measure of the vertical angle?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "43°",
+      "B": "47°",
+      "C": "94°",
+      "D": "133°"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "subtracts_from_90_confusing_vertical_angles_with_complementary_angles",
+      "C": "doubles_the_angle_instead_of_recognizing_vertical_angles_are_equal",
+      "D": "subtracts_from_180_confusing_vertical_angles_with_supplementary_angles"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m17_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-17",
+    "difficulty": 4,
+    "question_text": "An exterior angle of a triangle measures 110°. The two non-adjacent interior angles are in a ratio of 2:3. What are their measures?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "22° and 33°",
+      "B": "40° and 70°",
+      "C": "44° and 66°",
+      "D": "55° and 55°"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "applies_ratio_to_70_the_third_interior_angle_instead_of_110",
+      "B": "uses_incorrect_ratio_application_summing_to_110_but_wrong_parts",
+      "D": "assumes_the_two_angles_are_equal_ignoring_the_2_to_3_ratio"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m18_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-18",
+    "difficulty": 2,
+    "question_text": "A right triangle has legs of length 5 and 12. What is the length of the hypotenuse?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "13",
+      "B": "17",
+      "C": "60",
+      "D": "√119"
+    },
+    "correct_answer": "A",
+    "distractor_analysis": {
+      "B": "adds_the_legs_directly_instead_of_using_the_Pythagorean_theorem",
+      "C": "multiplies_the_legs_instead_of_squaring_and_adding",
+      "D": "subtracts_the_squares_instead_of_adding_them"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m18_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-18",
+    "difficulty": 4,
+    "question_text": "In a right triangle, sin(θ) = 3/5. What is cos(θ)?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "3/4",
+      "B": "4/5",
+      "C": "5/3",
+      "D": "5/4"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "gives_tan_theta_which_is_opposite_over_adjacent_not_cosine",
+      "C": "inverts_sine_giving_the_cosecant_instead_of_cosine",
+      "D": "inverts_cosine_giving_the_secant_instead_of_cosine"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m19_004",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-19",
+    "difficulty": 2,
+    "question_text": "A circle has a diameter of 10. What is its area? (Use π ≈ 3.14)",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "31.4",
+      "B": "78.5",
+      "C": "157",
+      "D": "314"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "calculates_circumference_pi_times_d_instead_of_area",
+      "C": "multiplies_circumference_by_5_using_an_incorrect_area_method",
+      "D": "uses_diameter_10_as_the_radius_in_the_area_formula"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m19_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-19",
+    "difficulty": 4,
+    "question_text": "A circle has center (2, −3) and passes through the point (6, −3). What is the equation of the circle?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "(x − 2)² + (y + 3)² = 4",
+      "B": "(x − 2)² + (y + 3)² = 16",
+      "C": "(x + 2)² + (y − 3)² = 16",
+      "D": "(x − 2)² + (y + 3)² = 8"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "uses_the_radius_4_instead_of_the_radius_squared_16",
+      "C": "writes_wrong_signs_in_the_standard_form_equation",
+      "D": "halves_the_squared_radius_through_an_arithmetic_error"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_rw01_004",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-01",
+    "difficulty": 3,
+    "question_text": "The following text is from a science article about ocean chemistry.\n\n\"Ocean acidification occurs when the ocean absorbs carbon dioxide from the atmosphere, triggering a chemical reaction that lowers the pH of seawater. Since the Industrial Revolution, ocean pH has dropped from 8.2 to 8.1—a 26% increase in acidity. This change threatens marine ecosystems, particularly organisms with calcium carbonate shells, such as oysters, clams, and corals, which dissolve more readily in acidic water.\"\n\nWhat is the central claim of this passage?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "The ocean has always been slightly acidic",
+      "B": "The Industrial Revolution improved ocean chemistry",
+      "C": "Ocean acidification, driven by CO₂ absorption, threatens shell-forming marine life",
+      "D": "Corals are the most endangered species in the ocean"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "contradicts_the_passage_which_describes_a_change_not_a_constant_state",
+      "B": "directly_contradicted_by_the_passage",
+      "D": "too_narrow_the_passage_discusses_multiple_organisms_not_only_corals"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage"
+    ]
+  },
+  {
+    "question_id": "q_rw01_005",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-01",
+    "difficulty": 5,
+    "question_text": "The following text is from a public health article.\n\n\"The discovery of antibiotics transformed modern medicine, saving countless lives from once-fatal infections. However, their widespread and often unnecessary use has accelerated the evolution of drug-resistant bacteria. Hospitals now report infections that do not respond to any known antibiotic. While antibiotics remain lifesaving when used appropriately, public health officials warn that without significant changes in prescription practices, the world may face a post-antibiotic era in which routine infections once again become deadly.\"\n\nWhich of the following best states the main idea of the passage?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Antibiotics were an important discovery that transformed medicine",
+      "B": "Hospitals are failing to protect patients from bacterial infections",
+      "C": "The overuse of antibiotics has created drug-resistant bacteria that threaten to undo their lifesaving benefits",
+      "D": "Bacteria evolve faster than scientists can study them"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "captures_only_the_opening_sentence_ignoring_the_central_tension_of_the_passage",
+      "B": "misrepresents_a_supporting_detail_as_the_main_idea",
+      "D": "not_stated_or_implied_by_the_passage"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage"
+    ]
+  },
+  {
+    "question_id": "q_rw02_004",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-02",
+    "difficulty": 2,
+    "question_text": "The following text is from an article about monarch butterflies.\n\n\"Monarch butterflies migrate thousands of miles each year between their summer habitat in North America and their winter habitat in Mexico. This journey is one of the most remarkable in the animal kingdom. However, monarch populations have declined by over 80% in the past 20 years due to habitat loss, pesticide use, and climate change.\"\n\nA student claims that monarch butterfly populations have fallen sharply in recent decades. Which detail from the passage most directly supports this claim?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Monarch butterflies migrate thousands of miles each year",
+      "B": "Their journey is one of the most remarkable in the animal kingdom",
+      "C": "Monarch populations have declined by over 80% in the past 20 years",
+      "D": "Monarchs spend winters in Mexico"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "supports_the_migration_claim_not_the_population_decline_claim",
+      "B": "describes_the_impressiveness_of_migration_unrelated_to_population_decline",
+      "D": "describes_the_destination_of_migration_not_population_trends"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage",
+      "evidence"
+    ]
+  },
+  {
+    "question_id": "q_rw02_005",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-02",
+    "difficulty": 4,
+    "question_text": "The following text is from a history article about electricity.\n\n\"In the late 19th century, Thomas Edison and Nikola Tesla clashed in the so-called War of Currents. Edison championed direct current (DC), while Tesla and George Westinghouse promoted alternating current (AC). Edison mounted a public campaign against AC, staging demonstrations in which he electrocuted animals to show its dangers. Despite these efforts, AC ultimately became the global standard for electrical power transmission because it could travel far greater distances with less energy loss.\"\n\nThe author implies that Edison's campaign against AC was ultimately unsuccessful. Which detail most directly supports this interpretation?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Edison and Tesla were rivals in the late 19th century",
+      "B": "Edison staged demonstrations in which he electrocuted animals",
+      "C": "AC became the global standard for electrical power transmission",
+      "D": "Tesla was backed by George Westinghouse"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "establishes_the_context_of_rivalry_but_does_not_indicate_the_outcome",
+      "B": "describes_the_campaign_itself_not_its_failure",
+      "D": "describes_Teslas_support_not_the_outcome_of_the_competition"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage",
+      "evidence"
+    ]
+  },
+  {
+    "question_id": "q_rw03_004",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-03",
+    "difficulty": 2,
+    "question_text": "The table below shows population data for four cities.\n\nCity        | Pop. 2020 | Pop. 2023\nSpringfield |  45,000   |  47,700\nRiverside   |  82,000   |  78,000\nLakewood    |  31,000   |  33,200\nHillside    |  58,000   |  61,400\n\nBased on the table, which city experienced a population decrease between 2020 and 2023?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Springfield",
+      "B": "Riverside",
+      "C": "Lakewood",
+      "D": "Hillside"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "Springfield_grew_from_45000_to_47700",
+      "C": "Lakewood_grew_from_31000_to_33200",
+      "D": "Hillside_grew_from_58000_to_61400"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "table",
+      "data_interpretation"
+    ]
+  },
+  {
+    "question_id": "q_rw03_005",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-03",
+    "difficulty": 4,
+    "question_text": "The table below shows weekly study hours and average test scores for students in a survey.\n\nStudy Hours/Week | Avg Score | Sample Size\n0–2              |    62     |     45\n3–5              |    71     |     88\n6–8              |    79     |    102\n9–11             |    83     |     64\n12+              |    84     |     29\n\nA researcher concludes that studying more than 11 hours per week produces substantially higher scores than studying 6–8 hours. Which consideration most weakens this conclusion?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Students studying 0–2 hours scored lowest",
+      "B": "The sample size for the 12+ hours group is far smaller than for other groups",
+      "C": "The highest average score belongs to students studying 12+ hours",
+      "D": "Average scores increase steadily from 0–2 hours through 9–11 hours"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "irrelevant_to_comparing_the_6_8_and_12_plus_hour_groups",
+      "C": "this_supports_rather_than_weakens_the_researchers_conclusion",
+      "D": "describes_a_general_trend_that_supports_not_weakens_the_claim"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "table",
+      "data_interpretation"
+    ]
+  },
+  {
+    "question_id": "q_rw04_004",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-04",
+    "difficulty": 2,
+    "question_text": "The following text is from a short story.\n\n\"Maria arrived at the library just as the last patron was leaving. The librarian was turning off the lights and sliding the deadbolt into place. Maria looked down at the heavy bag of books in her hand.\"\n\nWhat can most reasonably be inferred about Maria's situation?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Maria works at the library and is arriving for her shift",
+      "B": "Maria arrived too late and the library is already closing",
+      "C": "Maria plans to donate the books she is carrying",
+      "D": "The library is only open during daytime hours"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "contradicted_by_the_librarian_closing_up_and_no_mention_of_Maria_working_there",
+      "C": "possible_but_unsupported_no_detail_about_donation",
+      "D": "cannot_be_inferred_from_this_single_scene"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage",
+      "literary"
+    ]
+  },
+  {
+    "question_id": "q_rw04_005",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-04",
+    "difficulty": 4,
+    "question_text": "The following text is from a short story.\n\n\"For three years Dimitri had shown up to every practice, memorized every play, and stayed late whenever the coaches asked. He had never missed a game day. This season, he found his name on the starting lineup for the first time. He stared at the card for a long moment before folding it carefully and placing it in his jacket pocket.\"\n\nWhat can most reasonably be inferred about Dimitri's reaction to seeing his name on the lineup?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Dimitri is disappointed that he was not named team captain",
+      "B": "The result feels meaningful to Dimitri given his years of dedication",
+      "C": "Dimitri intends to quit the team now that he has achieved his goal",
+      "D": "Dimitri is surprised the coaches remembered his name"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "not_supported_there_is_no_mention_of_team_captain_or_disappointment",
+      "C": "not_supported_and_contradicted_by_the_careful_way_he_preserves_the_card",
+      "D": "the_passage_emphasizes_his_consistent_effort_making_recognition_expected"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage",
+      "literary"
+    ]
+  },
+  {
+    "question_id": "q_rw05_004",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-05",
+    "difficulty": 2,
+    "question_text": "The following sentence is from a history essay.\n\n\"The historian's account of the events was remarkably candid, revealing uncomfortable truths that official reports had long obscured.\"\n\nAs used in this sentence, the word candid most nearly means:",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Informal and casual",
+      "B": "Frank and honest",
+      "C": "Thorough and well-researched",
+      "D": "Sympathetic to the subjects"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "confuses_candid_with_conversational_tone_a_different_meaning",
+      "C": "thoroughness_is_implied_by_context_but_is_not_what_candid_means",
+      "D": "sympathy_is_unrelated_candid_refers_to_honesty_not_attitude_toward_subjects"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "words_in_context"
+    ]
+  },
+  {
+    "question_id": "q_rw05_005",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-05",
+    "difficulty": 4,
+    "question_text": "The following sentence is from a policy report.\n\n\"The committee's findings were provisional, subject to revision as new evidence came to light.\"\n\nAs used in this sentence, the word provisional most nearly means:",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Authoritative and final",
+      "B": "Widely publicized",
+      "C": "Temporary and conditional",
+      "D": "Controversial and disputed"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "opposite_of_provisional_which_implies_the_findings_may_change",
+      "B": "unrelated_provisional_says_nothing_about_how_widely_the_findings_were_shared",
+      "D": "too_strong_provisional_implies_openness_to_change_not_active_controversy"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "words_in_context"
+    ]
+  },
+  {
+    "question_id": "q_rw06_004",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-06",
+    "difficulty": 2,
+    "question_text": "The following text is from a nutritional science article.\n\n\"Breakfast has long been promoted as the most important meal of the day. Studies show that children who eat breakfast perform better academically, have improved concentration, and are less likely to be overweight. Despite this, many students skip breakfast due to time constraints or lack of appetite in the morning.\"\n\nThe author mentions studies about children primarily in order to:",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Argue that schools should provide free breakfast to all students",
+      "B": "Provide evidence that eating breakfast has measurable benefits",
+      "C": "Explain why so many students skip breakfast each morning",
+      "D": "Describe the general causes of poor academic performance"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "the_passage_does_not_advocate_for_school_meal_programs",
+      "C": "the_reasons_for_skipping_breakfast_appear_in_the_final_sentence_not_in_the_studies",
+      "D": "too_broad_the_studies_focus_specifically_on_breakfast_not_all_causes_of_poor_performance"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage",
+      "structure",
+      "purpose"
+    ]
+  },
+  {
+    "question_id": "q_rw06_005",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-06",
+    "difficulty": 4,
+    "question_text": "The following passage is from an opinion article about space exploration.\n\n\"Critics of NASA's budget argue that billions spent on space exploration would be better used addressing poverty, healthcare, and climate change. These are legitimate concerns, and no reasonable person would dismiss them. Yet history shows that space exploration has driven innovations—GPS, water purification, medical imaging—that directly benefit life on Earth. The question is not whether we should invest in people, but how best to do so.\"\n\nThe author's acknowledgment that critics' concerns are 'legitimate' serves primarily to:",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Signal that the author agrees space exploration funding should be cut",
+      "B": "Show that the author has not fully considered the opposing position",
+      "C": "Concede the opposing view in order to argue the author's own position more credibly",
+      "D": "Provide a transition into a discussion of NASA's history"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "contradicted_by_the_rest_of_the_passage_which_defends_space_spending",
+      "B": "the_opposite_is_true_acknowledging_the_opposing_view_demonstrates_awareness_of_it",
+      "D": "the_passage_moves_to_a_counterargument_about_innovation_not_into_NASAs_history"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "short_passage",
+      "structure",
+      "purpose",
+      "rhetoric"
+    ]
+  },
+  {
+    "question_id": "q_rw07_004",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-07",
+    "difficulty": 2,
+    "question_text": "Read the following two passages.\n\nPassage 1: \"Regular physical activity reduces the risk of heart disease, improves mood, and extends lifespan. Health experts recommend at least 150 minutes of moderate exercise per week.\"\n\nPassage 2: \"Despite widespread awareness of exercise's benefits, surveys show that over 60% of Americans do not meet recommended physical activity guidelines.\"\n\nHow do the two passages most directly relate to each other?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Passage 1 recommends more exercise than Passage 2 considers realistic",
+      "B": "Both passages argue that exercise guidelines are too strict for most people",
+      "C": "Passage 1 establishes the benefits and guidelines for exercise while Passage 2 notes that most people fall short of those guidelines",
+      "D": "Passage 2 explains the specific reasons why Americans avoid exercise"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "passage_2_does_not_challenge_the_guidelines_only_notes_that_they_are_not_met",
+      "B": "neither_passage_argues_the_guidelines_are_too_strict",
+      "D": "passage_2_states_the_statistic_but_does_not_explain_the_specific_reasons"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "dual_passage"
+    ]
+  },
+  {
+    "question_id": "q_rw07_005",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-07",
+    "difficulty": 4,
+    "question_text": "Read the following two passages.\n\nPassage 1: \"Zoos play a vital conservation role, housing endangered species in safe environments and funding breeding programs that have brought animals such as the California condor and Arabian oryx back from the brink of extinction.\"\n\nPassage 2: \"However well-intentioned, zoos cannot replicate the complex ecosystems animals need to thrive. Animals in captivity often exhibit signs of psychological distress. True conservation requires protecting natural habitats, not substituting for them.\"\n\nA student claims that both passages agree conservation of endangered species is important. Which response best evaluates this claim?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "The claim is inaccurate — the passages disagree about whether endangered species are worth protecting",
+      "B": "The claim is accurate — both passages express concern for endangered species, though they disagree on the best method of conservation",
+      "C": "The claim is inaccurate — Passage 2 argues that no form of conservation is effective",
+      "D": "The claim is accurate — both passages endorse zoo-based breeding programs"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "both_passages_care_about_species_survival_they_only_differ_on_method",
+      "C": "passage_2_advocates_for_habitat_protection_as_the_preferred_conservation_method",
+      "D": "passage_2_explicitly_rejects_zoo_based_conservation_as_a_true_solution"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "dual_passage"
+    ]
+  },
+  {
+    "question_id": "q_rw08_004",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-08",
+    "difficulty": 2,
+    "question_text": "A student is writing a paragraph about electric vehicles and wants to introduce the topic with a sentence combining their environmental benefit and their rising market share.\n\nNotes:\n• Electric vehicles (EVs) produce zero direct emissions\n• EVs accounted for 14% of all new car sales globally in 2023\n• Charging infrastructure has expanded to over 1 million public charging points worldwide\n• Battery improvements have extended driving range to over 300 miles\n\nWhich choice most effectively combines the environmental benefit of EVs with their rising market share?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Electric vehicles produce zero direct emissions, and charging infrastructure has expanded rapidly worldwide.",
+      "B": "As battery technology improves, electric vehicles can now travel more than 300 miles on a single charge.",
+      "C": "Electric vehicles, which produce zero direct emissions, now account for 14% of all new car sales globally.",
+      "D": "Over 1 million public charging stations now support the growing number of electric vehicle owners."
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "combines_the_environmental_benefit_with_infrastructure_not_market_share",
+      "B": "discusses_range_improvements_but_mentions_neither_emissions_nor_market_share",
+      "D": "focuses_only_on_charging_infrastructure_not_environmental_benefits_or_sales_figures"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "rhetorical_synthesis",
+      "notes_based"
+    ]
+  },
+  {
+    "question_id": "q_rw08_005",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-08",
+    "difficulty": 4,
+    "question_text": "A student wants to write a sentence that acknowledges the benefits of remote work while emphasizing its social drawbacks.\n\nNotes:\n• Remote workers report higher job satisfaction and better work-life balance\n• Remote work eliminates commuting, saving workers an average of 54 minutes per day\n• Studies show remote workers experience more difficulty collaborating and feel more socially isolated\n• Companies with remote workforces report lower overhead costs\n\nWhich sentence best acknowledges the benefits of remote work while emphasizing its social drawbacks?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Remote work saves workers an average of 54 minutes per day by eliminating the daily commute.",
+      "B": "Companies benefit from lower overhead costs and improved employee satisfaction when staff work remotely.",
+      "C": "Though remote work improves job satisfaction and eliminates commuting, studies show it can lead to social isolation and collaboration difficulties.",
+      "D": "Remote work offers both higher job satisfaction and significant savings for companies."
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "mentions_only_a_benefit_with_no_acknowledgment_of_social_drawbacks",
+      "B": "presents_only_benefits_from_the_company_perspective_with_no_mention_of_drawbacks",
+      "D": "lists_two_benefits_without_any_reference_to_the_social_or_collaborative_challenges"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "rhetorical_synthesis",
+      "notes_based"
+    ]
+  },
+  {
+    "question_id": "q_rw09_004",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-09",
+    "difficulty": 3,
+    "question_text": "Which choice most logically completes the sentence?\n\nThe company required all employees to complete three hours of safety training each month. ______, workplace accidents decreased by 40% in the first year.",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Nevertheless,",
+      "B": "For instance,",
+      "C": "Consequently,",
+      "D": "By contrast,"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "implies_a_contrast_or_obstacle_but_the_second_sentence_is_a_positive_result_not_a_contradiction",
+      "B": "implies_the_second_sentence_is_an_example_of_the_first_but_it_is_a_result_not_an_example",
+      "D": "signals_a_comparison_with_something_different_but_no_contrasting_subject_is_present"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "transitions"
+    ]
+  },
+  {
+    "question_id": "q_rw09_005",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-09",
+    "difficulty": 5,
+    "question_text": "Which choice most logically completes the sentence?\n\n______ this approach initially slowed revenue growth, it positioned the startup to release breakthrough products five years later.",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "Because",
+      "B": "Although",
+      "C": "Therefore",
+      "D": "Similarly"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "because_introduces_a_cause_but_the_clause_is_a_concession_not_a_cause_of_the_later_success",
+      "C": "therefore_signals_a_result_but_the_second_clause_is_not_a_result_of_slowing_revenue",
+      "D": "similarly_implies_a_parallel_comparison_but_no_prior_comparison_has_been_established"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "transitions"
+    ]
+  },
+  {
+    "question_id": "q_rw10_004",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-10",
+    "difficulty": 3,
+    "question_text": "Which of the following is punctuated correctly?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "The professor assigned three essays; and two presentations for the semester.",
+      "B": "The professor assigned three essays, and, two presentations for the semester.",
+      "C": "The professor assigned three essays: and two presentations for the semester.",
+      "D": "The professor assigned three essays and two presentations for the semester."
+    },
+    "correct_answer": "D",
+    "distractor_analysis": {
+      "A": "a_semicolon_cannot_precede_a_coordinating_conjunction_joining_two_nouns_in_a_list",
+      "B": "commas_around_and_are_not_used_when_joining_two_simple_nouns_in_a_list",
+      "C": "a_colon_cannot_introduce_a_continuation_of_the_same_list_element_with_a_conjunction"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "punctuation",
+      "boundaries"
+    ]
+  },
+  {
+    "question_id": "q_rw10_005",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-10",
+    "difficulty": 5,
+    "question_text": "Which of the following is punctuated correctly?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "The author, who had spent decades researching the topic released her definitive book last spring.",
+      "B": "The author who had spent decades researching the topic, released her definitive book last spring.",
+      "C": "The author, who had spent decades researching the topic, released her definitive book last spring.",
+      "D": "The author who had spent decades researching the topic released her definitive book, last spring."
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "missing_the_closing_comma_after_the_nonrestrictive_relative_clause",
+      "B": "missing_the_opening_comma_and_incorrectly_places_a_comma_after_the_clause",
+      "D": "omits_both_required_commas_around_the_nonrestrictive_clause_and_adds_an_incorrect_comma_before_last_spring"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "punctuation",
+      "boundaries",
+      "relative_clause"
+    ]
+  },
+  {
+    "question_id": "q_rw11_004",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-11",
+    "difficulty": 2,
+    "question_text": "Which choice correctly completes the sentence?\n\nLast year, the team ______ every home game and finished with the best record in the league.",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "wins",
+      "B": "won",
+      "C": "will win",
+      "D": "is winning"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "present_tense_inconsistent_with_the_past_time_marker_last_year",
+      "C": "future_tense_contradicts_the_past_time_marker_last_year",
+      "D": "present_progressive_inconsistent_with_the_past_time_marker_and_the_past_tense_finished"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "verb_tense",
+      "consistency"
+    ]
+  },
+  {
+    "question_id": "q_rw11_005",
+    "source": "seed_data",
+    "section": "reading_writing",
+    "sub_skill_id": "RW-11",
+    "difficulty": 4,
+    "question_text": "Which choice correctly completes the sentence?\n\nNeither the director nor the producers ______ satisfied with the final cut of the film.",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "was",
+      "B": "were",
+      "C": "has been",
+      "D": "is"
+    },
+    "correct_answer": "B",
+    "distractor_analysis": {
+      "A": "with_neither_nor_the_verb_agrees_with_the_nearer_subject_producers_which_is_plural",
+      "C": "present_perfect_is_inconsistent_with_the_implied_past_context_and_subject_is_plural",
+      "D": "present_tense_singular_does_not_agree_with_the_plural_nearer_subject_producers"
+    },
+    "is_ai_generated": false,
+    "tags": [
+      "subject_verb_agreement",
+      "correlative_conjunctions"
+    ]
+  },
+  {
+    "question_id": "q_m02_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-02",
+    "difficulty": 4,
+    "question_text": "A line passes through the point (1, 7) and is perpendicular to the line y = (1/3)x + 2. What is the equation of this line?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "y = (1/3)x + 20/3",
+      "B": "y = 3x + 4",
+      "C": "y = −3x + 4",
+      "D": "y = −3x + 10"
+    },
+    "correct_answer": "D",
+    "distractor_analysis": {
+      "A": "uses_the_original_slope_giving_a_parallel_line_instead_of_a_perpendicular_one",
+      "B": "takes_the_reciprocal_but_not_the_negative_giving_the_wrong_sign",
+      "C": "uses_the_correct_slope_but_applies_the_original_y_intercept_ignoring_the_given_point"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m03_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-03",
+    "difficulty": 4,
+    "question_text": "A linear function h satisfies h(2) = 5 and h(6) = 13. What is the value of h(10)?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "17",
+      "B": "19",
+      "C": "21",
+      "D": "25"
+    },
+    "correct_answer": "C",
+    "distractor_analysis": {
+      "A": "uses_an_increment_of_4_instead_of_correctly_computing_the_slope",
+      "B": "uses_an_increment_of_6_based_on_an_arithmetic_error_in_the_slope",
+      "D": "adds_12_per_interval_doubling_the_correct_increment_of_8"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  },
+  {
+    "question_id": "q_m05_005",
+    "source": "seed_data",
+    "section": "math",
+    "sub_skill_id": "M-05",
+    "difficulty": 4,
+    "question_text": "Which of the following is equivalent to −3x + 6 ≥ 12?",
+    "passage_id": null,
+    "answer_choices": {
+      "A": "x ≥ 2",
+      "B": "x ≥ −2",
+      "C": "x ≤ 2",
+      "D": "x ≤ −2"
+    },
+    "correct_answer": "D",
+    "distractor_analysis": {
+      "A": "ignores_the_negative_coefficient_and_does_not_flip_the_inequality_sign",
+      "B": "correctly_solves_for_x_equals_negative_2_but_does_not_flip_the_inequality",
+      "C": "flips_the_inequality_correctly_but_uses_the_wrong_value_of_x"
+    },
+    "is_ai_generated": false,
+    "tags": []
+  }
+]
