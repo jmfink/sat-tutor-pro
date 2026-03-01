@@ -52,7 +52,7 @@ const SESSION_CARDS: SessionCard[] = [
     type: 'study_session',
     icon: <BookOpen className="h-6 w-6 text-blue-600" />,
     title: 'Study Session',
-    description: 'Mixed adaptive questions across multiple skills. AI adjusts difficulty based on your performance.',
+    description: 'Interleaved Math and R&W questions — mixing subjects builds the mental flexibility the real SAT requires. AI adjusts difficulty based on your performance.',
     duration: '25–45 min',
     questionCount: 'Adaptive',
     color: 'border-blue-200 hover:border-blue-400',
