@@ -95,12 +95,13 @@ export async function GET(req: NextRequest) {
     sessionDurationMinutes: sessionMinutes,
   });
 
-  // Fetch candidate questions from DB (exclude formatting-issues questions)
+  // Fetch candidate questions from DB (exclude formatting-issues and figure-only questions)
   let questionsQuery = supabase
     .from('questions')
     .select('*')
     .eq('sub_skill_id', targetSkill)
-    .not('tags', 'cs', '{formatting_issues}');
+    .not('tags', 'cs', '{formatting_issues}')
+    .not('tags', 'cs', '{has_figure}');
 
   if (effectiveExcludeIds.length > 0) {
     questionsQuery = questionsQuery.not('question_id', 'in', `(${effectiveExcludeIds.join(',')})`);
@@ -119,8 +120,9 @@ export async function GET(req: NextRequest) {
 
   if (!selectedQuestion) {
     let fallbackQuery = supabase.from('questions').select('*');
-    // Exclude questions with known formatting corruption
+    // Exclude questions with known formatting corruption or figure-only content
     fallbackQuery = fallbackQuery.not('tags', 'cs', '{formatting_issues}') as typeof fallbackQuery;
+    fallbackQuery = fallbackQuery.not('tags', 'cs', '{has_figure}') as typeof fallbackQuery;
 
     if (subSkillId) {
       // Explicit skill focus (Quick Drill): stay within the skill, recycle seen questions

@@ -41,6 +41,48 @@ A) …
 
 The raw text may contain markers like `--- Page 20 ---`. These are extraction artifacts. **Ignore them entirely** — they are not part of any passage or question.
 
+## Answer choice preservation — CRITICAL
+
+Answer choices in SAT math questions frequently contain algebraic expressions, fractions, exponents, and negative signs. You MUST reproduce these **exactly** as they appear — character for character, including all parentheses, minus signs, fraction bars, and coefficients.
+
+**Rules for answer choices:**
+- **Never reformat or simplify**: Copy the expression exactly as it appears. If the PDF shows `(19c + 4)/(7)`, write exactly `(19c + 4)/(7)` — do NOT rewrite as `19c/7 + 4/7` or any other form.
+- **Preserve all parentheses**: If the original has parentheses, keep them. Do not remove, add, or shift parentheses.
+- **Preserve minus/negative signs**: A leading `−` (minus) is part of the expression. `−3x` is not the same as `3x`. Never drop a negative sign.
+- **Preserve fraction structure**: If the answer is a fraction `a/b`, write it as `a/b`. Do not convert to a decimal or rearrange the numerator/denominator.
+- **No LaTeX**: Write fractions as `a/b` not `\frac{a}{b}`. Write exponents as `x^2` (or plaintext like `x squared`) not `x²` or `\^2`.
+- **Each choice is independent**: A, B, C, D are separate entries in the `answer_choices` object. Never merge or split choices.
+
+**Bad example** (do NOT do this):
+```
+"A": "(19c)/(4+7)"   ← WRONG: parentheses inserted incorrectly, expression split wrong
+"A": "19c + 105"     ← WRONG: expression oversimplified
+```
+**Good example:**
+```
+"A": "(19c + 4)/7"   ← correct if that is exactly what appears in the PDF
+```
+
+## Table value preservation — CRITICAL
+
+When extracting values from tables (e.g., a table of f(x) values):
+- **Preserve all signs**: If a cell contains `−19/5`, write `−19/5`. Never drop the negative sign.
+- **Preserve fractions exactly**: `−19/5` stays `−19/5`. Do not convert to `−3.8` or `3.8` or `19/5`.
+- **Reproduce the table structure**: Use a markdown table with pipe characters (`|`) so the table renders correctly. Every row must include all columns.
+
+**Bad example:**
+```
+f(x): 3, 19/5, −2   ← WRONG: sign dropped from −19/5
+```
+**Good example:**
+```
+| x | f(x) |
+|---|------|
+| 1 | 3 |
+| 2 | −19/5 |
+| 3 | −2 |
+```
+
 ## Rules
 
 - Include EVERY question found in the text, in order.

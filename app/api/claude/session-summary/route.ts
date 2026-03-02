@@ -49,8 +49,22 @@ export async function POST(req: NextRequest) {
       skill_ratings: {} as StudentContextProfile['skill_ratings'],
     };
 
+    // Format started_at as a local date string so Claude references the
+    // correct local date rather than a raw UTC timestamp.
+    const sessionForClaude = {
+      ...session,
+      started_at: new Date(session.started_at).toLocaleString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+    };
+
     const summary = await generateSessionSummary({
-      session,
+      session: sessionForClaude,
       attempts: attempts || [],
       studentProfile: studentProfile as StudentContextProfile,
     });

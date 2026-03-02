@@ -88,6 +88,15 @@ export async function POST(req: NextRequest) {
         }
 
         const qid = `q_${source.replace(/\s+/g, '_')}_${Date.now()}_${Math.random().toString(36).slice(2, 5)}`;
+        // Build tags: start from any tags set by the classify step, then add
+        // has_figure if the pdf-parser flagged this question as referencing a
+        // visual element that cannot be displayed.
+        const baseTags = (q.tags as string[]) || [];
+        const hasFigure = q.has_figure === true || q.has_figure === 'true';
+        const tags = hasFigure && !baseTags.includes('has_figure')
+          ? [...baseTags, 'has_figure']
+          : baseTags;
+
         const { error } = await supabase.from('questions').insert({
           question_id: qid,
           source,
@@ -100,7 +109,7 @@ export async function POST(req: NextRequest) {
           correct_answer: q.correct_answer,
           distractor_analysis: (q.distractor_analysis as Record<string, string>) || null,
           is_ai_generated: false,
-          tags: (q.tags as string[]) || [],
+          tags,
         });
 
         if (error) {
