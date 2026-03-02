@@ -366,40 +366,58 @@ export default function ActiveStudySessionPage() {
 
         {/* Stats */}
         <div className="flex items-center gap-4 shrink-0">
-          <div className="flex items-center gap-1.5 text-sm">
-            <Clock className="h-4 w-4 text-slate-400" />
-            <span className="font-mono text-slate-600 font-medium">
+          {/* Timer */}
+          <div className="flex items-center gap-1.5">
+            <Clock className="h-3.5 w-3.5 text-slate-400" />
+            <span className="font-mono text-sm text-slate-600 font-medium tabular-nums">
               {formatElapsed(elapsedSeconds)}
             </span>
           </div>
-          <div className="flex items-center gap-1.5 text-sm">
-            <CheckCircle2 className="h-4 w-4 text-green-500" />
-            <span className="text-slate-700 font-medium">{correctCount}</span>
-            <span className="text-slate-400">/</span>
-            <span className="text-slate-700 font-medium">{questionCount}</span>
-          </div>
+
+          <div className="w-px h-4 bg-slate-200" />
+
+          {/* Quick Drill: "Question N of 10" + slim progress bar */}
           {session?.session_type === 'quick_drill' && (
-            <div className="w-20">
-              <div className="flex justify-between text-xs text-slate-500 mb-0.5">
-                <span>Progress</span>
-                <span>{Math.min(questionCount, QUICK_DRILL_LIMIT)}/{QUICK_DRILL_LIMIT}</span>
+            <>
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs text-slate-500">Question</span>
+                <span className="text-sm font-bold text-slate-800 tabular-nums">
+                  {Math.min(questionCount + (isAnswered ? 0 : 1), QUICK_DRILL_LIMIT)}
+                </span>
+                <span className="text-xs text-slate-400">of {QUICK_DRILL_LIMIT}</span>
+                <Progress
+                  value={(Math.min(questionCount, QUICK_DRILL_LIMIT) / QUICK_DRILL_LIMIT) * 100}
+                  className="w-14 h-1.5"
+                />
               </div>
-              <Progress
-                value={(Math.min(questionCount, QUICK_DRILL_LIMIT) / QUICK_DRILL_LIMIT) * 100}
-                className="h-1.5"
-              />
-            </div>
+
+              <div className="w-px h-4 bg-slate-200" />
+
+              {/* Accuracy as a plain count — no slash */}
+              {questionCount > 0 && (
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-green-500" />
+                  <span className="text-sm font-semibold text-slate-700">
+                    {correctCount} correct
+                  </span>
+                </div>
+              )}
+            </>
           )}
+
+          {/* Study Session: percentage + accuracy bar */}
           {questionCount > 0 && session?.session_type !== 'quick_drill' && (
-            <div className="w-20">
-              <div className="flex justify-between text-xs text-slate-500 mb-0.5">
-                <span>Accuracy</span>
-                <span>{accuracy}%</span>
-              </div>
-              <Progress
-                value={accuracy}
-                className="h-1.5"
-              />
+            <div className="flex items-center gap-1.5">
+              <CheckCircle2 className="h-3.5 w-3.5 text-green-500" />
+              <span className={`text-sm font-bold tabular-nums ${
+                accuracy >= 80 ? 'text-green-600'
+                : accuracy >= 60 ? 'text-yellow-600'
+                : 'text-red-600'
+              }`}>
+                {accuracy}%
+              </span>
+              <span className="text-xs text-slate-400">accuracy</span>
+              <Progress value={accuracy} className="w-14 h-1.5" />
             </div>
           )}
         </div>
