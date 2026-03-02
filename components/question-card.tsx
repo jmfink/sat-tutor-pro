@@ -12,6 +12,88 @@ import type { ConfidenceLevel } from '@/types';
 import { getDifficultyLabel, getDifficultyColor } from '@/lib/constants';
 import { gridInAnswersMatch } from '@/lib/utils';
 
+/**
+ * Render a string that may contain pipe-delimited table blocks.
+ * Two or more consecutive lines containing '|' are parsed as a table;
+ * single-line occurrences (e.g. |x − 5| = 10) are left as plain text.
+ */
+function renderTextWithTables(text: string): React.ReactNode {
+  const lines = text.split('\n');
+  const result: React.ReactNode[] = [];
+  let i = 0;
+  let textLines: string[] = [];
+
+  const pushText = () => {
+    if (textLines.length === 0) return;
+    result.push(
+      <span key={result.length} className="whitespace-pre-wrap">
+        {textLines.join('\n')}
+      </span>
+    );
+    textLines = [];
+  };
+
+  while (i < lines.length) {
+    if (lines[i].includes('|')) {
+      // Look ahead to count consecutive pipe-containing lines
+      let j = i + 1;
+      while (j < lines.length && lines[j].includes('|')) j++;
+      if (j - i >= 2) {
+        // Table block detected
+        pushText();
+        const tableLines = lines.slice(i, j);
+        const rows = tableLines.map(line => line.split('|').map(c => c.trim()));
+        // Filter markdown separator rows (cells are only dashes/colons)
+        const dataRows = rows.filter(row => {
+          const nonEmpty = row.filter(c => c.length > 0);
+          return nonEmpty.length > 0 && !nonEmpty.every(c => /^[-:]+$/.test(c));
+        });
+        if (dataRows.length > 0) {
+          const [header, ...body] = dataRows;
+          result.push(
+            <div key={result.length} className="overflow-x-auto my-3">
+              <table className="border-collapse text-sm w-auto">
+                <thead>
+                  <tr>
+                    {header.map((cell, ci) => (
+                      <th
+                        key={ci}
+                        className="border border-slate-300 bg-slate-100 px-3 py-1.5 text-left font-semibold text-slate-700"
+                      >
+                        {cell}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                {body.length > 0 && (
+                  <tbody>
+                    {body.map((row, ri) => (
+                      <tr key={ri} className={ri % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
+                        {row.map((cell, ci) => (
+                          <td key={ci} className="border border-slate-300 px-3 py-1.5 text-slate-700">
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                )}
+              </table>
+            </div>
+          );
+        }
+        i = j;
+        continue;
+      }
+    }
+    textLines.push(lines[i]);
+    i++;
+  }
+  pushText();
+
+  return <>{result}</>;
+}
+
 interface QuestionCardProps {
   question: Question;
   passage: Passage | null;
@@ -160,9 +242,9 @@ export function QuestionCard({
                 </span>
               </div>
               <ScrollArea className="flex-1 px-5 py-4">
-                <p className="text-sm leading-relaxed text-slate-700 passage-text whitespace-pre-wrap">
-                  {passage.passage_text}
-                </p>
+                <div className="text-sm leading-relaxed text-slate-700 passage-text">
+                  {renderTextWithTables(passage.passage_text)}
+                </div>
               </ScrollArea>
             </div>
             <Separator orientation="vertical" />
@@ -174,9 +256,9 @@ export function QuestionCard({
           <ScrollArea className="flex-1 px-5 py-4">
             <div className="space-y-5">
               {/* Question text */}
-              <p className="text-base leading-relaxed text-slate-800 font-medium">
-                {question.question_text}
-              </p>
+              <div className="text-base leading-relaxed text-slate-800 font-medium">
+                {renderTextWithTables(question.question_text)}
+              </div>
 
               {/* Answer choices / grid-in input */}
               {isGridIn ? (
