@@ -17,6 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import type { ReviewQueueItem, Question, Passage } from '@/types';
 import { SUB_SKILL_MAP , DEMO_STUDENT_ID } from '@/lib/constants';
+import { toLocalDateKey } from '@/lib/utils';
 
 
 type ReviewMode = 'list' | 'active' | 'done';
@@ -154,6 +155,7 @@ export default function ReviewQueuePage() {
           question_id: item.question_id,
           is_correct: correct,
           time_spent_seconds: timeSpent,
+          local_date: toLocalDateKey(),
         }),
       });
     } catch {

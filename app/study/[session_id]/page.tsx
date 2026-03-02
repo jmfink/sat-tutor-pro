@@ -32,7 +32,7 @@ import type {
   SubSkillId,
 } from '@/types';
 import { SUB_SKILL_MAP, DEMO_STUDENT_ID, formatElapsed } from '@/lib/constants';
-import { gridInAnswersMatch } from '@/lib/utils';
+import { gridInAnswersMatch, toLocalDateKey } from '@/lib/utils';
 import { toast } from 'sonner';
 
 const DUMMY_PROFILE: StudentContextProfile = {
@@ -98,6 +98,9 @@ export default function ActiveStudySessionPage() {
   const subSkillsRef = useRef<Set<string>>(new Set());
   const elapsedSecondsRef = useRef(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  // Tracks the in-flight attempt-save promise so handleEndSession can await it
+  // before requesting the session summary (which queries the DB for attempt data).
+  const pendingAttemptSave = useRef<Promise<void>>(Promise.resolve());
 
   // End session state
   const [showEndDialog, setShowEndDialog] = useState(false);
@@ -211,41 +214,46 @@ export default function ActiveStudySessionPage() {
         },
       ]);
 
-      // Record attempt
-      try {
-        const attemptRes = await fetch('/api/questions', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            student_id: DEMO_STUDENT_ID,
-            session_id: sessionId,
-            question_id: question.question_id,
-            student_answer: answer,
-            is_correct: correct,
-            time_spent_seconds: timeSpent,
-            confidence_level: confidence,
-          }),
-        });
-
-        // Fire-and-forget: classify error type for wrong answers (powers Wrong Answer Insights)
-        if (!correct && attemptRes.ok) {
-          const { attempt } = await attemptRes.json();
-          fetch('/api/claude/classify-error', {
+      // Record attempt — track the promise so handleEndSession can await it
+      // before requesting the session summary (which queries the DB for attempts).
+      const savePromise = (async () => {
+        try {
+          const attemptRes = await fetch('/api/questions', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              question,
-              correctAnswer: question.correct_answer,
-              studentAnswer: answer,
-              timeSpentSeconds: timeSpent,
-              confidenceLevel: confidence ?? 'okay',
-              attemptId: attempt?.id,
+              student_id: DEMO_STUDENT_ID,
+              session_id: sessionId,
+              question_id: question.question_id,
+              student_answer: answer,
+              is_correct: correct,
+              time_spent_seconds: timeSpent,
+              confidence_level: confidence,
+              local_date: toLocalDateKey(),
             }),
-          }).catch(() => {});
+          });
+
+          // Fire-and-forget: classify error type for wrong answers (powers Wrong Answer Insights)
+          if (!correct && attemptRes.ok) {
+            const { attempt } = await attemptRes.json();
+            fetch('/api/claude/classify-error', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                question,
+                correctAnswer: question.correct_answer,
+                studentAnswer: answer,
+                timeSpentSeconds: timeSpent,
+                confidenceLevel: confidence ?? 'okay',
+                attemptId: attempt?.id,
+              }),
+            }).catch(() => {});
+          }
+        } catch {
+          // non-critical
         }
-      } catch {
-        // non-critical
-      }
+      })();
+      pendingAttemptSave.current = savePromise;
     },
     [question, questionStartTime, consecutiveWrong, sessionId]
   );
@@ -277,6 +285,10 @@ export default function ActiveStudySessionPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ studentId: DEMO_STUDENT_ID }),
     }).catch(() => {});
+
+    // Wait for the last attempt to finish saving so the summary API
+    // reads the complete set of attempts from the database.
+    await pendingAttemptSave.current;
 
     try {
       const res = await fetch('/api/claude/session-summary', {

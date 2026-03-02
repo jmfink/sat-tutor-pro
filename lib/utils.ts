@@ -26,3 +26,14 @@ export function gridInAnswersMatch(student: string, correct: string): boolean {
   if (a === null || b === null) return false;
   return Math.abs(a - b) < 1e-9;
 }
+
+/**
+ * Returns a YYYY-MM-DD date string using the runtime's LOCAL timezone.
+ * Prefer this over toISOString().slice(0,10) which always gives UTC.
+ */
+export function toLocalDateKey(d: Date = new Date()): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}

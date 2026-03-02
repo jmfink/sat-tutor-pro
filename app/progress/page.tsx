@@ -23,6 +23,7 @@ import type {
   SubSkillId,
 } from '@/types';
 import { SUB_SKILL_MAP, DEMO_STUDENT_ID, SESSION_TYPE_LABELS, SESSION_TYPE_COLORS } from '@/lib/constants';
+import { toLocalDateKey } from '@/lib/utils';
 import {
   PieChart,
   Pie,
@@ -128,8 +129,8 @@ export default function ProgressPage() {
         .then((data) => Array.isArray(data) ? data : data?.sessions ?? [])
         .catch(() => []),
 
-      // Streak / activity
-      fetch(`/api/sessions/streak?studentId=${DEMO_STUDENT_ID}`)
+      // Streak / activity — pass local date so streak counts in user's timezone
+      fetch(`/api/sessions/streak?studentId=${DEMO_STUDENT_ID}&localDate=${toLocalDateKey()}`)
         .then((r) => (r.ok ? r.json() : null))
         .catch(() => null),
 

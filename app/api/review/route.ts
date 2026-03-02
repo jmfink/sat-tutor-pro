@@ -35,9 +35,12 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     // Accept both camelCase and snake_case field names from the frontend
-    const { reviewId, review_item_id, wasCorrect, is_correct } = body;
+    const { reviewId, review_item_id, wasCorrect, is_correct, local_date } = body;
     const effectiveReviewId = reviewId ?? review_item_id;
     const effectiveWasCorrect = wasCorrect ?? is_correct;
+    // Use the client's local date as the base for scheduling the next review,
+    // so intervals are relative to the user's calendar day, not UTC.
+    const baseDate = local_date ? new Date(local_date + 'T12:00:00') : new Date();
 
     const supabase = createSupabaseServerClient();
 
@@ -49,7 +52,7 @@ export async function POST(req: NextRequest) {
 
     if (!item) return NextResponse.json({ error: 'Review item not found' }, { status: 404 });
 
-    const nextDate = getNextReviewDate(item, effectiveWasCorrect);
+    const nextDate = getNextReviewDate(item, effectiveWasCorrect, baseDate);
 
     // If mastered (3+ correct reviews), remove from queue
     const newReviewCount = item.review_count + (effectiveWasCorrect ? 1 : 0);
