@@ -217,28 +217,43 @@ const MODULE_META = [
 function parseAnswerKey(text: string): Record<string, unknown>[] {
   const results: Record<string, unknown>[] = [];
 
-  // Split on the repeating "QUESTION #" marker that heads each answer block
-  const blocks = text.split(/QUESTION\s*#/i).slice(1); // skip preamble
+  // The scoring PDF contains TWO complete answer key forms (8 QUESTION # blocks total):
+  //   Blocks 0–3: "Classroom Use" worksheet embedded in the scoring instructions (page 2)
+  //   Blocks 4–7: Standalone "Answer Key Worksheet" (page 4) — matches the student questions PDFs
+  // We read the SECOND set (blocks 4–7), which is the standalone worksheet that corresponds
+  // to the questions PDF students download and upload here.
+  // If the scoring PDF has fewer than 8 blocks (older format), we fall back to blocks 0–3.
+  const allBlocks = text.split(/QUESTION\s*#/i).slice(1); // skip preamble
+  const hasSecondForm = allBlocks.length >= 8;
+  const blocks = hasSecondForm ? allBlocks.slice(4, 8) : allBlocks.slice(0, 4);
 
-  blocks.slice(0, 4).forEach((block, blockIdx) => {
-    const { offset, section } = MODULE_META[blockIdx];
+  blocks.forEach((block, blockIdx) => {
+    const meta = MODULE_META[blockIdx];
+    if (!meta) return;
+    const { offset, count, section } = meta;
+
     const lineRe = /^(\d+)\s+([A-D][\w./;: -]*)$/gm;
     let m: RegExpExecArray | null;
     while ((m = lineRe.exec(block)) !== null) {
+      const qn = parseInt(m[1]);
+      if (qn < 1 || qn > count) continue; // guard against score-table pollution
       results.push({
-        question_number: parseInt(m[1]) + offset,
+        question_number: qn + offset,
         correct_answer: m[2].split(';')[0].trim(), // keep first accepted value
         section,
       });
     }
-    // Grid-in answers are numbers, not letters — need a separate pattern
-    const gridRe = /^(\d+)\s+(\d[\d./;: -]*)$/gm;
+    // Grid-in answers: allow leading decimal point (e.g. ".3", ".8824") in addition
+    // to answers that start with a digit.  The old pattern (\d[...]) silently dropped
+    // any answer beginning with "." which is a valid SAT grid-in format.
+    const gridRe = /^(\d+)\s+(\.?\d[\d./;: -]*)$/gm;
     while ((m = gridRe.exec(block)) !== null) {
-      // Avoid duplicating letter answers already captured above
-      const qn = parseInt(m[1]) + offset;
-      if (!results.find(r => r.question_number === qn)) {
+      const qn = parseInt(m[1]);
+      if (qn < 1 || qn > count) continue; // guard against score-table pollution
+      const globalQn = qn + offset;
+      if (!results.find(r => r.question_number === globalQn)) {
         results.push({
-          question_number: qn,
+          question_number: globalQn,
           correct_answer: m[2].split(';')[0].trim(),
           section,
         });

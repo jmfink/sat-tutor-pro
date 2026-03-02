@@ -303,6 +303,26 @@ export default function ActiveStudySessionPage() {
     }
   };
 
+  // Auto-end Quick Drill once 10 questions are answered.
+  // The effect fires after the render where questionCount reaches 10 and isAnswered
+  // is true, so handleEndSession sees the up-to-date counts from that render.
+  const QUICK_DRILL_LIMIT = 10;
+  useEffect(() => {
+    if (
+      session?.session_type === 'quick_drill' &&
+      questionCount >= QUICK_DRILL_LIMIT &&
+      isAnswered &&
+      !showEndDialog &&
+      !sessionEnded
+    ) {
+      handleEndSession();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questionCount, isAnswered]);
+
+  const isQuickDrillComplete =
+    session?.session_type === 'quick_drill' && questionCount >= QUICK_DRILL_LIMIT;
+
   const accuracy = questionCount > 0 ? Math.round((correctCount / questionCount) * 100) : 0;
   const skillName = session?.sub_skill_focus
     ? (SUB_SKILL_MAP[session.sub_skill_focus as SubSkillId]?.name ?? session.sub_skill_focus)
@@ -346,7 +366,19 @@ export default function ActiveStudySessionPage() {
             <span className="text-slate-400">/</span>
             <span className="text-slate-700 font-medium">{questionCount}</span>
           </div>
-          {questionCount > 0 && (
+          {session?.session_type === 'quick_drill' && (
+            <div className="w-20">
+              <div className="flex justify-between text-xs text-slate-500 mb-0.5">
+                <span>Progress</span>
+                <span>{Math.min(questionCount, QUICK_DRILL_LIMIT)}/{QUICK_DRILL_LIMIT}</span>
+              </div>
+              <Progress
+                value={(Math.min(questionCount, QUICK_DRILL_LIMIT) / QUICK_DRILL_LIMIT) * 100}
+                className="h-1.5"
+              />
+            </div>
+          )}
+          {questionCount > 0 && session?.session_type !== 'quick_drill' && (
             <div className="w-20">
               <div className="flex justify-between text-xs text-slate-500 mb-0.5">
                 <span>Accuracy</span>
@@ -408,13 +440,23 @@ export default function ActiveStudySessionPage() {
 
               {isAnswered && (
                 <div className="flex justify-end">
-                  <Button
-                    onClick={fetchNextQuestion}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-sm"
-                  >
-                    Next Question
-                    <ChevronRight className="h-4 w-4 ml-1" />
-                  </Button>
+                  {isQuickDrillComplete ? (
+                    <Button
+                      onClick={handleEndSession}
+                      className="bg-green-600 hover:bg-green-700 text-white font-semibold shadow-sm"
+                    >
+                      Finish Session
+                      <Trophy className="h-4 w-4 ml-1" />
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={fetchNextQuestion}
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-sm"
+                    >
+                      Next Question
+                      <ChevronRight className="h-4 w-4 ml-1" />
+                    </Button>
+                  )}
                 </div>
               )}
             </div>
