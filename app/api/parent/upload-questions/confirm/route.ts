@@ -18,6 +18,13 @@ export async function POST(req: NextRequest) {
     const inserted: string[] = [];
     const errors: string[] = [];
     let duplicates_skipped = 0;
+    let missing_passage_skipped = 0;
+
+    // Keywords that indicate the question references a SEPARATE passage.
+    // "the text" is intentionally excluded — it fires on "Which choice completes the text"
+    // which is a standard SAT inline-passage question stem, not a passage reference.
+    // R&W questions containing these but lacking passage_text are excluded.
+    const PASSAGE_KEYWORDS = ['the passage', 'text 1', 'text 2', 'underlined'];
 
     // One query to find which question_texts already exist — avoids N round-trips.
     // Also catches intra-batch duplicates by adding each processed text to the set.
@@ -47,6 +54,16 @@ export async function POST(req: NextRequest) {
 
         // Defensive coercions — classify route may not have run, or may have failed per-question
         const section = (q.section as string) === 'math' ? 'math' : 'reading_writing';
+
+        // Skip R&W questions that reference a passage but have no passage_text.
+        // These were likely mis-parsed (passage dropped during extraction).
+        if (section === 'reading_writing' && !q.passage_text) {
+          const lower = questionText?.toLowerCase() ?? '';
+          if (PASSAGE_KEYWORDS.some(kw => lower.includes(kw))) {
+            missing_passage_skipped++;
+            continue;
+          }
+        }
         const subSkillId = (q.sub_skill_id as string | undefined)?.trim() ||
           (section === 'math' ? 'M-01' : 'RW-01');
         const rawDifficulty = Number(q.difficulty);
@@ -97,10 +114,10 @@ export async function POST(req: NextRequest) {
     }
 
     // Return a non-2xx status when every question failed with real errors
-    // (all-duplicates is a valid outcome, not a failure).
-    if (inserted.length === 0 && duplicates_skipped === 0 && errors.length > 0) {
+    // (all-duplicates or all-missing-passage is a valid outcome, not a failure).
+    if (inserted.length === 0 && duplicates_skipped === 0 && missing_passage_skipped === 0 && errors.length > 0) {
       return NextResponse.json(
-        { questions_added: 0, duplicates_skipped: 0, errors: errors.length, error_details: errors },
+        { questions_added: 0, duplicates_skipped: 0, missing_passage_skipped: 0, errors: errors.length, error_details: errors },
         { status: 422 }
       );
     }
@@ -108,6 +125,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       questions_added: inserted.length,
       duplicates_skipped,
+      missing_passage_skipped,
       errors: errors.length,
       error_details: errors,
     });

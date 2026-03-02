@@ -42,6 +42,10 @@ export interface Question {
   distractor_analysis?: Record<string, string> | null;
   is_ai_generated: boolean;
   tags: string[];
+  /** Set to true when PDF extraction has produced corrupted notation (e.g. x^2).
+   *  Questions with this flag are excluded from study sessions until reviewed.
+   *  Populated by the 002_add_formatting_issues_flag.sql migration. */
+  has_formatting_issues?: boolean;
 }
 
 export interface Passage {

@@ -32,6 +32,7 @@ import type {
   SubSkillId,
 } from '@/types';
 import { SUB_SKILL_MAP, DEMO_STUDENT_ID, formatElapsed } from '@/lib/constants';
+import { gridInAnswersMatch } from '@/lib/utils';
 import { toast } from 'sonner';
 
 const DUMMY_PROFILE: StudentContextProfile = {
@@ -172,7 +173,10 @@ export default function ActiveStudySessionPage() {
     async (answer: string, confidence: ConfidenceLevel | null) => {
       if (!question) return;
       const timeSpent = Math.round((Date.now() - questionStartTime) / 1000);
-      const correct = answer === question.correct_answer;
+      const isGridIn = Object.keys(question.answer_choices ?? {}).length === 0;
+      const correct = isGridIn
+        ? gridInAnswersMatch(answer, question.correct_answer)
+        : answer === question.correct_answer;
 
       setSelectedAnswer(answer);
       setIsAnswered(true);
@@ -432,7 +436,11 @@ export default function ActiveStudySessionPage() {
             <ExplanationPanel
               question={question}
               studentAnswer={selectedAnswer}
-              isCorrect={selectedAnswer === question.correct_answer}
+              isCorrect={
+                Object.keys(question.answer_choices ?? {}).length === 0
+                  ? gridInAnswersMatch(selectedAnswer, question.correct_answer)
+                  : selectedAnswer === question.correct_answer
+              }
               tutorMode={tutorMode}
               onModeToggle={setTutorMode}
               studentProfile={DUMMY_PROFILE}
