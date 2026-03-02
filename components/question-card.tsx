@@ -10,6 +10,7 @@ import { Flag, CheckCircle2, XCircle } from 'lucide-react';
 import { ConfidenceSelector } from '@/components/confidence-selector';
 import type { ConfidenceLevel } from '@/types';
 import { getDifficultyLabel, getDifficultyColor } from '@/lib/constants';
+import { gridInAnswersMatch } from '@/lib/utils';
 
 interface QuestionCardProps {
   question: Question;
@@ -37,15 +38,23 @@ export function QuestionCard({
   const [isFlagged, setIsFlagged] = useState(false);
   const [pendingAnswer, setPendingAnswer] = useState<string | null>(null);
   const [confidence, setConfidence] = useState<ConfidenceLevel | null>(null);
+  const [gridInValue, setGridInValue] = useState('');
 
   const handleChoiceClick = (letter: string) => {
     if (isAnswered) return;
     setPendingAnswer(letter);
   };
 
+  const isGridIn = Object.keys(question.answer_choices ?? {}).length === 0;
+
   const handleSubmit = () => {
-    if (!pendingAnswer) return;
-    onAnswer(pendingAnswer, confidence);
+    if (isGridIn) {
+      if (!gridInValue.trim()) return;
+      onAnswer(gridInValue.trim(), confidence);
+    } else {
+      if (!pendingAnswer) return;
+      onAnswer(pendingAnswer, confidence);
+    }
   };
 
   const getChoiceStyle = (letter: string) => {
@@ -169,26 +178,46 @@ export function QuestionCard({
                 {question.question_text}
               </p>
 
-              {/* Answer choices */}
-              <div className="space-y-2.5">
-                {choices.map(([letter, text]) => (
-                  <button
-                    key={letter}
-                    className={getChoiceStyle(letter)}
-                    onClick={() => handleChoiceClick(letter)}
-                    disabled={isAnswered}
-                  >
-                    <span className={getLabelStyle(letter)}>{letter}</span>
-                    <span className="flex-1 pt-0.5">{text}</span>
-                    {isAnswered && letter === correctAnswer && (
-                      <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
-                    )}
-                    {isAnswered && letter === selectedAnswer && letter !== correctAnswer && (
-                      <XCircle className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />
-                    )}
-                  </button>
-                ))}
-              </div>
+              {/* Answer choices / grid-in input */}
+              {isGridIn ? (
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                    Your answer
+                  </label>
+                  <input
+                    type="text"
+                    inputMode="decimal"
+                    value={isAnswered ? selectedAnswer : gridInValue}
+                    onChange={(e) => { if (!isAnswered) setGridInValue(e.target.value); }}
+                    readOnly={isAnswered}
+                    placeholder="e.g. 289 or 1/2 or 0.5"
+                    className="w-full border-2 border-slate-200 rounded-lg px-4 py-3 text-base font-mono
+                               focus:outline-none focus:border-blue-500 focus:bg-blue-50/30
+                               read-only:bg-slate-50 read-only:text-slate-700 read-only:cursor-default
+                               transition-colors"
+                  />
+                </div>
+              ) : (
+                <div className="space-y-2.5">
+                  {choices.map(([letter, text]) => (
+                    <button
+                      key={letter}
+                      className={getChoiceStyle(letter)}
+                      onClick={() => handleChoiceClick(letter)}
+                      disabled={isAnswered}
+                    >
+                      <span className={getLabelStyle(letter)}>{letter}</span>
+                      <span className="flex-1 pt-0.5">{text}</span>
+                      {isAnswered && letter === correctAnswer && (
+                        <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                      )}
+                      {isAnswered && letter === selectedAnswer && letter !== correctAnswer && (
+                        <XCircle className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </ScrollArea>
 
@@ -202,7 +231,7 @@ export function QuestionCard({
                 </div>
                 <Button
                   onClick={handleSubmit}
-                  disabled={!pendingAnswer}
+                  disabled={isGridIn ? !gridInValue.trim() : !pendingAnswer}
                   className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
                 >
                   Submit Answer
@@ -211,23 +240,30 @@ export function QuestionCard({
             </div>
           ) : (
             <div className="px-5 py-3 border-t border-slate-100">
-              <div
-                className={`flex items-center gap-2 text-sm font-semibold ${
-                  selectedAnswer === correctAnswer ? 'text-green-600' : 'text-red-600'
-                }`}
-              >
-                {selectedAnswer === correctAnswer ? (
-                  <>
-                    <CheckCircle2 className="h-4 w-4" />
-                    Correct!
-                  </>
-                ) : (
-                  <>
-                    <XCircle className="h-4 w-4" />
-                    Incorrect — correct answer is {correctAnswer}
-                  </>
-                )}
-              </div>
+              {(() => {
+                const isAnswerCorrect = isGridIn
+                  ? gridInAnswersMatch(selectedAnswer, correctAnswer)
+                  : selectedAnswer === correctAnswer;
+                return (
+                  <div
+                    className={`flex items-center gap-2 text-sm font-semibold ${
+                      isAnswerCorrect ? 'text-green-600' : 'text-red-600'
+                    }`}
+                  >
+                    {isAnswerCorrect ? (
+                      <>
+                        <CheckCircle2 className="h-4 w-4" />
+                        Correct!
+                      </>
+                    ) : (
+                      <>
+                        <XCircle className="h-4 w-4" />
+                        Incorrect — correct answer is {correctAnswer}
+                      </>
+                    )}
+                  </div>
+                );
+              })()}
             </div>
           )}
         </div>

@@ -297,17 +297,40 @@ function detectModuleBoundaries(text: string): Array<{
 }> {
   const boundaries: Array<{ pos: number; section: 'reading_writing' | 'math' }> = [];
 
-  const rwRe = /Reading and Writing\n\d+ QUESTIONS\nDIRECTIONS/g;
-  const mathRe = /Math\n\d+ QUESTIONS\nDIRECTIONS/g;
+  // "QUESTIONS" appears as a solid word in older PDFs (tests 4-6) and as
+  // "Q U E S T I O N S" (spaced letters) in test 11's paper format.
+  // Newer digital-format PDFs (tests 7-10) omit the "DIRECTIONS" line that
+  // follows the header in older PDFs, so we no longer require it.
+  const QS = '\\d+ Q(?:UESTIONS| U E S T I O N S)';
+  const rwRe   = new RegExp(`Reading and Writing\\n${QS}`, 'g');
+  const mathRe = new RegExp(`Math\\n${QS}`, 'g');
   let m: RegExpExecArray | null;
   while ((m = rwRe.exec(text)) !== null)   boundaries.push({ pos: m.index, section: 'reading_writing' });
   while ((m = mathRe.exec(text)) !== null) boundaries.push({ pos: m.index, section: 'math' });
 
   boundaries.sort((a, b) => a.pos - b.pos);
 
+  // For modules 2+ (i > 0): questions Q1/Q2 of the new module can appear on the
+  // same PDF page BEFORE the module header due to column layout — the extractor
+  // emits them before the header in reading order.  Look back up to 3000 chars to
+  // find the nearest page separator (`--- Page N ---\n`) and use that as the true
+  // start so we don't miss those pre-header questions.  The previous module's end
+  // is also set to that separator so there is no overlap between chunks.
+  const LOOKBACK = 3000;
+  const adjustedStarts = boundaries.map((b, i) => {
+    if (i === 0) return b.pos;
+    const windowStart = Math.max(0, b.pos - LOOKBACK);
+    const window = text.slice(windowStart, b.pos);
+    const pageSepRe = /--- Page \d+ ---\n/g;
+    let lastOffset = -1;
+    let psm: RegExpExecArray | null;
+    while ((psm = pageSepRe.exec(window)) !== null) lastOffset = psm.index;
+    return lastOffset === -1 ? b.pos : windowStart + lastOffset;
+  });
+
   return boundaries.map((b, i) => ({
-    start: b.pos,
-    end: boundaries[i + 1]?.pos ?? text.length,
+    start: adjustedStarts[i],
+    end: adjustedStarts[i + 1] ?? text.length,
     section: b.section,
     offset: MODULE_META[i]?.offset ?? i * 33,
   }));

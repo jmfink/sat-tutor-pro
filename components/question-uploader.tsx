@@ -127,18 +127,11 @@ function FileDropZone({
   );
 }
 
-function ParsedQuestionRow({ q }: { q: ParsedQuestion }) {
-  const confidenceColor =
-    q.confidence >= 0.8
-      ? 'text-green-600'
-      : q.confidence >= 0.5
-      ? 'text-yellow-600'
-      : 'text-red-500';
-
+function ParsedQuestionRow({ q, displayNumber }: { q: ParsedQuestion; displayNumber: number }) {
   return (
     <div className="flex items-start gap-3 py-3 border-b border-slate-100 last:border-0">
       <div className="flex-shrink-0 w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-500">
-        {q.question_number}
+        {displayNumber}
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-sm text-slate-700 line-clamp-2">{q.question_text}</p>
@@ -163,9 +156,6 @@ function ParsedQuestionRow({ q }: { q: ParsedQuestion }) {
               {q.section === 'math' ? 'Math' : 'R&W'}
             </Badge>
           )}
-          <span className={`text-[11px] font-medium ${confidenceColor}`}>
-            {Math.round(q.confidence * 100)}% confidence
-          </span>
         </div>
       </div>
     </div>
@@ -189,6 +179,7 @@ export function QuestionUploader({ onComplete, onDismiss, studentName }: Questio
   const [confirmWarnings, setConfirmWarnings] = useState<string[]>([]);
   const [questionsAdded, setQuestionsAdded] = useState(0);
   const [duplicatesSkipped, setDuplicatesSkipped] = useState(0);
+  const [missingPassageSkipped, setMissingPassageSkipped] = useState(0);
 
   const allFilesUploaded = files.questions && files.answers && files.explanations;
 
@@ -286,6 +277,7 @@ export function QuestionUploader({ onComplete, onDismiss, studentName }: Questio
 
       setQuestionsAdded(data.questions_added);
       setDuplicatesSkipped(data.duplicates_skipped ?? 0);
+      setMissingPassageSkipped(data.missing_passage_skipped ?? 0);
       setConfirmStatus('success');
       setStep(2);
       onComplete({ questionsAdded: data.questions_added });
@@ -465,10 +457,10 @@ export function QuestionUploader({ onComplete, onDismiss, studentName }: Questio
             )}
 
             <div className="border border-slate-200 rounded-xl overflow-hidden">
-              <ScrollArea className="max-h-72">
+              <ScrollArea className="h-[calc(100vh-380px)] min-h-[400px]">
                 <div className="px-4 divide-y divide-slate-100">
                   {parseResult.questions.map((q, i) => (
-                    <ParsedQuestionRow key={i} q={q} />
+                    <ParsedQuestionRow key={i} q={q} displayNumber={i + 1} />
                   ))}
                 </div>
               </ScrollArea>
@@ -537,8 +529,13 @@ export function QuestionUploader({ onComplete, onDismiss, studentName }: Questio
             </div>
             <div className="space-y-1.5">
               <h3 className="text-xl font-bold text-slate-800">
-                {questionsAdded} question{questionsAdded !== 1 ? 's' : ''} added
-                {duplicatesSkipped > 0 ? `, ${duplicatesSkipped} duplicate${duplicatesSkipped !== 1 ? 's' : ''} skipped` : '!'}
+                {questionsAdded} question{questionsAdded !== 1 ? 's' : ''} added,{' '}
+                {duplicatesSkipped} duplicate{duplicatesSkipped !== 1 ? 's' : ''} skipped
+                {missingPassageSkipped > 0 && (
+                  <span className="block text-base font-medium text-amber-600 mt-0.5">
+                    {missingPassageSkipped} skipped — passage text missing
+                  </span>
+                )}
               </h3>
               <p className="text-sm text-slate-500">
                 {questionsAdded > 0 ? (
