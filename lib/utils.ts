@@ -24,7 +24,7 @@ export function gridInAnswersMatch(student: string, correct: string): boolean {
   const a = parseGridInAnswer(student);
   const b = parseGridInAnswer(correct);
   if (a === null || b === null) return false;
-  return Math.abs(a - b) < 1e-9;
+  return Math.abs(a - b) < 0.005;
 }
 
 /**
