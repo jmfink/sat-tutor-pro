@@ -25,17 +25,21 @@ export function calculateNextInterval(item: ReviewItem, wasCorrect: boolean): nu
   }
 }
 
-// Calculate the next review date
-export function getNextReviewDate(item: ReviewItem, wasCorrect: boolean): Date {
+// Calculate the next review date, relative to an optional base date.
+// Pass the user's local "today" as baseDate to avoid UTC-offset drift.
+export function getNextReviewDate(item: ReviewItem, wasCorrect: boolean, baseDate: Date = new Date()): Date {
   const intervalDays = calculateNextInterval(item, wasCorrect);
-  const nextDate = new Date();
+  const nextDate = new Date(baseDate);
   nextDate.setDate(nextDate.getDate() + intervalDays);
   return nextDate;
 }
 
-// Format date as YYYY-MM-DD
+// Format date as YYYY-MM-DD using local timezone components.
 export function formatDateForDB(date: Date): string {
-  return date.toISOString().split('T')[0];
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 }
 
 // Check if an item is due for review

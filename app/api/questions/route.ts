@@ -167,6 +167,9 @@ export async function POST(req: NextRequest) {
     const isCorrect: boolean = body.isCorrect ?? body.is_correct;
     const timeSpentSeconds: number = body.timeSpentSeconds ?? body.time_spent_seconds ?? 0;
     const confidenceLevel: string | undefined = body.confidenceLevel ?? body.confidence_level;
+    // User's local date (YYYY-MM-DD) sent by the client to avoid UTC-offset drift
+    // in activity tracking and review scheduling. Falls back to UTC if missing.
+    const localDate: string = body.local_date || new Date().toISOString().split('T')[0];
 
     const supabase = createSupabaseServerClient();
 
@@ -250,19 +253,18 @@ export async function POST(req: NextRequest) {
     }
 
     // Update daily activity — read existing count first to correctly increment
-    const today = new Date().toISOString().split('T')[0];
     const { data: existingActivity } = await supabase
       .from('daily_activity')
       .select('questions_answered')
       .eq('student_id', studentId)
-      .eq('activity_date', today)
+      .eq('activity_date', localDate)
       .maybeSingle();
 
     await supabase
       .from('daily_activity')
       .upsert({
         student_id: studentId,
-        activity_date: today,
+        activity_date: localDate,
         questions_answered: (existingActivity?.questions_answered ?? 0) + 1,
         streak_qualifying: false,
       }, {
@@ -271,14 +273,15 @@ export async function POST(req: NextRequest) {
 
     // Add wrong answer to review queue (SM-2)
     if (!isCorrect) {
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
+      const [ly, lm, ld] = localDate.split('-').map(Number);
+      const tomorrowDate = new Date(ly, lm - 1, ld + 1);
+      const tomorrow = `${tomorrowDate.getFullYear()}-${String(tomorrowDate.getMonth() + 1).padStart(2, '0')}-${String(tomorrowDate.getDate()).padStart(2, '0')}`;
       await supabase
         .from('review_queue')
         .upsert({
           student_id: studentId,
           question_id: questionId,
-          next_review_date: tomorrow.toISOString().split('T')[0],
+          next_review_date: tomorrow,
           review_count: 0,
           interval_days: 1,
         }, { onConflict: 'student_id,question_id' });

@@ -2,6 +2,7 @@
 
 import type { DailyActivity } from '@/types';
 import { useMemo } from 'react';
+import { toLocalDateKey } from '@/lib/utils';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -59,7 +60,7 @@ function getDatesForGrid(): Date[] {
 }
 
 function toDateKey(d: Date): string {
-  return d.toISOString().slice(0, 10);
+  return toLocalDateKey(d);
 }
 
 const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];

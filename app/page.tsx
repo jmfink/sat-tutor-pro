@@ -21,6 +21,7 @@ import { Separator } from '@/components/ui/separator';
 import { StreakCounter } from '@/components/streak-counter';
 import type { Session, ScorePrediction, DailyActivity, WrongAnswerInsight } from '@/types';
 import { DEMO_STUDENT_ID, SESSION_TYPE_LABELS, SESSION_TYPE_COLORS, calcAccuracy } from '@/lib/constants';
+import { toLocalDateKey } from '@/lib/utils';
 
 const STUDENT_NAME = 'Ethan';
 
@@ -209,8 +210,8 @@ export default function DashboardPage() {
       })
       .catch(() => {});
 
-    // Fetch streak / activity
-    fetch(`/api/sessions/streak?studentId=${DEMO_STUDENT_ID}`)
+    // Fetch streak / activity — pass local date so streak counts in user's timezone
+    fetch(`/api/sessions/streak?studentId=${DEMO_STUDENT_ID}&localDate=${toLocalDateKey()}`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (data?.currentStreak !== undefined) setStreak(data.currentStreak);
