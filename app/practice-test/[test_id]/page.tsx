@@ -13,7 +13,6 @@ import {
   AlertTriangle,
   Trophy,
   Loader2,
-  Strikethrough,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -24,6 +23,7 @@ import { AnnotationToolbar } from '@/components/annotation-toolbar';
 import type { Question, Passage } from '@/types';
 
 import { DEMO_STUDENT_ID } from '@/lib/constants';
+import { renderTextWithTables } from '@/components/question-card';
 
 // SAT module structure
 const MODULES = [
@@ -144,7 +144,7 @@ export default function ActivePracticeTestPage() {
   const [showWarning, setShowWarning] = useState(false);
   const [showBreak, setShowBreak] = useState(false);
   const [showEndSummary, setShowEndSummary] = useState(false);
-  const [crossoutMode, setCrossoutMode] = useState(false);
+  const [showSubmitConfirm, setShowSubmitConfirm] = useState(false);
 
   const currentModule = MODULES[moduleIndex];
   const isMathModule = currentModule.section === 'math';
@@ -259,6 +259,15 @@ export default function ActivePracticeTestPage() {
   const totalQuestions = currentModule.questions;
   const pctAnswered = totalQuestions > 0 ? Math.round((totalAnswered / totalQuestions) * 100) : 0;
 
+  // Show confirmation if there are unanswered questions; otherwise advance immediately
+  const handleSubmitModule = () => {
+    if (totalAnswered < totalQuestions) {
+      setShowSubmitConfirm(true);
+    } else {
+      handleModuleEnd();
+    }
+  };
+
   return (
     <div className="flex flex-col h-screen bg-white overflow-hidden">
       <SmallViewportWarning />
@@ -303,18 +312,6 @@ export default function ActivePracticeTestPage() {
             </>
           )}
 
-          {/* Crossout toggle for RW */}
-          {!isMathModule && !isBreak && (
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => setCrossoutMode((v) => !v)}
-              className={`border-slate-600 text-xs hover:bg-slate-700 ${crossoutMode ? 'bg-slate-700 text-white' : 'text-slate-200 hover:text-white'}`}
-            >
-              <Strikethrough className="h-3.5 w-3.5 mr-1" />
-              Crossout
-            </Button>
-          )}
         </div>
       </div>
 
@@ -397,7 +394,7 @@ export default function ActivePracticeTestPage() {
             {/* Submit module */}
             <div className="mt-auto pt-3 border-t border-slate-200">
               <Button
-                onClick={handleModuleEnd}
+                onClick={handleSubmitModule}
                 className="w-full bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold"
                 size="sm"
               >
@@ -421,9 +418,11 @@ export default function ActivePracticeTestPage() {
                 {currentPassage && (
                   <div className="w-1/2 flex flex-col border-r border-slate-200 bg-white">
                     <div className="shrink-0 px-4 py-2 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-                      <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                        Passage
-                      </span>
+                      {!isMathModule && (
+                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                          Passage
+                        </span>
+                      )}
                       {!isMathModule && (
                         <AnnotationToolbar
                           onHighlight={() => {}}
@@ -433,9 +432,9 @@ export default function ActivePracticeTestPage() {
                       )}
                     </div>
                     <div className="flex-1 overflow-y-auto px-5 py-4">
-                      <p className="text-sm leading-relaxed text-slate-700 passage-text whitespace-pre-wrap">
-                        {currentPassage.passage_text}
-                      </p>
+                      <div className="text-sm leading-relaxed text-slate-700 passage-text">
+                        {renderTextWithTables(currentPassage.passage_text)}
+                      </div>
                     </div>
                   </div>
                 )}
@@ -465,44 +464,62 @@ export default function ActivePracticeTestPage() {
 
                   {/* Question content */}
                   <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
-                    <p className="text-base leading-relaxed text-slate-800 font-medium">
-                      {currentQuestion.question_text}
-                    </p>
-
-                    {/* Answer choices */}
-                    <div className="space-y-2.5">
-                      {Object.entries(currentQuestion.answer_choices)
-                        .sort(([a], [b]) => a.localeCompare(b))
-                        .map(([letter, text]) => {
-                          const isSelected = currentState?.answer === letter;
-                          return (
-                            <button
-                              key={letter}
-                              onClick={() => handleAnswer(letter)}
-                              className={`
-                                w-full text-left px-4 py-3 rounded-lg border-2 transition-all duration-100
-                                font-medium text-sm flex items-start gap-3
-                                ${
-                                  isSelected
-                                    ? 'border-blue-500 bg-blue-50 text-blue-900'
-                                    : 'border-slate-200 bg-white hover:border-blue-300 hover:bg-blue-50/50 text-slate-800'
-                                }
-                              `}
-                            >
-                              <span
-                                className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-colors ${
-                                  isSelected
-                                    ? 'border-blue-500 bg-blue-500 text-white'
-                                    : 'border-slate-300 text-slate-500'
-                                }`}
-                              >
-                                {letter}
-                              </span>
-                              <span className="flex-1 pt-0.5">{text}</span>
-                            </button>
-                          );
-                        })}
+                    <div className="text-base leading-relaxed text-slate-800 font-medium">
+                      {renderTextWithTables(currentQuestion.question_text)}
                     </div>
+
+                    {/* Answer choices or grid-in input */}
+                    {Object.keys(currentQuestion.answer_choices).length === 0 ? (
+                      <div className="space-y-2">
+                        <label className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                          Your answer
+                        </label>
+                        <input
+                          type="text"
+                          inputMode="decimal"
+                          value={currentState?.answer || ''}
+                          onChange={(e) => handleAnswer(e.target.value)}
+                          placeholder="e.g. 289 or 1/2 or 0.5"
+                          className="w-full border-2 border-slate-200 rounded-lg px-4 py-3 text-base font-mono
+                                     focus:outline-none focus:border-blue-500 focus:bg-blue-50/30
+                                     transition-colors"
+                        />
+                      </div>
+                    ) : (
+                      <div className="space-y-2.5">
+                        {Object.entries(currentQuestion.answer_choices)
+                          .sort(([a], [b]) => a.localeCompare(b))
+                          .map(([letter, text]) => {
+                            const isSelected = currentState?.answer === letter;
+                            return (
+                              <button
+                                key={letter}
+                                onClick={() => handleAnswer(letter)}
+                                className={`
+                                  w-full text-left px-4 py-3 rounded-lg border-2 transition-all duration-100
+                                  font-medium text-sm flex items-start gap-3
+                                  ${
+                                    isSelected
+                                      ? 'border-blue-500 bg-blue-50 text-blue-900'
+                                      : 'border-slate-200 bg-white hover:border-blue-300 hover:bg-blue-50/50 text-slate-800'
+                                  }
+                                `}
+                              >
+                                <span
+                                  className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-colors ${
+                                    isSelected
+                                      ? 'border-blue-500 bg-blue-500 text-white'
+                                      : 'border-slate-300 text-slate-500'
+                                  }`}
+                                >
+                                  {letter}
+                                </span>
+                                <span className="flex-1 pt-0.5">{text as string}</span>
+                              </button>
+                            );
+                          })}
+                      </div>
+                    )}
                   </div>
 
                   {/* Navigation */}
@@ -530,7 +547,7 @@ export default function ActivePracticeTestPage() {
                     ) : (
                       <Button
                         size="sm"
-                        onClick={handleModuleEnd}
+                        onClick={handleSubmitModule}
                         className="bg-slate-800 hover:bg-slate-900 text-white font-semibold"
                       >
                         Submit Module
@@ -585,6 +602,39 @@ export default function ActivePracticeTestPage() {
             >
               Got it, keep going
             </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Submit module confirmation — shown when unanswered questions remain */}
+      <Dialog open={showSubmitConfirm} onOpenChange={setShowSubmitConfirm}>
+        <DialogContent className="max-w-sm">
+          <div className="text-center space-y-4">
+            <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mx-auto">
+              <AlertTriangle className="h-6 w-6 text-amber-600" />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-slate-900">Submit Module?</h2>
+              <p className="text-slate-500 text-sm mt-1">
+                You have {totalQuestions - totalAnswered} unanswered question{totalQuestions - totalAnswered !== 1 ? 's' : ''}.
+                Unanswered questions will be marked incorrect.
+              </p>
+            </div>
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                className="flex-1 border-slate-200"
+                onClick={() => setShowSubmitConfirm(false)}
+              >
+                Keep Going
+              </Button>
+              <Button
+                className="flex-1 bg-slate-800 hover:bg-slate-900 text-white font-semibold"
+                onClick={() => { setShowSubmitConfirm(false); handleModuleEnd(); }}
+              >
+                Submit Anyway
+              </Button>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
