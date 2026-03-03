@@ -17,7 +17,7 @@ import { gridInAnswersMatch } from '@/lib/utils';
  * Two or more consecutive lines containing '|' are parsed as a table;
  * single-line occurrences (e.g. |x − 5| = 10) are left as plain text.
  */
-function renderTextWithTables(text: string): React.ReactNode {
+export function renderTextWithTables(text: string): React.ReactNode {
   const lines = text.split('\n');
   const result: React.ReactNode[] = [];
   let i = 0;
@@ -231,11 +231,13 @@ export function QuestionCard({
         {passage && (
           <>
             <div className="w-1/2 flex flex-col border-r border-slate-100">
-              <div className="px-5 py-2 bg-slate-50 border-b border-slate-100">
-                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                  Passage
-                </span>
-              </div>
+              {question.section === 'reading_writing' && (
+                <div className="px-5 py-2 bg-slate-50 border-b border-slate-100">
+                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                    Passage
+                  </span>
+                </div>
+              )}
               <ScrollArea className="flex-1 px-5 py-4">
                 <div className="text-sm leading-relaxed text-slate-700 passage-text">
                   {renderTextWithTables(passage.passage_text)}

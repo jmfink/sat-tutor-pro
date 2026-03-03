@@ -131,6 +131,17 @@ function hasFigureReference(text) {
   return FIGURE_PHRASES.some(phrase => lower.includes(phrase));
 }
 
+// Detect questions whose answer choices are "Graph A", "Graph B", etc.
+// These questions ask students to identify which graph matches criteria —
+// impossible without seeing the graphs.
+const GRAPH_CHOICE_RE = /^graph\s+[a-d]$/i;
+
+function hasGraphChoices(answer_choices) {
+  if (!answer_choices || typeof answer_choices !== 'object') return false;
+  const values = Object.values(answer_choices);
+  return values.length > 0 && values.every(v => GRAPH_CHOICE_RE.test(String(v).trim()));
+}
+
 // ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
@@ -155,7 +166,7 @@ process.stdout.write('Fetching questions');
 while (true) {
   const { data, error } = await supabase
     .from('questions')
-    .select('question_id, question_text, source, tags')
+    .select('question_id, question_text, answer_choices, source, tags')
     .range(from, from + PAGE - 1);
 
   if (error) { console.error('\nFetch error:', error.message); process.exit(1); }
@@ -176,7 +187,7 @@ const alreadyCorrect = []; // currently tagged AND phrase-matches
 for (const q of allQuestions) {
   const tags = Array.isArray(q.tags) ? q.tags : [];
   const isTagged = tags.includes('has_figure');
-  const matches  = hasFigureReference(q.question_text);
+  const matches  = hasFigureReference(q.question_text) || hasGraphChoices(q.answer_choices);
 
   if (!isTagged && matches)  { shouldTag.push(q); }
   else if (isTagged && !matches) { shouldUntag.push(q); }

@@ -90,9 +90,6 @@ export function Timer({ totalSeconds, onTimeUp, onWarning, isPaused }: TimerProp
         }`}
       />
       <span className="tabular-nums tracking-wider">{formatTime(remaining)}</span>
-      {isPaused && (
-        <span className="text-xs font-sans font-medium text-slate-400 ml-1">PAUSED</span>
-      )}
       {/* Progress bar */}
       <div className="hidden" aria-hidden="true">
         {/* progress embedded as thin bar below the timer if needed by parent */}

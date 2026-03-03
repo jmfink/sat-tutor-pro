@@ -13,6 +13,7 @@ export async function GET(req: NextRequest) {
   const isFrustrated = searchParams.get('isFrustrated') === 'true';
   const sessionMinutes = parseInt(searchParams.get('sessionMinutes') || '0');
   const questionsAnswered = parseInt(searchParams.get('questionsAnswered') || '0');
+  const section = searchParams.get('section');
 
   const supabase = createSupabaseServerClient();
 
@@ -103,6 +104,10 @@ export async function GET(req: NextRequest) {
     .not('tags', 'cs', '{formatting_issues}')
     .not('tags', 'cs', '{has_figure}');
 
+  if (section) {
+    questionsQuery = questionsQuery.eq('section', section);
+  }
+
   if (effectiveExcludeIds.length > 0) {
     questionsQuery = questionsQuery.not('question_id', 'in', `(${effectiveExcludeIds.join(',')})`);
   }
@@ -123,6 +128,10 @@ export async function GET(req: NextRequest) {
     // Exclude questions with known formatting corruption or figure-only content
     fallbackQuery = fallbackQuery.not('tags', 'cs', '{formatting_issues}') as typeof fallbackQuery;
     fallbackQuery = fallbackQuery.not('tags', 'cs', '{has_figure}') as typeof fallbackQuery;
+
+    if (section) {
+      fallbackQuery = fallbackQuery.eq('section', section) as typeof fallbackQuery;
+    }
 
     if (subSkillId) {
       // Explicit skill focus (Quick Drill): stay within the skill, recycle seen questions

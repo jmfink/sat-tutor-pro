@@ -196,16 +196,6 @@ export function AnnotationToolbar({ onHighlight, onCrossOut, onClear }: Annotati
         Clear All
       </button>
 
-      {/* Status indicator */}
-      {activeTool && activeTool !== 'select' && (
-        <>
-          <Separator orientation="vertical" className="h-5 mx-0.5" />
-          <span className="text-xs text-slate-500 italic pr-1 select-none">
-            Select text in passage to{' '}
-            {activeTool === 'highlight' ? 'highlight' : 'cross out'}
-          </span>
-        </>
-      )}
     </div>
   );
 }
