@@ -54,7 +54,7 @@ const SESSION_CARDS: SessionCard[] = [
     title: 'Study Session',
     description: 'Interleaved Math and R&W questions — mixing subjects builds the mental flexibility the real SAT requires. AI adjusts difficulty based on your performance.',
     duration: '25–45 min',
-    questionCount: 'Adaptive',
+    questionCount: 'Ends when you stop',
     color: 'border-blue-200 hover:border-blue-400',
     iconBg: 'bg-blue-100',
   },
