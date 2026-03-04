@@ -150,6 +150,14 @@ export async function GET(req: NextRequest) {
     }
 
     const randomFallback = fallbackQuestions[Math.floor(Math.random() * fallbackQuestions.length)] as Question;
+    if (randomFallback.passage_id) {
+      const { data: passage } = await supabase
+        .from('passages')
+        .select('*')
+        .eq('passage_id', randomFallback.passage_id)
+        .single();
+      return NextResponse.json({ question: randomFallback, passage, targetSkill, targetDifficulty });
+    }
     return NextResponse.json({ question: randomFallback, targetSkill, targetDifficulty });
   }
 

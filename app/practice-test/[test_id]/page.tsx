@@ -167,7 +167,9 @@ export default function ActivePracticeTestPage() {
     : null;
   const currentState = questionStates.get(questionIndex);
 
-  // Load questions for current module
+  // Load questions for current module.
+  // Timer is paused (via isPaused) while loadingQuestions is true so it doesn't
+  // count down during the 10-15 second fetch delay.
   useEffect(() => {
     if (isBreak || !currentModule.section) return;
     setLoadingQuestions(true);
@@ -177,7 +179,7 @@ export default function ActivePracticeTestPage() {
     const loadedIds = [...answeredIds].join(',');
     const excludeParam = loadedIds ? `&excludeIds=${loadedIds}` : '';
 
-    // Fetch all module questions
+    // Fetch all module questions in parallel
     Promise.all(
       Array.from({ length: currentModule.questions }, () =>
         fetch(
@@ -191,10 +193,14 @@ export default function ActivePracticeTestPage() {
       .then((results) => {
         const qs: Question[] = [];
         const passMap = new Map<string, Passage>(passages);
+        const seen = new Set<string>();
         for (const r of results) {
           if (r.q) {
+            // Deduplicate by question_id — parallel requests can return the same question
+            if (seen.has(r.q.question_id)) continue;
+            seen.add(r.q.question_id);
             qs.push(r.q);
-            if (r.p) passMap.set(r.q.passage_id ?? '', r.p);
+            if (r.p && r.q.passage_id) passMap.set(r.q.passage_id, r.p);
           }
         }
         setQuestions(qs);
@@ -259,7 +265,8 @@ export default function ActivePracticeTestPage() {
   const totalQuestions = currentModule.questions;
   const pctAnswered = totalQuestions > 0 ? Math.round((totalAnswered / totalQuestions) * 100) : 0;
 
-  // Show confirmation if there are unanswered questions; otherwise advance immediately
+  // Show confirmation if there are unanswered questions; otherwise advance immediately.
+  // Timer is paused while the confirmation dialog is open (isPaused below).
   const handleSubmitModule = () => {
     if (totalAnswered < totalQuestions) {
       setShowSubmitConfirm(true);
@@ -267,6 +274,10 @@ export default function ActivePracticeTestPage() {
       handleModuleEnd();
     }
   };
+
+  // Timer is paused when: questions are loading, or the submit confirmation is open.
+  // Timer is hidden entirely when the break screen is active (showBreak).
+  const timerIsPaused = loadingQuestions || showSubmitConfirm;
 
   return (
     <div className="flex flex-col h-screen bg-white overflow-hidden">
@@ -279,12 +290,13 @@ export default function ActivePracticeTestPage() {
         </div>
 
         <div className="flex items-center gap-3">
-          {!isBreak && (
+          {/* Hide timer during break screen and during the break module itself */}
+          {!isBreak && !showBreak && (
             <TimerWithBar
               totalSeconds={currentModule.minutes * 60}
               onTimeUp={handleModuleEnd}
               onWarning={() => setShowWarning(true)}
-              isPaused={isBreak}
+              isPaused={timerIsPaused}
             />
           )}
 
@@ -311,7 +323,6 @@ export default function ActivePracticeTestPage() {
               </Button>
             </>
           )}
-
         </div>
       </div>
 
@@ -325,7 +336,7 @@ export default function ActivePracticeTestPage() {
             <div>
               <h2 className="text-2xl font-black text-slate-900">Break Time!</h2>
               <p className="text-slate-600 mt-2 text-sm leading-relaxed">
-                Great work on the Reading & Writing sections. You have 10 minutes before
+                Great work on the Reading &amp; Writing sections. You have 10 minutes before
                 the Math section begins. Step away, stretch, and recharge.
               </p>
             </div>
@@ -409,28 +420,30 @@ export default function ActivePracticeTestPage() {
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center space-y-3">
                   <Loader2 className="h-8 w-8 text-blue-500 animate-spin mx-auto" />
-                  <p className="text-slate-500 text-sm">Loading questions...</p>
+                  <p className="text-slate-500 text-sm">Loading questions…</p>
                 </div>
               </div>
             ) : currentQuestion ? (
               <div className="flex flex-1 min-h-0">
-                {/* Passage */}
-                {currentPassage && (
+                {/* Passage panel — R&W questions with a passage */}
+                {currentPassage && !isMathModule && (
                   <div className="w-1/2 flex flex-col border-r border-slate-200 bg-white">
-                    <div className="shrink-0 px-4 py-2 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-                      {!isMathModule && (
-                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                          Passage
-                        </span>
-                      )}
-                      {!isMathModule && (
-                        <AnnotationToolbar
-                          onHighlight={() => {}}
-                          onCrossOut={() => {}}
-                          onClear={() => {}}
-                        />
-                      )}
+                    <div className="shrink-0 px-4 py-2 bg-slate-50 border-b border-slate-200">
+                      <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                        Passage
+                      </span>
                     </div>
+                    <div className="flex-1 overflow-y-auto px-5 py-4">
+                      <div className="text-sm leading-relaxed text-slate-700 passage-text">
+                        {renderTextWithTables(currentPassage.passage_text)}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Math formula context — math questions with passage_text show it inline */}
+                {currentPassage && isMathModule && (
+                  <div className="w-1/2 flex flex-col border-r border-slate-200 bg-white">
                     <div className="flex-1 overflow-y-auto px-5 py-4">
                       <div className="text-sm leading-relaxed text-slate-700 passage-text">
                         {renderTextWithTables(currentPassage.passage_text)}
@@ -443,22 +456,26 @@ export default function ActivePracticeTestPage() {
                 <div className={`flex flex-col ${currentPassage ? 'w-1/2' : 'w-full'} bg-white`}>
                   {/* Question header */}
                   <div className="shrink-0 flex items-center justify-between px-5 py-2.5 border-b border-slate-100 bg-slate-50">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-slate-700">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="text-sm font-semibold text-slate-700 shrink-0">
                         Question {questionIndex + 1}
                         <span className="text-slate-400 font-normal"> / {totalQuestions}</span>
                       </span>
+                      {/* Annotation toolbar — always visible for R&W modules */}
+                      {!isMathModule && (
+                        <AnnotationToolbar />
+                      )}
                     </div>
                     <button
                       onClick={toggleFlag}
-                      className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
+                      className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-medium transition-colors shrink-0 ${
                         currentState?.isFlagged
                           ? 'bg-amber-100 border-amber-400 text-amber-800'
                           : 'bg-white border-slate-200 text-slate-600 hover:border-amber-300 hover:bg-amber-50'
                       }`}
                     >
                       <Flag className="h-3.5 w-3.5" fill={currentState?.isFlagged ? 'currentColor' : 'none'} />
-                      {currentState?.isFlagged ? 'Flagged' : 'Flag for Review'}
+                      {currentState?.isFlagged ? 'Flagged' : 'Flag'}
                     </button>
                   </div>
 
@@ -606,7 +623,8 @@ export default function ActivePracticeTestPage() {
         </DialogContent>
       </Dialog>
 
-      {/* Submit module confirmation — shown when unanswered questions remain */}
+      {/* Submit module confirmation — shown when unanswered questions remain.
+          Timer is paused while this dialog is open (timerIsPaused above). */}
       <Dialog open={showSubmitConfirm} onOpenChange={setShowSubmitConfirm}>
         <DialogContent className="max-w-sm">
           <div className="text-center space-y-4">
@@ -660,7 +678,7 @@ export default function ActivePracticeTestPage() {
               </div>
               <div className="bg-blue-50 rounded-xl p-3 text-center">
                 <p className="text-2xl font-black text-blue-700">--</p>
-                <p className="text-xs text-slate-500 mt-0.5">R&W</p>
+                <p className="text-xs text-slate-500 mt-0.5">R&amp;W</p>
               </div>
               <div className="bg-purple-50 rounded-xl p-3 text-center">
                 <p className="text-2xl font-black text-purple-700">--</p>
