@@ -42,7 +42,13 @@ export function renderTextWithTables(text: string): React.ReactNode {
         // Table block detected
         pushText();
         const tableLines = lines.slice(i, j);
-        const rows = tableLines.map(line => line.split('|').map(c => c.trim()));
+        const rows = tableLines.map(line => {
+          const cells = line.split('|').map(c => c.trim());
+          // Strip leading/trailing empty strings produced by "| cell | cell |" syntax
+          while (cells.length > 0 && cells[0] === '') cells.shift();
+          while (cells.length > 0 && cells[cells.length - 1] === '') cells.pop();
+          return cells;
+        });
         // Filter markdown separator rows (cells are only dashes/colons)
         const dataRows = rows.filter(row => {
           const nonEmpty = row.filter(c => c.length > 0);

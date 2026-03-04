@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   ClipboardList,
@@ -8,56 +9,18 @@ import {
   Calculator,
   ChevronRight,
   Info,
+  Loader2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
-interface PracticeTest {
+interface PracticeTestMeta {
   id: string;
   name: string;
-  description: string;
-  totalQuestions: number;
-  estimatedTime: string;
-  type: 'full' | 'section';
-  modules: string[];
-  difficulty: 'Standard' | 'Adaptive';
+  questionCount: number;
+  mathCount: number;
+  rwCount: number;
 }
-
-const PRACTICE_TESTS: PracticeTest[] = [
-  {
-    id: 'sat-practice-1',
-    name: 'SAT Practice Test 1',
-    description:
-      'Full SAT simulation with adaptive difficulty. Mirrors the real digital SAT format with both Reading & Writing and Math modules.',
-    totalQuestions: 98,
-    estimatedTime: '2 hr 14 min',
-    type: 'full',
-    modules: ['RW Module 1 (27q)', 'RW Module 2 (27q)', 'Math Module 1 (22q)', 'Math Module 2 (22q)'],
-    difficulty: 'Adaptive',
-  },
-  {
-    id: 'sat-practice-2',
-    name: 'SAT Practice Test 2',
-    description:
-      'A second full-length practice test to track score improvement over time. Includes new question types focused on advanced math.',
-    totalQuestions: 98,
-    estimatedTime: '2 hr 14 min',
-    type: 'full',
-    modules: ['RW Module 1 (27q)', 'RW Module 2 (27q)', 'Math Module 1 (22q)', 'Math Module 2 (22q)'],
-    difficulty: 'Adaptive',
-  },
-  {
-    id: 'custom-timed-section',
-    name: 'Custom Timed Section',
-    description:
-      'Practice a single timed section — either Reading & Writing or Math. Great for building section-specific stamina and pacing.',
-    totalQuestions: 27,
-    estimatedTime: '32 min',
-    type: 'section',
-    modules: ['Choose: RW or Math section'],
-    difficulty: 'Standard',
-  },
-];
 
 function ModuleChip({ label }: { label: string }) {
   const isMath = label.toLowerCase().includes('math');
@@ -77,6 +40,16 @@ function ModuleChip({ label }: { label: string }) {
 
 export default function PracticeTestPage() {
   const router = useRouter();
+  const [tests, setTests] = useState<PracticeTestMeta[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/practice-tests')
+      .then(r => r.ok ? r.json() : [])
+      .then(setTests)
+      .catch(() => setTests([]))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="p-6 max-w-5xl mx-auto w-full">
@@ -93,79 +66,84 @@ export default function PracticeTestPage() {
         <div>
           <p className="text-sm font-semibold text-blue-800">What to expect</p>
           <p className="text-xs text-blue-700 mt-0.5 leading-relaxed">
-            Full tests have a 10-minute break between the Reading & Writing and Math sections. No hints
+            Full tests have a 10-minute break between the Reading &amp; Writing and Math sections. No hints
             or explanations are shown during the test. You&apos;ll see a detailed score report when you finish.
             Use the Desmos calculator and formula sheet on math modules.
           </p>
         </div>
       </div>
 
-      <div className="space-y-4">
-        {PRACTICE_TESTS.map((test) => (
-          <div
-            key={test.id}
-            className="flex flex-col md:flex-row gap-4 bg-white rounded-xl border border-slate-200 p-6 shadow-sm hover:border-blue-300 hover:shadow-md transition-all duration-150"
-          >
-            {/* Icon */}
-            <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center shrink-0">
-              <ClipboardList className="h-6 w-6 text-purple-600" />
-            </div>
+      {loading ? (
+        <div className="flex items-center justify-center py-16 gap-3 text-slate-400">
+          <Loader2 className="h-5 w-5 animate-spin" />
+          <span className="text-sm">Loading available tests…</span>
+        </div>
+      ) : tests.length === 0 ? (
+        <div className="text-center py-16 text-slate-400 text-sm">
+          No practice tests found. Upload College Board PDFs in the Parent Dashboard to add tests.
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {tests.map((test) => (
+            <div
+              key={test.id}
+              className="flex flex-col md:flex-row gap-4 bg-white rounded-xl border border-slate-200 p-6 shadow-sm hover:border-blue-300 hover:shadow-md transition-all duration-150"
+            >
+              {/* Icon */}
+              <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center shrink-0">
+                <ClipboardList className="h-6 w-6 text-purple-600" />
+              </div>
 
-            {/* Content */}
-            <div className="flex-1 min-w-0 space-y-3">
-              <div>
-                <div className="flex items-center gap-2 flex-wrap mb-1">
-                  <h2 className="text-base font-bold text-slate-900">{test.name}</h2>
-                  <Badge
-                    variant="outline"
-                    className={
-                      test.difficulty === 'Adaptive'
-                        ? 'bg-purple-50 text-purple-700 border-purple-200 text-xs'
-                        : 'bg-slate-50 text-slate-600 border-slate-200 text-xs'
-                    }
-                  >
-                    {test.difficulty}
-                  </Badge>
-                  <Badge variant="outline" className="bg-slate-50 text-slate-600 border-slate-200 text-xs">
-                    {test.type === 'full' ? 'Full Test' : 'Section'}
-                  </Badge>
+              {/* Content */}
+              <div className="flex-1 min-w-0 space-y-3">
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap mb-1">
+                    <h2 className="text-base font-bold text-slate-900">{test.name}</h2>
+                    <Badge variant="outline" className="bg-slate-50 text-slate-600 border-slate-200 text-xs">
+                      Full Test
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-slate-500 leading-relaxed">
+                    Full SAT simulation with timed modules, passage annotation, and Desmos calculator.
+                    Mirrors the real digital SAT format.
+                  </p>
                 </div>
-                <p className="text-sm text-slate-500 leading-relaxed">{test.description}</p>
+
+                {/* Meta */}
+                <div className="flex items-center gap-4 text-xs text-slate-500">
+                  <span className="flex items-center gap-1.5">
+                    <ClipboardList className="h-3.5 w-3.5 text-slate-400" />
+                    {test.questionCount} questions available
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <Clock className="h-3.5 w-3.5 text-slate-400" />
+                    ~2 hr 14 min
+                  </span>
+                </div>
+
+                {/* Modules */}
+                <div className="flex flex-wrap gap-1.5">
+                  <ModuleChip label="RW Module 1 (27q)" />
+                  <ModuleChip label="RW Module 2 (27q)" />
+                  <ModuleChip label="Math Module 1 (22q)" />
+                  <ModuleChip label="Math Module 2 (22q)" />
+                </div>
               </div>
 
-              {/* Meta */}
-              <div className="flex items-center gap-4 text-xs text-slate-500">
-                <span className="flex items-center gap-1.5">
-                  <ClipboardList className="h-3.5 w-3.5 text-slate-400" />
-                  {test.totalQuestions} questions
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <Clock className="h-3.5 w-3.5 text-slate-400" />
-                  {test.estimatedTime}
-                </span>
-              </div>
-
-              {/* Modules */}
-              <div className="flex flex-wrap gap-1.5">
-                {test.modules.map((m, i) => (
-                  <ModuleChip key={i} label={m} />
-                ))}
+              {/* CTA */}
+              <div className="flex items-center md:items-end md:flex-col gap-2 shrink-0">
+                <Button
+                  onClick={() => router.push(`/practice-test/${test.id}`)}
+                  className="bg-purple-600 hover:bg-purple-700 text-white font-semibold shadow-sm"
+                >
+                  Start Test
+                  <ChevronRight className="h-4 w-4 ml-1" />
+                </Button>
               </div>
             </div>
-
-            {/* CTA */}
-            <div className="flex items-center md:items-end md:flex-col gap-2 shrink-0">
-              <Button
-                onClick={() => router.push(`/practice-test/${test.id}`)}
-                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold shadow-sm"
-              >
-                Start Test
-                <ChevronRight className="h-4 w-4 ml-1" />
-              </Button>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Tips */}
       <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
