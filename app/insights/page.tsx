@@ -148,6 +148,29 @@ export default function InsightsPage() {
     }
   };
 
+  // Look up the sub-skill of the first evidence question, then navigate to
+  // the study page with that sub-skill pre-selected so it auto-launches a
+  // Quick Drill instead of the generic study chooser.
+  const handleDrill = async (evidenceIds: string[]) => {
+    let subSkillId: string | null = null;
+    if (evidenceIds.length > 0) {
+      try {
+        const res = await fetch(`/api/questions?questionId=${evidenceIds[0]}`);
+        if (res.ok) {
+          const data = await res.json();
+          subSkillId = (data.question?.sub_skill_id as string | undefined) ?? null;
+        }
+      } catch {
+        // non-critical — fall back to generic study page
+      }
+    }
+    if (subSkillId) {
+      router.push(`/study?subSkill=${encodeURIComponent(subSkillId)}`);
+    } else {
+      router.push('/study');
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -291,19 +314,28 @@ export default function InsightsPage() {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {insight.top_insights.slice(0, 3).map((ins, idx) => {
-                  const dimensionKey = Object.entries(insight.dimension_details).find(
-                    ([, v]) => v.finding === ins.finding
-                  )?.[0] ?? `dim-${idx}`;
+                  // Match the top insight back to its dimension key by finding text.
+                  // Fall back to the idx-th key in dimension_details so we never
+                  // show raw "dim-0 / dim-1 / dim-2" labels.
+                  const dimensionKey =
+                    Object.entries(insight.dimension_details).find(
+                      ([, v]) => v.finding === ins.finding
+                    )?.[0] ??
+                    Object.keys(insight.dimension_details)[idx] ??
+                    `dim-${idx}`;
+
+                  // Resolve the human-readable label from the INSIGHT_DIMENSIONS list
+                  const dimensionLabel =
+                    INSIGHT_DIMENSIONS.find((d) => d.id === dimensionKey)?.label ??
+                    dimensionKey.replace(/_/g, ' ');
 
                   return (
                     <InsightCard
                       key={idx}
                       insight={ins}
                       rank={(idx + 1) as 1 | 2 | 3}
-                      dimension={dimensionKey.replace(/_/g, ' ')}
-                      onDrill={() =>
-                        router.push(`/study?focus=${dimensionKey}`)
-                      }
+                      dimension={dimensionLabel}
+                      onDrill={() => handleDrill(ins.evidence_question_ids)}
                     />
                   );
                 })}

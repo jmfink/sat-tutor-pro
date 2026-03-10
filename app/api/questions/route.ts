@@ -24,6 +24,10 @@ export async function GET(req: NextRequest) {
       .from('questions')
       .select('*')
       .eq('question_id', questionId)
+      // Apply the same exclusion filters used in study sessions so corrupted
+      // or figure-only questions are never served even via direct ID lookup.
+      .not('tags', 'cs', '{formatting_issues}')
+      .not('tags', 'cs', '{has_figure}')
       .single();
     if (qErr || !question) {
       return NextResponse.json({ error: 'Question not found' }, { status: 404 });
