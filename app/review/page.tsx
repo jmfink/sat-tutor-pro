@@ -473,7 +473,7 @@ export default function ReviewQueuePage() {
           <Button variant="outline" onClick={() => router.push('/')} className="flex-1 border-slate-200">
             Dashboard
           </Button>
-          <Button onClick={() => router.push('/study')} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold">
+          <Button onClick={() => router.push('/review')} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold">
             Keep Studying
           </Button>
         </div>
