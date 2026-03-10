@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Zap,
@@ -84,6 +84,38 @@ export default function StudyPage() {
   const router = useRouter();
   const [loading, setLoading] = useState<SessionType | null>(null);
   const [focusSkill, setFocusSkill] = useState<SubSkillId | ''>('');
+
+  // When navigated here from an Insights "Start a targeted drill" button, a
+  // ?subSkill=<SubSkillId> param is passed.  Auto-launch a Quick Drill session
+  // immediately so the student doesn't have to re-select the skill manually.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const preselectedSkill = params.get('subSkill') as SubSkillId | null;
+    if (!preselectedSkill) return;
+
+    setFocusSkill(preselectedSkill);
+    setLoading('quick_drill');
+
+    fetch('/api/sessions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        student_id: DEMO_STUDENT_ID,
+        session_type: 'quick_drill',
+        sub_skill_focus: preselectedSkill,
+      }),
+    })
+      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+      .then((session) => {
+        const sessionId = session.id ?? session.session_id;
+        router.push(`/study/${sessionId}`);
+      })
+      .catch(() => {
+        setLoading(null);
+        setFocusSkill('');
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const startSession = async (type: SessionType) => {
     if (type === 'quick_drill' && !focusSkill) {

@@ -170,11 +170,34 @@ export default function InsightDimensionPage() {
   const dimensionMeta = INSIGHT_DIMENSIONS.find((d) => d.id === dimensionId);
   const detail: InsightDimension | null = insight?.dimension_details[dimensionId] ?? null;
 
+  // Navigate to a Quick Drill pre-configured for the first evidence question's sub-skill.
+  const handleDrill = async (evidenceIds: string[]) => {
+    let subSkillId: string | null = null;
+    if (evidenceIds.length > 0) {
+      try {
+        const res = await fetch(`/api/questions?questionId=${evidenceIds[0]}`);
+        if (res.ok) {
+          const data = await res.json();
+          subSkillId = (data.question?.sub_skill_id as string | undefined) ?? null;
+        }
+      } catch {
+        // non-critical
+      }
+    }
+    if (subSkillId) {
+      router.push(`/study?subSkill=${encodeURIComponent(subSkillId)}`);
+    } else {
+      router.push('/study');
+    }
+  };
+
   useEffect(() => {
     fetch(`/api/claude/analyze-patterns?studentId=${DEMO_STUDENT_ID}`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
-        if (data?.id) setInsight(data);
+        // The GET endpoint returns { insight: {...}, wrong_answers_count: N }
+        // not a bare insight object — extract the nested insight.
+        if (data?.insight?.id) setInsight(data.insight);
       })
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -315,7 +338,7 @@ export default function InsightDimensionPage() {
           {/* CTA */}
           <div className="flex gap-3">
             <Button
-              onClick={() => router.push(`/study?focus=${dimensionId}`)}
+              onClick={() => handleDrill(detail.evidence_question_ids)}
               className="bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-sm"
             >
               Start Targeted Drill

@@ -26,8 +26,16 @@ export async function GET(req: NextRequest) {
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-  if (countOnly) return NextResponse.json({ count: (data || []).length });
-  return NextResponse.json(data || []);
+  // Exclude review items whose question is tagged formatting_issues or has_figure
+  // so that corrupted / figure-only questions are never served in the review session.
+  type ReviewRow = typeof data extends (infer R)[] | null ? R : never;
+  const clean = (data || []).filter((item: ReviewRow) => {
+    const tags: string[] = (item as { question?: { tags?: string[] } }).question?.tags ?? [];
+    return !tags.includes('formatting_issues') && !tags.includes('has_figure');
+  });
+
+  if (countOnly) return NextResponse.json({ count: clean.length });
+  return NextResponse.json(clean);
 }
 
 // Record a review result and update schedule
