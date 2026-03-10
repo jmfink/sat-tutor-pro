@@ -64,9 +64,17 @@ const PATTERNS = [
   },
 ];
 
-function detectIssues(text) {
-  if (!text) return [];
-  return PATTERNS.filter(p => p.test(text)).map(p => p.name);
+// Check question_text AND all answer_choices values so corrupted answer options
+// (e.g. "950 3 50 1 150- + =^ h") are caught even when question_text is clean.
+function detectIssues(question) {
+  const texts = [question.question_text ?? ''];
+  if (question.answer_choices && typeof question.answer_choices === 'object') {
+    for (const v of Object.values(question.answer_choices)) {
+      if (typeof v === 'string') texts.push(v);
+    }
+  }
+  const combined = texts.join('\n');
+  return PATTERNS.filter(p => p.test(combined)).map(p => p.name);
 }
 
 // ---------------------------------------------------------------------------
@@ -86,7 +94,7 @@ process.stdout.write('Fetching questions');
 while (true) {
   const { data, error } = await supabase
     .from('questions')
-    .select('question_id, question_text, source, section, tags')
+    .select('question_id, question_text, answer_choices, source, section, tags')
     .range(from, from + PAGE - 1);
 
   if (error) { console.error('\nFetch error:', error.message); process.exit(1); }
@@ -114,7 +122,7 @@ const affected = [];
 const patternTotals = Object.fromEntries(PATTERNS.map(p => [p.name, 0]));
 
 for (const q of allQuestions) {
-  const issues = detectIssues(q.question_text ?? '');
+  const issues = detectIssues(q);
   if (issues.length === 0) continue;
   for (const name of issues) patternTotals[name]++;
   affected.push({ ...q, issues });
