@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { TimerWithBar } from '@/components/timer';
 import { DesmosEmbed } from '@/components/desmos-embed';
 import { AnnotationToolbar } from '@/components/annotation-toolbar';
@@ -138,6 +138,9 @@ export default function ActivePracticeTestPage() {
   const [questionStates, setQuestionStates] = useState<Map<number, QuestionState>>(new Map());
   const [loadingQuestions, setLoadingQuestions] = useState(false);
   const [answeredIds] = useState<Set<string>>(new Set());
+  // Actual number of questions loaded for the current module (may be less than
+  // the hardcoded SAT spec count after deduplication / filtering).
+  const [moduleSize, setModuleSize] = useState(0);
 
   const [showCalculator, setShowCalculator] = useState(false);
   const [showFormulas, setShowFormulas] = useState(false);
@@ -175,6 +178,7 @@ export default function ActivePracticeTestPage() {
     setLoadingQuestions(true);
     setQuestions([]);
     setQuestionIndex(0);
+    setModuleSize(0);
 
     const loadedIds = [...answeredIds].join(',');
     const excludeParam = loadedIds ? `&excludeIds=${loadedIds}` : '';
@@ -205,6 +209,7 @@ export default function ActivePracticeTestPage() {
         }
         setQuestions(qs);
         setPassages(passMap);
+        setModuleSize(qs.length);
       })
       .catch(() => {})
       .finally(() => setLoadingQuestions(false));
@@ -230,7 +235,7 @@ export default function ActivePracticeTestPage() {
   };
 
   const goNext = () => {
-    if (questionIndex < currentModule.questions - 1) {
+    if (questionIndex < questions.length - 1) {
       setQuestionIndex(questionIndex + 1);
     }
   };
@@ -262,7 +267,9 @@ export default function ActivePracticeTestPage() {
   };
 
   const totalAnswered = answered.size;
-  const totalQuestions = currentModule.questions;
+  // Use the actual loaded count; fall back to the SAT spec number only while
+  // questions are still loading (used purely as a progress-bar placeholder).
+  const totalQuestions = moduleSize > 0 ? moduleSize : currentModule.questions;
   const pctAnswered = totalQuestions > 0 ? Math.round((totalAnswered / totalQuestions) * 100) : 0;
 
   // Show confirmation if there are unanswered questions; otherwise advance immediately.
@@ -372,13 +379,21 @@ export default function ActivePracticeTestPage() {
                 </div>
                 <Progress value={pctAnswered} className="h-1" />
               </div>
-              <QuestionGrid
-                total={Math.min(totalQuestions, questions.length || totalQuestions)}
-                current={questionIndex}
-                answered={answered}
-                flagged={flagged}
-                onJump={setQuestionIndex}
-              />
+              {loadingQuestions ? (
+                <div className="grid grid-cols-6 gap-1.5">
+                  {Array.from({ length: 12 }, (_, i) => (
+                    <div key={i} className="h-8 w-full rounded-md bg-slate-100 animate-pulse" />
+                  ))}
+                </div>
+              ) : (
+                <QuestionGrid
+                  total={moduleSize}
+                  current={questionIndex}
+                  answered={answered}
+                  flagged={flagged}
+                  onJump={setQuestionIndex}
+                />
+              )}
             </div>
 
             {/* Legend */}
@@ -427,7 +442,7 @@ export default function ActivePracticeTestPage() {
               <div className="flex flex-1 min-h-0">
                 {/* Passage panel — R&W questions with a passage */}
                 {currentPassage && !isMathModule && (
-                  <div className="w-1/2 flex flex-col border-r border-slate-200 bg-white">
+                  <div key={currentPassage.passage_id} className="w-1/2 flex flex-col border-r border-slate-200 bg-white">
                     <div className="shrink-0 px-4 py-2 bg-slate-50 border-b border-slate-200">
                       <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
                         Passage
@@ -443,7 +458,7 @@ export default function ActivePracticeTestPage() {
 
                 {/* Math formula context — math questions with passage_text show it inline */}
                 {currentPassage && isMathModule && (
-                  <div className="w-1/2 flex flex-col border-r border-slate-200 bg-white">
+                  <div key={currentPassage.passage_id} className="w-1/2 flex flex-col border-r border-slate-200 bg-white">
                     <div className="flex-1 overflow-y-auto px-5 py-4">
                       <div className="text-sm leading-relaxed text-slate-700 passage-text">
                         {renderTextWithTables(currentPassage.passage_text)}
@@ -627,6 +642,7 @@ export default function ActivePracticeTestPage() {
           Timer is paused while this dialog is open (timerIsPaused above). */}
       <Dialog open={showSubmitConfirm} onOpenChange={setShowSubmitConfirm}>
         <DialogContent className="max-w-sm">
+          <DialogTitle className="sr-only">Submit Module</DialogTitle>
           <div className="text-center space-y-4">
             <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mx-auto">
               <AlertTriangle className="h-6 w-6 text-amber-600" />

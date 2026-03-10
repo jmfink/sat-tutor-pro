@@ -86,10 +86,15 @@ export default function ReviewQueuePage() {
   const [isCorrect, setIsCorrect] = useState(false);
   const [sessionCorrect, setSessionCorrect] = useState(0);
   const [sessionTotal, setSessionTotal] = useState(0);
+  // Tracks how many cards have been reviewed in the current session so the
+  // "cards due" count decreases in real time even before a full re-fetch.
+  const [sessionReviewedCount, setSessionReviewedCount] = useState(0);
   const [questionStartTime, setQuestionStartTime] = useState(Date.now());
 
   useEffect(() => {
-    fetch(`/api/review?studentId=${DEMO_STUDENT_ID}`)
+    // cache: 'no-store' ensures the browser never returns a stale count when
+    // the user navigates away and back after completing a review session.
+    fetch(`/api/review?studentId=${DEMO_STUDENT_ID}`, { cache: 'no-store' })
       .then((r) => (r.ok ? r.json() : []))
       .then((data) => {
         const items: ReviewQueueItem[] = Array.isArray(data) ? data : data?.items ?? [];
@@ -129,6 +134,7 @@ export default function ReviewQueuePage() {
     setCurrentItemIndex(0);
     setSessionCorrect(0);
     setSessionTotal(0);
+    setSessionReviewedCount(0);
     await fetchQuestionForItem(queueItems[0]);
   };
 
@@ -143,8 +149,10 @@ export default function ReviewQueuePage() {
     setSessionTotal((t) => t + 1);
     if (correct) setSessionCorrect((c) => c + 1);
 
-    // Record review result
+    // Record review result and optimistically mark card as reviewed so the
+    // displayed count decreases immediately without waiting for a re-fetch.
     const item = queueItems[currentItemIndex];
+    setSessionReviewedCount((c) => c + 1);
     try {
       await fetch('/api/review', {
         method: 'POST',
@@ -166,6 +174,18 @@ export default function ReviewQueuePage() {
   const handleNext = async () => {
     const nextIndex = currentItemIndex + 1;
     if (nextIndex >= queueItems.length) {
+      // Re-fetch the queue so the list view reflects the server's updated counts
+      // (items rescheduled to future dates should no longer appear as "due").
+      try {
+        const res = await fetch(`/api/review?studentId=${DEMO_STUDENT_ID}`, { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items: ReviewQueueItem[] = Array.isArray(data) ? data : data?.items ?? [];
+          setQueueItems(items);
+        }
+      } catch {
+        // non-critical
+      }
       setMode('done');
       return;
     }
@@ -173,8 +193,11 @@ export default function ReviewQueuePage() {
     await fetchQuestionForItem(queueItems[nextIndex]);
   };
 
-  const dueCount = queueItems.length;
-  const progressPct = mode === 'active' ? Math.round((sessionTotal / dueCount) * 100) : 0;
+  // Total items in the current session (stable for progress tracking).
+  const sessionTotal_count = queueItems.length;
+  // Cards still remaining after accounting for reviewed ones this session.
+  const dueCount = Math.max(0, queueItems.length - sessionReviewedCount);
+  const progressPct = mode === 'active' ? Math.round((sessionTotal / sessionTotal_count) * 100) : 0;
 
   if (loading) {
     return (
@@ -281,7 +304,7 @@ export default function ReviewQueuePage() {
           </div>
           <div className="flex items-center gap-3">
             <span className="text-xs text-slate-500">
-              {currentItemIndex + 1} / {dueCount}
+              {currentItemIndex + 1} / {sessionTotal_count}
             </span>
             <div className="w-24">
               <Progress value={progressPct} className="h-1.5" />
@@ -392,7 +415,7 @@ export default function ReviewQueuePage() {
                       onClick={handleNext}
                       className="bg-blue-600 hover:bg-blue-700 text-white font-semibold"
                     >
-                      {currentItemIndex < dueCount - 1 ? (
+                      {currentItemIndex < sessionTotal_count - 1 ? (
                         <>Next Card <ChevronRight className="h-4 w-4 ml-1" /></>
                       ) : (
                         <>Finish Review <ChevronRight className="h-4 w-4 ml-1" /></>
