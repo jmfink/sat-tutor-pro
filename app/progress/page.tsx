@@ -106,14 +106,8 @@ export default function ProgressPage() {
   const [loading, setLoading] = useState(true);
   const [selectedSkill, setSelectedSkill] = useState<SubSkillId | null>(null);
 
-  // Fake error distribution for demo
-  const errorDist = [
-    { name: 'Conceptual Gap', value: 38 },
-    { name: 'Careless/Rush', value: 24 },
-    { name: 'Trap Answer', value: 18 },
-    { name: 'Procedural Error', value: 12 },
-    { name: 'Misread', value: 8 },
-  ];
+  // Error distribution — no real data yet, placeholder until backend provides it
+  const errorDist: { name: string; value: number }[] = [];
 
   useEffect(() => {
     Promise.all([
@@ -283,9 +277,11 @@ export default function ProgressPage() {
           <h2 className="text-sm font-bold text-slate-700 uppercase tracking-wide mb-4">
             Error Type Distribution
           </h2>
-          {errorDist.every((d) => d.value === 0) ? (
+          {sessions.length === 0 || errorDist.length === 0 ? (
             <div className="flex items-center justify-center h-48">
-              <p className="text-slate-400 text-sm">No error data yet</p>
+              <p className="text-slate-400 text-sm text-center">
+                Error patterns will appear here after you&apos;ve answered some questions.
+              </p>
             </div>
           ) : (
             <ResponsiveContainer width="100%" height={260}>

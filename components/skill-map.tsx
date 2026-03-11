@@ -35,6 +35,11 @@ const MASTERY_LABEL_COLOR = {
   mastered: 'text-amber-700',
 } as const;
 
+// Styles for skills that have never been attempted — neutral gray, no mastery implied
+const NOT_PRACTICED_BG = 'bg-slate-50 border-slate-200 hover:bg-slate-100';
+const NOT_PRACTICED_DOT = 'bg-slate-300';
+const NOT_PRACTICED_LABEL = 'text-slate-400';
+
 const DEFAULT_ELO = 1000;
 
 export function SkillMap({ skillRatings, onSkillClick }: SkillMapProps) {
@@ -65,6 +70,12 @@ export function SkillMap({ skillRatings, onSkillClick }: SkillMapProps) {
     const mastery = getMasteryLevel(elo);
     const attempted = rating?.questions_attempted ?? 0;
 
+    const isPracticed = attempted > 0;
+    const bgClass = isPracticed ? MASTERY_BG[mastery] : NOT_PRACTICED_BG;
+    const dotClass = isPracticed ? MASTERY_DOT[mastery] : NOT_PRACTICED_DOT;
+    const labelClass = isPracticed ? MASTERY_LABEL_COLOR[mastery] : NOT_PRACTICED_LABEL;
+    const labelText = isPracticed ? mastery : 'Not yet practiced';
+
     return (
       <TooltipProvider key={skill.id} delayDuration={200}>
         <Tooltip>
@@ -74,7 +85,7 @@ export function SkillMap({ skillRatings, onSkillClick }: SkillMapProps) {
               className={`
                 group relative flex flex-col gap-1 p-3 rounded-lg border-2 text-left
                 transition-all duration-150 cursor-pointer w-full
-                ${MASTERY_BG[mastery]}
+                ${bgClass}
               `}
             >
               <div className="flex items-start justify-between gap-1">
@@ -82,12 +93,12 @@ export function SkillMap({ skillRatings, onSkillClick }: SkillMapProps) {
                   {skill.name}
                 </span>
                 <span
-                  className={`flex-shrink-0 w-2.5 h-2.5 rounded-full mt-0.5 ${MASTERY_DOT[mastery]}`}
+                  className={`flex-shrink-0 w-2.5 h-2.5 rounded-full mt-0.5 ${dotClass}`}
                 />
               </div>
               <div className="flex items-center justify-between mt-auto">
-                <span className={`text-xs font-medium capitalize ${MASTERY_LABEL_COLOR[mastery]}`}>
-                  {mastery}
+                <span className={`text-xs font-medium capitalize ${labelClass}`}>
+                  {labelText}
                 </span>
                 <span className="text-xs text-slate-400">{skill.id}</span>
               </div>
@@ -150,6 +161,10 @@ export function SkillMap({ skillRatings, onSkillClick }: SkillMapProps) {
   const legend = (
     <div className="flex items-center gap-4 flex-wrap">
       <span className="text-xs text-slate-500 font-medium">Mastery:</span>
+      <div className="flex items-center gap-1.5">
+        <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
+        <span className="text-xs text-slate-600">Not yet practiced</span>
+      </div>
       {(
         [
           ['developing', 'bg-red-500', 'Developing (<1100)'],
