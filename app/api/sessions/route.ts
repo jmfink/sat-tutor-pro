@@ -26,6 +26,11 @@ export async function POST(req: NextRequest) {
 
     const supabase = createSupabaseServerClient();
 
+    // Ensure student row exists (FK constraint: sessions.student_id → students.id)
+    await supabase
+      .from('students')
+      .upsert({ id: studentId, name: 'Student' }, { onConflict: 'id', ignoreDuplicates: true });
+
     const { data: session, error } = await supabase
       .from('sessions')
       .insert({

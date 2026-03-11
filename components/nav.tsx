@@ -73,6 +73,7 @@ const NAV_ITEMS: NavItem[] = [
 
 export function Nav({ currentPath, studentId }: NavProps) {
   const [predictedScore, setPredictedScore] = useState<number | null>(null);
+  const [scoreLoaded, setScoreLoaded] = useState(false);
 
   useEffect(() => {
     if (!studentId) return;
@@ -83,7 +84,8 @@ export function Nav({ currentPath, studentId }: NavProps) {
           setPredictedScore(data.total_score_mid);
         }
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setScoreLoaded(true));
   }, [studentId]);
 
   const isActive = (item: NavItem) => {
@@ -190,6 +192,8 @@ export function Nav({ currentPath, studentId }: NavProps) {
             <span className="text-2xl font-black text-slate-800">{predictedScore}</span>
             <span className="text-sm text-slate-400 mb-0.5">/ 1600</span>
           </div>
+        ) : scoreLoaded ? (
+          <p className="text-sm text-slate-400">Answer 20+ questions to unlock</p>
         ) : (
           <div className="h-8 bg-slate-100 rounded-md animate-pulse" />
         )}
