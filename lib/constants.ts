@@ -1,7 +1,15 @@
 import type { SubSkill } from '@/types';
 
-// Demo student used throughout the app until real auth is wired up
-export const DEMO_STUDENT_ID = '00000000-0000-0000-0000-000000000001';
+// Maps friendly student IDs (used in .env.local) to stable UUIDs.
+// The students table requires a UUID primary key, so each person gets a fixed UUID.
+// To add a new student, add an entry here and set NEXT_PUBLIC_DEFAULT_STUDENT_ID in .env.local.
+const STUDENT_UUID_MAP: Record<string, string> = {
+  ethan_001: '00000000-0000-0000-0000-000000000001',
+  dad_001:   '00000000-0000-0000-0000-000000000002',
+};
+
+const _rawStudentId = process.env.NEXT_PUBLIC_DEFAULT_STUDENT_ID ?? 'ethan_001';
+export const DEMO_STUDENT_ID: string = STUDENT_UUID_MAP[_rawStudentId] ?? _rawStudentId;
 
 // Shared session type display helpers
 export const SESSION_TYPE_LABELS: Record<string, string> = {

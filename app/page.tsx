@@ -395,7 +395,7 @@ export default function DashboardPage() {
           <p className="text-sm font-bold">See your skill map, score history, and error breakdown</p>
         </div>
         <Link href="/progress">
-          <Button variant="outline" className="border-slate-500 text-slate-200 hover:bg-slate-700 hover:text-white shrink-0">
+          <Button variant="outline" className="bg-transparent border-slate-500 text-slate-200 hover:bg-slate-700 hover:text-white shrink-0">
             View Progress
             <ChevronRight className="h-4 w-4 ml-1" />
           </Button>
