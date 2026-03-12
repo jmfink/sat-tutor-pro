@@ -23,13 +23,7 @@ import type { Session, ScorePrediction, DailyActivity, WrongAnswerInsight } from
 import { DEMO_STUDENT_ID, SESSION_TYPE_LABELS, SESSION_TYPE_COLORS, calcAccuracy } from '@/lib/constants';
 import { toLocalDateKey } from '@/lib/utils';
 
-const STUDENT_NAME = 'Ethan';
-
-const WEEKLY_GOALS = [
-  { id: 1, label: 'Complete 5 study sessions', target: 5, current: 2 },
-  { id: 2, label: 'Reduce careless errors to < 20%', target: 100, current: 72, isPercent: true, invert: true },
-  { id: 3, label: 'Master 2 new skills', target: 2, current: 1 },
-];
+const STUDENT_NAME = process.env.NEXT_PUBLIC_STUDENT_NAME ?? 'Student';
 
 function ScorePredictionWidget({ prediction, loading }: { prediction: ScorePrediction | null; loading: boolean }) {
   if (!prediction) {
@@ -173,6 +167,8 @@ export default function DashboardPage() {
   const [reviewCount, setReviewCount] = useState<number>(0);
   const [insight, setInsight] = useState<WrongAnswerInsight | null>(null);
   const [streak, setStreak] = useState(0);
+  const [weekSessions, setWeekSessions] = useState(0);
+  const [weekQuestions, setWeekQuestions] = useState(0);
 
   useEffect(() => {
     // Fetch score prediction (GET returns array; take the most recent)
@@ -184,12 +180,17 @@ export default function DashboardPage() {
       .catch(() => {})
       .finally(() => setPredLoading(false));
 
-    // Fetch recent sessions
-    fetch(`/api/sessions?studentId=${DEMO_STUDENT_ID}&limit=5`)
+    // Fetch sessions — 50 gives enough history for weekly goal computation and recent list
+    fetch(`/api/sessions?studentId=${DEMO_STUDENT_ID}&limit=50`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
-        if (Array.isArray(data)) setSessions(data);
-        else if (data?.sessions) setSessions(data.sessions);
+        const list: Session[] = Array.isArray(data) ? data : (data?.sessions ?? []);
+        setSessions(list);
+        // Compute weekly goal progress here (effects can safely call Date.now)
+        const cutoff = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+        const ws = list.filter((s) => new Date(s.started_at) >= cutoff);
+        setWeekSessions(ws.length);
+        setWeekQuestions(ws.reduce((sum, s) => sum + (s.questions_answered ?? 0), 0));
       })
       .catch(() => {})
       .finally(() => setSessionsLoading(false));
@@ -219,6 +220,11 @@ export default function DashboardPage() {
       })
       .catch(() => {});
   }, []);
+
+  const weeklyGoals = [
+    { id: 1, label: 'Complete 5 study sessions this week', target: 5, current: weekSessions },
+    { id: 2, label: 'Answer 50 questions this week', target: 50, current: weekQuestions },
+  ];
 
   return (
     <div className="p-6 max-w-6xl mx-auto w-full space-y-6">
@@ -325,11 +331,9 @@ export default function DashboardPage() {
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
           <h2 className="text-sm font-bold text-slate-800 mb-3">Weekly Goals</h2>
           <div className="space-y-4">
-            {WEEKLY_GOALS.map((goal) => {
-              const pct = goal.invert
-                ? Math.max(0, Math.min(100, 100 - goal.current))
-                : Math.min(100, Math.round((goal.current / goal.target) * 100));
-              const done = goal.invert ? goal.current <= (100 - goal.target) : goal.current >= goal.target;
+            {weeklyGoals.map((goal) => {
+              const pct = Math.min(100, Math.round((goal.current / goal.target) * 100));
+              const done = goal.current >= goal.target;
               return (
                 <div key={goal.id}>
                   <div className="flex items-center justify-between mb-1.5">
@@ -343,11 +347,7 @@ export default function DashboardPage() {
                         {goal.label}
                       </p>
                     </div>
-                    <span className="text-xs text-slate-500">
-                      {goal.isPercent
-                        ? `${goal.current}%`
-                        : `${goal.current}/${goal.target}`}
-                    </span>
+                    <span className="text-xs text-slate-500">{goal.current}/{goal.target}</span>
                   </div>
                   <Progress value={pct} className="h-1.5" />
                 </div>
