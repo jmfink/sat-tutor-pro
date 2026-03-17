@@ -6,11 +6,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { Flag, CheckCircle2, XCircle } from 'lucide-react';
+import { Flag, CheckCircle2, XCircle, ThumbsDown } from 'lucide-react';
 import { ConfidenceSelector } from '@/components/confidence-selector';
 import type { ConfidenceLevel } from '@/types';
-import { getDifficultyLabel, getDifficultyColor } from '@/lib/constants';
+import { getDifficultyLabel, getDifficultyColor, DEMO_STUDENT_ID } from '@/lib/constants';
 import { gridInAnswersMatch } from '@/lib/utils';
+import { toast } from 'sonner';
 
 /**
  * Render a string that may contain pipe-delimited table blocks.
@@ -127,6 +128,27 @@ export function QuestionCard({
   const [pendingAnswer, setPendingAnswer] = useState<string | null>(null);
   const [confidence, setConfidence] = useState<ConfidenceLevel | null>(null);
   const [gridInValue, setGridInValue] = useState('');
+  const [feedbackSent, setFeedbackSent] = useState(false);
+
+  const handleFeedback = async () => {
+    if (feedbackSent) return;
+    setFeedbackSent(true);
+    try {
+      await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          question_id: question.question_id,
+          student_id: DEMO_STUDENT_ID,
+          feedback_type: 'bad_question',
+        }),
+      });
+      toast.success("Thanks — we'll review this question");
+    } catch {
+      setFeedbackSent(false);
+      toast.error('Could not submit feedback');
+    }
+  };
 
   const handleChoiceClick = (letter: string) => {
     if (isAnswered) return;
@@ -324,7 +346,7 @@ export function QuestionCard({
               </div>
             </div>
           ) : (
-            <div className="px-5 py-3 border-t border-slate-100">
+            <div className="px-5 py-3 border-t border-slate-100 flex items-center justify-between">
               {(() => {
                 const isAnswerCorrect = isGridIn
                   ? gridInAnswersMatch(selectedAnswer, correctAnswer)
@@ -349,6 +371,19 @@ export function QuestionCard({
                   </div>
                 );
               })()}
+              <button
+                onClick={handleFeedback}
+                disabled={feedbackSent}
+                title={feedbackSent ? "Feedback submitted" : "Flag this question as problematic"}
+                className={`flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg border transition-colors ${
+                  feedbackSent
+                    ? 'border-slate-200 text-slate-300 cursor-not-allowed bg-slate-50'
+                    : 'border-slate-200 text-slate-400 hover:text-red-500 hover:border-red-300 hover:bg-red-50'
+                }`}
+              >
+                <ThumbsDown className="h-3.5 w-3.5" />
+                {feedbackSent ? 'Reported' : 'Bad question'}
+              </button>
             </div>
           )}
         </div>

@@ -3,6 +3,80 @@ import { generateSessionSummary } from '@/lib/claude';
 import { createSupabaseServerClient } from '@/lib/supabase';
 import type { StudentContextProfile } from '@/types';
 
+const MATH_PACING_THRESHOLD_S = 90;
+const RW_PACING_THRESHOLD_S = 75;
+
+interface PacingFlag {
+  questionNum: number;
+  section: string;
+  timeSpentSeconds: number;
+  isCorrect: boolean;
+  isTimeSink: boolean; // slow AND wrong
+}
+
+function computePacingAnalysis(attempts: Record<string, unknown>[]): {
+  flags: PacingFlag[];
+  timeSinks: PacingFlag[];
+  summary: string | null;
+} {
+  const flags: PacingFlag[] = [];
+
+  attempts.forEach((attempt, idx) => {
+    const q = attempt.questions as Record<string, unknown> | null;
+    const section = (q?.section as string) ?? 'math';
+    const threshold = section === 'math' ? MATH_PACING_THRESHOLD_S : RW_PACING_THRESHOLD_S;
+    const timeSpent = (attempt.time_spent_seconds as number) ?? 0;
+
+    if (timeSpent > threshold) {
+      flags.push({
+        questionNum: idx + 1,
+        section,
+        timeSpentSeconds: timeSpent,
+        isCorrect: Boolean(attempt.is_correct),
+        isTimeSink: !attempt.is_correct,
+      });
+    }
+  });
+
+  const timeSinks = flags.filter((f) => f.isTimeSink);
+
+  if (flags.length === 0) return { flags, timeSinks, summary: null };
+
+  const threshold = (section: string) =>
+    section === 'math' ? MATH_PACING_THRESHOLD_S : RW_PACING_THRESHOLD_S;
+
+  const sinkDescriptions = timeSinks
+    .slice(0, 3)
+    .map((f) => {
+      const mins = Math.floor(f.timeSpentSeconds / 60);
+      const secs = f.timeSpentSeconds % 60;
+      const timeStr = mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
+      return `question ${f.questionNum} (${timeStr}, wrong — threshold: ${threshold(f.section)}s)`;
+    })
+    .join('; ');
+
+  const slowDescriptions = flags
+    .filter((f) => f.isCorrect)
+    .slice(0, 2)
+    .map((f) => {
+      const mins = Math.floor(f.timeSpentSeconds / 60);
+      const secs = f.timeSpentSeconds % 60;
+      const timeStr = mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
+      return `question ${f.questionNum} (${timeStr}, correct)`;
+    })
+    .join('; ');
+
+  const parts: string[] = [];
+  if (timeSinks.length > 0) parts.push(`Time sinks (slow + wrong): ${sinkDescriptions}`);
+  if (slowDescriptions) parts.push(`Slow but correct: ${slowDescriptions}`);
+
+  return {
+    flags,
+    timeSinks,
+    summary: parts.join(' | '),
+  };
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -49,6 +123,9 @@ export async function POST(req: NextRequest) {
       skill_ratings: {} as StudentContextProfile['skill_ratings'],
     };
 
+    // Compute pacing analysis from attempt timing data
+    const pacingAnalysis = computePacingAnalysis(attempts || []);
+
     // Format started_at as a local date string so Claude references the
     // correct local date rather than a raw UTC timestamp.
     const sessionForClaude = {
@@ -61,6 +138,7 @@ export async function POST(req: NextRequest) {
         hour: '2-digit',
         minute: '2-digit',
       }),
+      pacing_analysis: pacingAnalysis.summary ?? 'No pacing issues detected.',
     };
 
     const summary = await generateSessionSummary({
@@ -75,7 +153,7 @@ export async function POST(req: NextRequest) {
       .update({ summary, ended_at: new Date().toISOString() })
       .eq('id', sessionId);
 
-    return NextResponse.json({ summary });
+    return NextResponse.json({ summary, pacingFlags: pacingAnalysis.flags, timeSinks: pacingAnalysis.timeSinks });
   } catch (err) {
     console.error('session-summary:', err);
     return NextResponse.json({ error: String(err) }, { status: 500 });

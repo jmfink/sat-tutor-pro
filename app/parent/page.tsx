@@ -15,6 +15,7 @@ import {
   Upload,
   Loader2,
   TrendingDown,
+  Flag,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,6 +25,21 @@ import { QuestionUploader } from '@/components/question-uploader';
 import type { Session, WrongAnswerInsight, ScorePrediction } from '@/types';
 
 import { DEMO_STUDENT_ID } from '@/lib/constants';
+
+interface QuestionFeedback {
+  id: string;
+  question_id: string;
+  feedback_type: 'bad_question' | 'bad_explanation';
+  created_at: string;
+  questions?: {
+    question_id: string;
+    question_text: string;
+    section: string;
+    sub_skill_id: string;
+    difficulty: number;
+  } | null;
+}
+
 const DEMO_PIN = process.env.NEXT_PUBLIC_PARENT_PIN ?? '1234';
 const STUDENT_NAME = 'Ethan';
 
@@ -137,6 +153,7 @@ export default function ParentPage() {
   const [dataLoading, setDataLoading] = useState(false);
   const [timeStudiedHours, setTimeStudiedHours] = useState(0);
   const [showUploader, setShowUploader] = useState(false);
+  const [feedback, setFeedback] = useState<QuestionFeedback[]>([]);
 
   const handlePinSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -170,10 +187,14 @@ export default function ParentPage() {
       fetch(`/api/claude/analyze-patterns?studentId=${DEMO_STUDENT_ID}`)
         .then((r) => (r.ok ? r.json() : null))
         .catch(() => null),
-    ]).then(([pred, sess, ins]) => {
+      fetch('/api/feedback?limit=30')
+        .then((r) => (r.ok ? r.json() : []))
+        .catch(() => []),
+    ]).then(([pred, sess, ins, feedbackData]) => {
       if (pred) setPrediction(Array.isArray(pred) ? (pred[0] ?? null) : pred);
       setSessions(sess);
       if (ins?.insight?.id) setInsight(ins.insight);
+      setFeedback(Array.isArray(feedbackData) ? feedbackData : []);
 
       // Compute time studied (this week)
       const weekAgo = new Date();
@@ -457,6 +478,50 @@ export default function ParentPage() {
           </div>
         </div>
       )}
+
+      {/* Flagged Questions & Explanations */}
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="flex items-center gap-2.5 px-5 py-3.5 border-b border-slate-100 bg-slate-50">
+          <Flag className="h-4 w-4 text-red-500" />
+          <h2 className="text-sm font-bold text-slate-700 uppercase tracking-wide">
+            Flagged Questions & Explanations
+          </h2>
+          {feedback.length > 0 && (
+            <span className="ml-auto text-xs font-semibold text-red-600 bg-red-100 border border-red-200 px-2 py-0.5 rounded-full">
+              {feedback.length} flagged
+            </span>
+          )}
+        </div>
+        {feedback.length === 0 ? (
+          <div className="px-5 py-8 text-center">
+            <p className="text-slate-400 text-sm">No questions or explanations flagged yet.</p>
+          </div>
+        ) : (
+          <div className="divide-y divide-slate-100">
+            {feedback.map((item) => (
+              <div key={item.id} className="px-5 py-3 flex items-start gap-3">
+                <span className={`shrink-0 mt-0.5 text-[10px] font-semibold px-2 py-0.5 rounded-full border ${
+                  item.feedback_type === 'bad_question'
+                    ? 'bg-red-100 text-red-700 border-red-200'
+                    : 'bg-amber-100 text-amber-700 border-amber-200'
+                }`}>
+                  {item.feedback_type === 'bad_question' ? 'Bad question' : 'Bad explanation'}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-medium text-slate-700 line-clamp-2">
+                    {item.questions?.question_text ?? item.question_id}
+                  </p>
+                  <p className="text-[10px] text-slate-400 mt-0.5">
+                    {item.questions?.section === 'reading_writing' ? 'Reading & Writing' : 'Math'} ·{' '}
+                    {item.questions?.sub_skill_id} ·{' '}
+                    {new Date(item.created_at).toLocaleDateString('default', { month: 'short', day: 'numeric', year: 'numeric' })}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* PDF upload section */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">

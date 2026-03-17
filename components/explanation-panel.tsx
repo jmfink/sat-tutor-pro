@@ -17,7 +17,10 @@ import {
   ToggleLeft,
   ToggleRight,
   Loader2,
+  ThumbsDown,
 } from 'lucide-react';
+import { DEMO_STUDENT_ID } from '@/lib/constants';
+import { toast } from 'sonner';
 
 interface ExplanationPanelProps {
   question: Question;
@@ -123,7 +126,28 @@ export function ExplanationPanel({
   const [inputText, setInputText] = useState('');
   const [strategyIndex, setStrategyIndex] = useState(0);
   const [initKey, setInitKey] = useState(0);
+  const [explanationFeedbackSent, setExplanationFeedbackSent] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
+
+  const handleExplanationFeedback = async () => {
+    if (explanationFeedbackSent) return;
+    setExplanationFeedbackSent(true);
+    try {
+      await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          question_id: question.question_id,
+          student_id: DEMO_STUDENT_ID,
+          feedback_type: 'bad_explanation',
+        }),
+      });
+      toast.success("Thanks — we'll improve this explanation");
+    } catch {
+      setExplanationFeedbackSent(false);
+      toast.error('Could not submit feedback');
+    }
+  };
   const scrollRef = useRef<HTMLDivElement>(null);
   const hasInitialized = useRef(false);
 
@@ -317,6 +341,20 @@ export function ExplanationPanel({
           >
             <RefreshCw className="h-3 w-3" />
             Different explanation
+          </button>
+
+          <button
+            onClick={handleExplanationFeedback}
+            disabled={explanationFeedbackSent}
+            title={explanationFeedbackSent ? 'Feedback submitted' : 'Flag this explanation as unhelpful'}
+            className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded transition-colors ${
+              explanationFeedbackSent
+                ? 'text-slate-300 cursor-not-allowed'
+                : 'text-slate-400 hover:text-red-500 hover:bg-red-50'
+            }`}
+          >
+            <ThumbsDown className="h-3 w-3" />
+            {explanationFeedbackSent ? 'Reported' : ''}
           </button>
 
           <Separator orientation="vertical" className="h-5" />
