@@ -16,7 +16,10 @@ import {
   Loader2,
   TrendingDown,
   Flag,
+  Mail,
+  CheckCircle,
 } from 'lucide-react';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -154,6 +157,29 @@ export default function ParentPage() {
   const [timeStudiedHours, setTimeStudiedHours] = useState(0);
   const [showUploader, setShowUploader] = useState(false);
   const [feedback, setFeedback] = useState<QuestionFeedback[]>([]);
+  const [testAlertSending, setTestAlertSending] = useState(false);
+  const [testAlertResult, setTestAlertResult] = useState<{ sent: boolean; error?: string; to?: string } | null>(null);
+
+  const handleTestAlert = async () => {
+    setTestAlertSending(true);
+    setTestAlertResult(null);
+    try {
+      const res = await fetch(`/api/alerts/check?studentId=${DEMO_STUDENT_ID}&test=true`);
+      const data = await res.json();
+      setTestAlertResult({ sent: data.sent, error: data.error, to: data.to });
+      if (data.sent) {
+        toast.success(`Test alert sent to ${data.to}`);
+      } else if (data.error) {
+        toast.error(data.error);
+      } else {
+        toast.info('Alert check completed (email not sent — check API key or parent email).');
+      }
+    } catch {
+      toast.error('Failed to send test alert.');
+    } finally {
+      setTestAlertSending(false);
+    }
+  };
 
   const handlePinSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -519,6 +545,50 @@ export default function ParentPage() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+      </div>
+
+      {/* Email Alerts */}
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <h2 className="text-sm font-bold text-slate-700 uppercase tracking-wide">Email Alerts</h2>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Get notified about inactivity (3+ days) or skill regression. Configure the email in Settings.
+            </p>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleTestAlert}
+            disabled={testAlertSending}
+            className="border-slate-200 text-slate-600 shrink-0"
+          >
+            {testAlertSending ? (
+              <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" />
+            ) : (
+              <Mail className="h-3.5 w-3.5 mr-1.5" />
+            )}
+            {testAlertSending ? 'Sending...' : 'Send test alert'}
+          </Button>
+        </div>
+        {testAlertResult && (
+          <div className={`flex items-start gap-2 rounded-lg px-3 py-2.5 text-xs ${
+            testAlertResult.sent
+              ? 'bg-green-50 border border-green-200 text-green-700'
+              : 'bg-amber-50 border border-amber-200 text-amber-700'
+          }`}>
+            {testAlertResult.sent ? (
+              <CheckCircle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+            ) : (
+              <AlertTriangle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+            )}
+            <span>
+              {testAlertResult.sent
+                ? `Test alert sent to ${testAlertResult.to}.`
+                : testAlertResult.error ?? 'Alert not sent — add a Resend API key and parent email in Settings.'}
+            </span>
           </div>
         )}
       </div>

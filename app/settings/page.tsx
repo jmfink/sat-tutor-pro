@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   Settings,
@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 import {
   Dialog,
   DialogContent,
@@ -106,12 +107,29 @@ export default function SettingsPage() {
   const [showResetDialog, setShowResetDialog] = useState(false);
   const [resetConfirming, setResetConfirming] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [parentEmail, setParentEmail] = useState('');
+  const [parentEmailLoading, setParentEmailLoading] = useState(true);
 
-  const handleSave = () => {
-    // In production: persist to Supabase via /api/settings
-    setSaved(true);
-    toast.success('Settings saved!');
-    setTimeout(() => setSaved(false), 2000);
+  useEffect(() => {
+    fetch('/api/parent-email')
+      .then((r) => r.json())
+      .then((d) => setParentEmail(d.parent_email ?? ''))
+      .finally(() => setParentEmailLoading(false));
+  }, []);
+
+  const handleSave = async () => {
+    try {
+      await fetch('/api/parent-email', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ parent_email: parentEmail }),
+      });
+      setSaved(true);
+      toast.success('Settings saved!');
+      setTimeout(() => setSaved(false), 2000);
+    } catch {
+      toast.error('Failed to save settings.');
+    }
   };
 
   const handleResetProgress = () => {
@@ -249,6 +267,20 @@ export default function SettingsPage() {
               <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
           </Link>
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-slate-700 mb-1">Parent Email</p>
+          <p className="text-xs text-slate-500 mb-2">
+            Alert emails about inactivity or skill regression will be sent here.
+          </p>
+          <Input
+            type="email"
+            placeholder={parentEmailLoading ? 'Loading...' : 'parent@example.com'}
+            value={parentEmail}
+            onChange={(e) => setParentEmail(e.target.value)}
+            disabled={parentEmailLoading}
+            className="text-sm"
+          />
         </div>
         <div className="text-xs text-slate-400">
           Parent PIN: <span className="font-mono font-bold text-slate-600">1234</span> (demo)
