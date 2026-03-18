@@ -5,11 +5,19 @@
 | Field | Value |
 |---|---|
 | Author | Tim |
-| Version | 1.1 |
-| Date | February 23, 2026 |
+| Version | 1.2 |
+| Date | March 18, 2026 |
 | Target User | Oren (16, rising junior) |
 | Tech Stack | Claude API (Sonnet 4.6 + Opus 4.6), Next.js, Supabase |
 | Build Tool | Claude Code |
+
+### Changelog
+
+| Version | Date | Summary |
+|---|---|---|
+| 1.0 | Feb 23, 2026 | Initial specification |
+| 1.1 | Feb 23, 2026 | Added pacing analysis, parent alerts, session summary detail |
+| 1.2 | Mar 18, 2026 | Documented built features: thumbs-down feedback, pacing analysis implementation, parent email alerts (Resend), per-student env config, question quality exclusion system, automated re-parse tooling, Playwright E2E test suite |
 
 ---
 
@@ -30,6 +38,9 @@
 13. [Phase 1 Scope (Desktop Web)](#13-phase-1-scope-desktop-web)
 14. [Phase 2 Scope (Mobile Web)](#14-phase-2-scope-mobile-web)
 15. [Cost Estimates](#15-cost-estimates)
+16. [Per-Student Environment Configuration](#16-per-student-environment-configuration)
+17. [Question Quality System](#17-question-quality-system)
+18. [Quality Assurance & Testing](#18-quality-assurance--testing)
 
 ---
 
@@ -261,11 +272,55 @@ The digital SAT has an adaptive structure that must be replicated exactly:
 
 ### 5.4 Pacing Analysis
 
-During timed sessions, the app tracks time spent per question and provides post-session pacing feedback:
+**Status: Implemented**
 
-- Flag questions where time > 90 seconds (math) or > 75 seconds (reading/writing)
-- Identify "time sinks" — questions the student spent too long on and still got wrong
-- Provide SAT-specific strategy advice: "You spent 3 minutes on question 14 and got it wrong. On the real SAT, the optimal strategy is to flag it and move on after 90 seconds. The points you'd gain by spending that time on easier questions outweigh the chance of getting this one right."
+During timed sessions, the app tracks time spent per question and provides post-session pacing feedback. Pacing analysis runs automatically after every session as part of the session summary generation pipeline.
+
+**Thresholds:**
+- Math questions: flag if time spent > 90 seconds (`MATH_PACING_THRESHOLD_S = 90`)
+- Reading & Writing questions: flag if time spent > 75 seconds (`RW_PACING_THRESHOLD_S = 75`)
+
+**Time sink detection:** A question is classified as a "time sink" when it exceeds the pacing threshold *and* the student answered incorrectly — the worst-case outcome (time lost + wrong answer).
+
+**Implementation (`app/api/claude/session-summary/route.ts`):**
+
+The `computePacingAnalysis()` function runs server-side before the Claude summary call:
+
+```typescript
+// Returns a human-readable string injected into the Claude session object
+// e.g. "Time sinks (slow + wrong): question 8 (2m 15s, wrong — threshold: 90s)"
+// If no time sinks: "No significant time sinks detected."
+```
+
+The `pacing_analysis` string is injected into the session object passed to Claude, and the session summary prompt (`prompts/session-summary.md`) instructs Claude to include a pacing sentence whenever time sinks are present — naming the specific questions and recommending the "flag it after 75/90 seconds and move on" strategy.
+
+**API response fields added:**
+- `pacingFlags` — array of all questions exceeding the threshold
+- `timeSinks` — subset that were also wrong (the actionable ones)
+
+**SAT-specific advice template**: "You spent [time] on question [N] and got it wrong. On the real SAT, flag it and move on after [threshold] seconds — the points you'd gain by spending that time on easier questions outweigh the chance of getting this one right."
+
+### 5.5 Question Feedback (Thumbs Down)
+
+**Status: Implemented**
+
+Students can flag individual questions or AI explanations as problematic. This surfaces quality signals to parents/admins for review.
+
+**Two feedback types:**
+
+| Type | Trigger | Location |
+|---|---|---|
+| `bad_question` | "Bad question" button on answered question card footer | `components/question-card.tsx` |
+| `bad_explanation` | Thumbs-down button in explanation panel header | `components/explanation-panel.tsx` |
+
+**UX behavior:**
+- Clicking either button immediately POSTs to `/api/feedback` (no confirmation dialog)
+- Button state switches to "Reported" / filled icon — cannot be un-reported
+- A `sonner` toast confirms the action
+
+**API:** `POST /api/feedback` with `{ question_id, student_id, feedback_type: 'bad_question' | 'bad_explanation' }`. `GET /api/feedback?limit=N` returns feedback joined with question metadata for the Parent Dashboard review section.
+
+**Parent Dashboard review section:** A "Flagged Questions & Explanations" section lists all feedback with: badge showing type (Bad question / Bad explanation), question text preview, skill ID, section, and date reported. Shows "No questions or explanations flagged yet" when empty.
 
 ---
 
@@ -547,20 +602,74 @@ Accessible via a separate login or PIN-protected tab.
 - Full access to all analytics the student sees
 - Additional: error rate by topic over time (is tutoring working?)
 - Alert system: flag if no study session in 3+ days, or if a sub-skill is regressing
+- **Flagged Questions & Explanations** — review section listing all student thumbs-down feedback (see Section 5.5)
+
+### 7.2a Parent Email Alerts
+
+**Status: Implemented**
+
+Automated email notifications sent to the parent when alert conditions are met. Uses [Resend](https://resend.com) for email delivery.
+
+**Alert conditions evaluated by `GET /api/alerts/check`:**
+
+| Condition | Threshold | Signal |
+|---|---|---|
+| Inactivity | No study session in 3+ days | `daysSinceLastSession >= 3` |
+| Skill regression | Any sub-skill's Elo is 50+ points below the 1000 baseline with ≥ 5 attempts | `elo_rating < 950 AND questions_attempted >= 5` |
+
+> **Note on regression proxy:** Because there is no `skill_ratings_history` table, regression is detected by comparing current Elo to the fixed 1000 starting baseline rather than tracking directional change. A dedicated history snapshot table would enable true "was higher, now lower" regression detection.
+
+**Email content:**
+- Inactivity alert block (days since last session, last session date)
+- Skill regression block (list of regressed sub-skills with Elo and attempt count)
+- Current status cards (study streak, last session date)
+- Top 3 weaknesses table (lowest Elo sub-skills with > 0 attempts)
+
+**Query params:**
+- `?studentId=UUID` — required
+- `?dryRun=true` — compute everything but skip the actual Resend API call; returns `preview.bodyHtml` for inspection
+- `?test=true` — force-send a test email regardless of whether alert conditions are met
+
+**Parent email configuration:**
+- Parent email stored in `students.parent_email`
+- Configured via the Settings page (`/settings`) — "Parent Email" input in the Parent Access section, saved via `PATCH /api/parent-email`
+- `GET /api/parent-email` returns the current stored value on page load
+
+**"Send test alert" button:**
+- Located in the Parent Dashboard's Email Alerts section
+- Calls `/api/alerts/check?studentId=...&test=true`
+- Shows inline success (email address it was sent to) or error message
+- Requires a real `RESEND_API_KEY` in `.env.local` and a configured parent email
+
+**Environment variables required:**
+
+| Variable | Description |
+|---|---|
+| `RESEND_API_KEY` | API key from resend.com (free tier available) |
+| `RESEND_FROM_EMAIL` | Verified sender address (`onboarding@resend.dev` for testing) |
 
 ### 7.3 Session Summaries
 
-After each session, Claude generates:
+**Status: Implemented**
 
+After each session, Claude (Sonnet 4.6) generates a 2–4 sentence summary via `POST /api/claude/session-summary`. The summary is stored in `sessions.summary` and displayed in session history cards and the parent dashboard.
+
+**Standard summary example:**
 ```
 **Session Summary — Feb 21, 2026 (32 min)**
-Practiced 18 questions across algebra and reading comprehension. Math accuracy 
-improved to 78% (up from 70% last session), with strong performance on linear 
-equations. Reading inference questions remain challenging — recommend focusing 
+Practiced 18 questions across algebra and reading comprehension. Math accuracy
+improved to 78% (up from 70% last session), with strong performance on linear
+equations. Reading inference questions remain challenging — recommend focusing
 next session on evidence-based reading strategies.
 ```
 
-Stored in session history and accessible from the parent dashboard.
+**Pacing sentence (appended when time sinks detected):**
+```
+Pacing note: You spent over 2 minutes on question 8 (wrong) — on the real SAT,
+flag it after 90 seconds and move on to maximize your score.
+```
+
+**How pacing is injected:** The `computePacingAnalysis()` function runs before the Claude call and attaches a `pacing_analysis` string to the session data object. The `prompts/session-summary.md` system prompt instructs Claude to include a pacing sentence whenever `pacing_analysis` contains time sinks.
 
 ---
 
@@ -920,6 +1029,19 @@ CREATE TABLE daily_activity (
   streak_qualifying BOOLEAN DEFAULT FALSE,
   UNIQUE(student_id, activity_date)
 );
+
+-- Question/explanation feedback (thumbs down)
+-- Migration: supabase/migrations/004_question_feedback.sql
+CREATE TABLE question_feedback (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  question_id TEXT REFERENCES questions(question_id),
+  student_id UUID REFERENCES students(id),
+  feedback_type TEXT NOT NULL CHECK (feedback_type IN ('bad_question', 'bad_explanation')),
+  notes TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+-- Indexes: (student_id), (question_id), (created_at DESC)
+-- RLS: permissive INSERT/SELECT for anonymous model
 ```
 
 ---
@@ -981,8 +1103,12 @@ sat-tutor-pro/
 │       │   ├── analyze-patterns/route.ts # Pattern recognition (Opus)
 │       │   ├── session-summary/route.ts  # Session summaries
 │       │   └── predict-score/route.ts    # Score prediction
-│       ├── questions/route.ts          # Question serving logic
-│       ├── sessions/route.ts           # Session CRUD
+│       ├── questions/route.ts          # Question serving logic (excludes has_figure + formatting_issues)
+│       ├── sessions/route.ts           # Session CRUD (auto-upserts student row)
+│       ├── feedback/route.ts           # POST question_feedback; GET for parent review
+│       ├── parent-email/route.ts       # GET/PATCH parent email in students table
+│       ├── alerts/
+│       │   └── check/route.ts          # Inactivity + regression check; sends via Resend
 │       ├── parent/
 │       │   └── upload-questions/
 │       │       ├── parse/route.ts     # Parse one PDF type with Claude
@@ -1018,10 +1144,31 @@ sat-tutor-pro/
 │   ├── pattern-analyzer.md        # Pattern recognition prompt (Opus)
 │   ├── strategy-coach.md          # Strategy coaching prompt
 │   └── session-summary.md         # Summary generation prompt
+├── e2e/                           # Playwright end-to-end tests (9 files, 87 tests)
+│   ├── 01-dashboard.spec.ts       # Dashboard page tests
+│   ├── 02-study.spec.ts           # Study session flow tests
+│   ├── 03-practice-test.spec.ts   # Full practice test tests
+│   ├── 04-insights.spec.ts        # Wrong Answer Intelligence tests
+│   ├── 05-progress.spec.ts        # Progress dashboard tests
+│   ├── 06-review-queue.spec.ts    # Review queue tests
+│   ├── 07-parent.spec.ts          # Parent dashboard tests
+│   ├── 08-settings.spec.ts        # Settings page tests
+│   └── 09-empty-states.spec.ts    # First-time user / empty state tests
+├── scripts/                       # Development and data management scripts
+│   ├── reparse-all-tests.mjs      # Re-parse all 8 CB practice tests from PDFs
+│   ├── tag-has-figure.mjs         # Detect + tag questions requiring visual figures
+│   ├── audit-formatting.mjs       # Detect + tag questions with PDF extraction artifacts
+│   ├── query-bugs.mjs             # Ad-hoc DB queries for debugging
+│   ├── query-sources.mjs          # Report question counts by source
+│   └── reparse-log.txt            # Output log from last reparse run (gitignored)
 ├── data/
 │   └── questions/                 # Question bank seed data (JSON)
 └── supabase/
     └── migrations/                # Database schema migrations
+        ├── 001_initial_schema.sql
+        ├── 002_...
+        ├── 003_fix_rls_anonymous.sql  # Permissive RLS for demo/anonymous model
+        └── 004_question_feedback.sql  # question_feedback table
 ```
 
 ---
@@ -1167,6 +1314,190 @@ For comparison: a human SAT tutor at 2 hrs/week × $150/hr = $1,200/month.
 **Phase 1 build**: ~$0 (Claude Code + your time)
 **Monthly operating cost**: ~$40-55/month
 **Annual cost**: ~$500-650/year vs. ~$14,400/year for a human tutor
+
+---
+
+---
+
+## 16. Per-Student Environment Configuration
+
+**Status: Implemented**
+
+The app supports multiple distinct student identities on separate machines using environment variables. This enables, for example, a parent on one laptop and a student on another to maintain separate data without conflicts.
+
+### 16.1 Environment Variables
+
+| Variable | Description | Example |
+|---|---|---|
+| `NEXT_PUBLIC_DEFAULT_STUDENT_ID` | Friendly name key for the active student | `ethan_001`, `dad_001` |
+| `NEXT_PUBLIC_STUDENT_NAME` | Display name shown in the dashboard greeting and parent dashboard | `Ethan`, `Dad` |
+
+### 16.2 UUID Mapping
+
+Friendly names are mapped to stable UUIDs in `lib/constants.ts` via `STUDENT_UUID_MAP`. This ensures Supabase foreign keys are consistent regardless of which machine creates the session.
+
+```typescript
+const STUDENT_UUID_MAP: Record<string, string> = {
+  ethan_001: '00000000-0000-0000-0000-000000000001',
+  dad_001:   '00000000-0000-0000-0000-000000000002',
+};
+const _rawStudentId = process.env.NEXT_PUBLIC_DEFAULT_STUDENT_ID ?? 'ethan_001';
+export const DEMO_STUDENT_ID: string = STUDENT_UUID_MAP[_rawStudentId] ?? _rawStudentId;
+```
+
+If `NEXT_PUBLIC_DEFAULT_STUDENT_ID` is not set, it defaults to `ethan_001`. If the value is not found in the map (e.g. a raw UUID), it is used as-is — making the system forward-compatible with full auth.
+
+### 16.3 Student Auto-Creation
+
+All session API routes upsert the student row before inserting child records (sessions, skill ratings, etc.) to satisfy the `sessions.student_id → students.id` foreign key constraint. This means a new `.env.local` on a fresh machine will automatically bootstrap a student record on first use.
+
+```typescript
+// app/api/sessions/route.ts
+await supabase.from('students').upsert(
+  { id: studentId, name: 'Student' },
+  { onConflict: 'id', ignoreDuplicates: true }
+);
+```
+
+### 16.4 Row-Level Security
+
+The app uses an anonymous/demo model (no Supabase Auth). All nine student-facing tables have permissive RLS policies (`USING (true) WITH CHECK (true)`) applied via `supabase/migrations/003_fix_rls_anonymous.sql`. When Supabase Auth is introduced, these policies will be replaced with `auth.uid()`-based policies.
+
+---
+
+## 17. Question Quality System
+
+**Status: Implemented**
+
+Not all questions extracted from College Board PDFs render correctly in the app. Two quality issues are tracked and used to exclude questions from being served to students.
+
+### 17.1 Quality Tags
+
+Questions are tagged in the `questions.tags TEXT[]` column:
+
+| Tag | Meaning | Exclusion scope |
+|---|---|---|
+| `has_figure` | Question requires viewing a visual (graph, figure, diagram, table) that is not available as text | Excluded from all adaptive study sessions and drills |
+| `formatting_issues` | Question text contains PDF extraction artifacts (corrupted math symbols, garbled Unicode, misaligned tables) | Excluded from all adaptive study sessions and drills |
+
+Both tags are applied by the automated scripts (below) and also by Claude during PDF parsing when it detects visual-dependency context that simple phrase matching would miss.
+
+### 17.2 Exclusion Enforcement
+
+The question serving API (`/api/questions`) applies these exclusions at the database query level:
+
+```typescript
+.not('tags', 'cs', '{formatting_issues}')
+.not('tags', 'cs', '{has_figure}')
+```
+
+This applies to: initial candidate fetch, fallback query, and the "list questions for review" endpoint.
+
+### 17.3 Maintenance Scripts
+
+All scripts live in `scripts/` and are run from the project root with `node scripts/<name>.mjs`.
+
+#### `scripts/tag-has-figure.mjs`
+
+Detects questions whose text clearly requires viewing an external visual and tags them `has_figure`.
+
+```
+Usage:
+  node scripts/tag-has-figure.mjs                    # dry-run (report only)
+  node scripts/tag-has-figure.mjs --apply            # add tags for new matches
+  node scripts/tag-has-figure.mjs --apply --untag    # also remove stale tags
+```
+
+Uses a curated phrase list (e.g. "refer to the figure", "shown in the graph", "based on the table above"). By default, `--apply` only adds new tags — never removes existing ones (Claude-set tags are preserved). Pass `--untag` explicitly to clean up stale tags after updating the phrase list.
+
+#### `scripts/audit-formatting.mjs`
+
+Detects questions with corrupted math/text formatting from PDF extraction and tags them `formatting_issues`.
+
+```
+Usage:
+  node scripts/audit-formatting.mjs          # dry-run (report only)
+  node scripts/audit-formatting.mjs --apply  # report + apply tags
+```
+
+#### `scripts/reparse-all-tests.mjs`
+
+Re-parses all 8 College Board practice test bundles (tests 4–11) from PDFs on disk and inserts questions directly into the database — bypassing the browser upload UI entirely.
+
+**What it does:**
+1. Deletes all existing `uploaded_pdf` / `pt_N` questions and their passages
+2. For each bundle (pt_4 through pt_11):
+   - Extracts text from the questions PDF and the scoring PDF
+   - Parses the answer key via regex (scoring PDF — no Claude needed)
+   - Parses questions via Claude, one module chunk at a time in parallel
+   - Merges `correct_answer` into each question row
+   - Deduplicates against the DB and against prior bundles in this run
+   - Classifies each question (`sub_skill_id` + `difficulty`) via Claude
+   - Inserts questions + passages into Supabase
+3. Runs `scripts/audit-formatting.mjs --apply`
+4. Runs `scripts/tag-has-figure.mjs --apply`
+5. Reports per-bundle and overall counts
+
+The `source` field for inserted questions is `pt_N` (e.g. `pt_4`) so individual bundles can be re-run. The deletion step clears both the legacy `uploaded_pdf` source and all `pt_N` sources from previous runs.
+
+---
+
+## 18. Quality Assurance & Testing
+
+**Status: Implemented**
+
+The app has a Playwright end-to-end test suite covering all major flows and first-time user states.
+
+### 18.1 Test Suite Overview
+
+| File | Coverage | Tests |
+|---|---|---|
+| `01-dashboard.spec.ts` | Dashboard page load, greeting, score widget, streak | 8 |
+| `02-study.spec.ts` | Study session start, question display, answer selection, explanation | 8 |
+| `03-practice-test.spec.ts` | Practice test listing, start, timer, navigation, submit | 11 |
+| `04-insights.spec.ts` | Wrong Answer Intelligence page, pre/post threshold states | 9 |
+| `05-progress.spec.ts` | Progress dashboard, skill map, session history | 8 |
+| `06-review-queue.spec.ts` | Review queue, empty state, start review | 6 |
+| `07-parent.spec.ts` | Parent dashboard PIN entry, data sections | 6 |
+| `08-settings.spec.ts` | Settings page, toggles, parent email field, reset dialog | 11 |
+| `09-empty-states.spec.ts` | First-time user experience across all pages (mocked empty API responses) | 20 |
+| **Total** | | **87 tests** |
+
+### 18.2 Empty-State Testing Strategy
+
+`09-empty-states.spec.ts` uses Playwright route interception to simulate a first-time user with no data:
+
+```typescript
+// Single handler intercepts all /api/** routes
+await page.route('**/api/**', (route) => {
+  const url = route.request().url();
+  if (url.includes('/api/sessions')) {
+    return route.fulfill({ json: [] });
+  }
+  // ... per-route empty-state responses
+});
+```
+
+This verifies that every page renders gracefully with zero data — no broken layouts, no missing error boundaries, no "undefined" text appearing in the UI.
+
+### 18.3 Configuration
+
+Playwright config (`playwright.config.ts`) and the `e2e/` directory are excluded from the Next.js TypeScript compilation via `tsconfig.json` `exclude` array to prevent `Cannot find module '@playwright/test'` build errors.
+
+```json
+// tsconfig.json
+{
+  "exclude": ["node_modules", "playwright.config.ts", "e2e"]
+}
+```
+
+### 18.4 Running Tests
+
+```bash
+npx playwright test              # Run all tests
+npx playwright test 09-empty    # Run specific file
+npx playwright test --ui         # Open Playwright UI mode
+```
 
 ---
 
