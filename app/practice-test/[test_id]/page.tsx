@@ -24,6 +24,7 @@ import type { Question, Passage } from '@/types';
 
 import { DEMO_STUDENT_ID } from '@/lib/constants';
 import { renderTextWithTables } from '@/components/question-card';
+import { renderMathText } from '@/lib/math-text';
 
 // SAT module structure
 const MODULES = [
@@ -546,7 +547,7 @@ export default function ActivePracticeTestPage() {
                                 >
                                   {letter}
                                 </span>
-                                <span className="flex-1 pt-0.5">{text as string}</span>
+                                <span className="flex-1 pt-0.5">{renderMathText(text as string)}</span>
                               </button>
                             );
                           })}

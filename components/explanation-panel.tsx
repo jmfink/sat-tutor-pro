@@ -20,6 +20,7 @@ import {
   ThumbsDown,
 } from 'lucide-react';
 import { DEMO_STUDENT_ID } from '@/lib/constants';
+import { renderMathText } from '@/lib/math-text';
 import { toast } from 'sonner';
 
 interface ExplanationPanelProps {
@@ -105,7 +106,7 @@ function MessageBubble({ message }: { message: ConversationMessage }) {
             : 'bg-slate-100 text-slate-800 rounded-bl-md'}
         `}
       >
-        {message.content}
+        {renderMathText(message.content)}
       </div>
     </div>
   );
@@ -417,7 +418,7 @@ export function ExplanationPanel({
         {streamingText && (
           <div className="flex justify-start">
             <div className="max-w-[85%] px-4 py-2.5 rounded-2xl rounded-bl-md bg-slate-100 text-slate-800 text-sm leading-relaxed">
-              {streamingText}
+              {renderMathText(streamingText)}
               <span className="inline-block w-1.5 h-3.5 bg-slate-500 ml-0.5 animate-pulse rounded-sm align-middle" />
             </div>
           </div>

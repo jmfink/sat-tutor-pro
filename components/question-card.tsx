@@ -11,6 +11,7 @@ import { ConfidenceSelector } from '@/components/confidence-selector';
 import type { ConfidenceLevel } from '@/types';
 import { getDifficultyLabel, getDifficultyColor, DEMO_STUDENT_ID } from '@/lib/constants';
 import { gridInAnswersMatch } from '@/lib/utils';
+import { renderMathText } from '@/lib/math-text';
 import { toast } from 'sonner';
 
 /**
@@ -28,7 +29,7 @@ export function renderTextWithTables(text: string): React.ReactNode {
     if (textLines.length === 0) return;
     result.push(
       <span key={result.length} className="whitespace-pre-wrap">
-        {textLines.join('\n')}
+        {renderMathText(textLines.join('\n'))}
       </span>
     );
     textLines = [];
@@ -67,7 +68,7 @@ export function renderTextWithTables(text: string): React.ReactNode {
                         key={ci}
                         className="border border-slate-300 bg-slate-100 px-3 py-1.5 text-left font-semibold text-slate-700"
                       >
-                        {cell}
+                        {renderMathText(cell)}
                       </th>
                     ))}
                   </tr>
@@ -78,7 +79,7 @@ export function renderTextWithTables(text: string): React.ReactNode {
                       <tr key={ri} className={ri % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
                         {row.map((cell, ci) => (
                           <td key={ci} className="border border-slate-300 px-3 py-1.5 text-slate-700">
-                            {cell}
+                            {renderMathText(cell)}
                           </td>
                         ))}
                       </tr>
@@ -314,7 +315,7 @@ export function QuestionCard({
                       disabled={isAnswered}
                     >
                       <span className={getLabelStyle(letter)}>{letter}</span>
-                      <span className="flex-1 pt-0.5">{text}</span>
+                      <span className="flex-1 pt-0.5">{renderMathText(text as string)}</span>
                       {isAnswered && letter === correctAnswer && (
                         <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
                       )}
