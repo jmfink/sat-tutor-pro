@@ -5,7 +5,7 @@ import type { SubSkill } from '@/types';
 // To add a new student, add an entry here and set NEXT_PUBLIC_DEFAULT_STUDENT_ID in .env.local.
 const STUDENT_UUID_MAP: Record<string, string> = {
   ethan_001: '00000000-0000-0000-0000-000000000001',
-  dad_001:   '00000000-0000-0000-0000-000000000002',
+  jason_001: '00000000-0000-0000-0000-000000000002',
   joe_001:   '00000000-0000-0000-0000-000000000003',
 };
 
