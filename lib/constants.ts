@@ -6,6 +6,7 @@ import type { SubSkill } from '@/types';
 const STUDENT_UUID_MAP: Record<string, string> = {
   ethan_001: '00000000-0000-0000-0000-000000000001',
   dad_001:   '00000000-0000-0000-0000-000000000002',
+  joe_001:   '00000000-0000-0000-0000-000000000003',
 };
 
 const _rawStudentId = process.env.NEXT_PUBLIC_DEFAULT_STUDENT_ID ?? 'ethan_001';
