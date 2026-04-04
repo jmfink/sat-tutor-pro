@@ -4,10 +4,10 @@
 
 | Field | Value |
 |---|---|
-| Author | Tim |
+| Author | Jason Finkelstein |
 | Version | 1.3 |
 | Date | April 4, 2026 |
-| Target User | Oren (16, rising junior) |
+| Target User | High school juniors and seniors (grades 10-12) preparing for the SAT |
 | Tech Stack | Claude API (Sonnet 4.6 + Opus 4.6), Next.js, Supabase |
 | Build Tool | Claude Code |
 
