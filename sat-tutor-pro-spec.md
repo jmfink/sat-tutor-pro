@@ -7,7 +7,7 @@
 | Author | Jason Finkelstein |
 | Version | 1.3 |
 | Date | April 4, 2026 |
-| Target User | High school juniors and seniors (grades 10-12) preparing for the SAT |
+| Target User | High school students preparing for the SAT and PSAT |
 | Tech Stack | Claude API (Sonnet 4.6 + Opus 4.6), Next.js, Supabase |
 | Build Tool | Claude Code |
 
