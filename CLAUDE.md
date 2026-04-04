@@ -60,12 +60,15 @@ This order must be consistent everywhere: nav sidebar, dashboard tiles, any page
 
 ## Standing Instructions
 
-- After building any new feature or making any significant change, update `sat-tutor-pro-spec.md` to reflect what was built — keep the PRD as the source of truth.
+- After every task — without exception — review what was built and update both `user-guide.md` and `sat-tutor-pro-spec.md` to reflect the current state of the app. This is not optional. Specifically:
+  - `user-guide.md`: update any section affected by UI changes, copy changes, new features, removed features, or navigation changes. Make the actual edits — do not just flag what should change.
+  - `sat-tutor-pro-spec.md`: update the relevant module sections to reflect implementation decisions, UI changes, color system, information hierarchy, and any features that differ from the original spec.
+  - If a change affects the Color System or Information Hierarchy documented in CLAUDE.md, update those sections too.
+  - In your response summary, explicitly state what was updated in each document and what section numbers were changed.
+- The user guide source of truth is `user-guide.md` in the repo root. To regenerate the Word doc, run: `node scripts/generate-user-guide.mjs`. The Word doc styling is driven by the branding colors defined at the top of `user-guide.md` — if app colors change, update those values and regenerate.
 - Always run `npx next lint && npx next build` before committing. Fix all errors; the two pre-existing warnings in `e2e/` files are acceptable.
 - Always commit and push at the end of every task.
 - Run the Playwright test suite after significant changes and report results.
-- After building any feature that changes user-facing behavior, update user-guide.md directly — do not just flag what should change. Make the actual edits to the relevant sections. Then note what was updated in your response summary.
-- The user guide source of truth is `user-guide.md` in the repo root. When features change user-facing behavior, update `user-guide.md`. To regenerate the Word doc, run: `node scripts/generate-user-guide.mjs`. The Word doc styling is driven by the branding colors defined at the top of `user-guide.md` — if app colors change, update those values and regenerate.
 - After any change that affects UI copy, layout, navigation, or user-facing behavior, run the full Playwright test suite before committing. If tests fail due to the changes (not pre-existing failures), fix the tests to match the new correct UI before pushing. Never push UI changes that leave new Playwright failures unresolved. In your response summary, report the test results and what was fixed.
 
 ## Commands
