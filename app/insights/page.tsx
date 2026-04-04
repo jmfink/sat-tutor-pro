@@ -15,7 +15,8 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { InsightCard } from '@/components/insight-card';
-import { INSIGHT_DIMENSIONS , DEMO_STUDENT_ID } from '@/lib/constants';
+import { INSIGHT_DIMENSIONS } from '@/lib/constants';
+import { useAuth } from '@/components/auth-provider';
 import type { WrongAnswerInsight, InsightDimension } from '@/types';
 import { toast } from 'sonner';
 import Link from 'next/link';
@@ -87,6 +88,7 @@ function DimensionCard({
 
 export default function InsightsPage() {
   const router = useRouter();
+  const { userId } = useAuth();
   const [insight, setInsight] = useState<WrongAnswerInsight | null>(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -96,10 +98,10 @@ export default function InsightsPage() {
     const method = forceRefresh ? 'POST' : 'GET';
     const url = forceRefresh
       ? '/api/claude/analyze-patterns'
-      : `/api/claude/analyze-patterns?studentId=${DEMO_STUDENT_ID}`;
+      : `/api/claude/analyze-patterns?studentId=${userId ?? ''}`;
 
     const body = forceRefresh
-      ? JSON.stringify({ studentId: DEMO_STUDENT_ID })
+      ? JSON.stringify({ studentId: userId ?? '' })
       : undefined;
 
     const headers: Record<string, string> = forceRefresh
@@ -126,7 +128,7 @@ export default function InsightsPage() {
       return true;
     }
     return false;
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     fetchInsights(false).catch(() => {}).finally(() => setLoading(false));

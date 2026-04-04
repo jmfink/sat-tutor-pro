@@ -20,7 +20,8 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { StreakCounter } from '@/components/streak-counter';
 import type { Session, ScorePrediction, DailyActivity, WrongAnswerInsight } from '@/types';
-import { DEMO_STUDENT_ID, SESSION_TYPE_LABELS, SESSION_TYPE_COLORS, calcAccuracy } from '@/lib/constants';
+import { SESSION_TYPE_LABELS, SESSION_TYPE_COLORS, calcAccuracy } from '@/lib/constants';
+import { useAuth } from '@/components/auth-provider';
 import { toLocalDateKey } from '@/lib/utils';
 
 const STUDENT_NAME = process.env.NEXT_PUBLIC_STUDENT_NAME ?? 'Student';
@@ -159,6 +160,7 @@ function SessionRow({ session }: { session: Session }) {
 
 export default function DashboardPage() {
   const router = useRouter();
+  const { userId } = useAuth();
   const [prediction, setPrediction] = useState<ScorePrediction | null>(null);
   const [predLoading, setPredLoading] = useState(true);
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -172,7 +174,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     // Fetch score prediction (GET returns array; take the most recent)
-    fetch(`/api/claude/predict-score?studentId=${DEMO_STUDENT_ID}`)
+    fetch(`/api/claude/predict-score?studentId=${userId ?? ''}`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (data) setPrediction(Array.isArray(data) ? (data[0] ?? null) : data);
@@ -181,7 +183,7 @@ export default function DashboardPage() {
       .finally(() => setPredLoading(false));
 
     // Fetch sessions — 50 gives enough history for weekly goal computation and recent list
-    fetch(`/api/sessions?studentId=${DEMO_STUDENT_ID}&limit=50`)
+    fetch(`/api/sessions?studentId=${userId ?? ''}&limit=50`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         const list: Session[] = Array.isArray(data) ? data : (data?.sessions ?? []);
@@ -196,7 +198,7 @@ export default function DashboardPage() {
       .finally(() => setSessionsLoading(false));
 
     // Fetch review queue count
-    fetch(`/api/review?studentId=${DEMO_STUDENT_ID}&countOnly=true`)
+    fetch(`/api/review?studentId=${userId ?? ''}&countOnly=true`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (data?.count !== undefined) setReviewCount(data.count);
@@ -204,7 +206,7 @@ export default function DashboardPage() {
       .catch(() => {});
 
     // Fetch insights for teaser
-    fetch(`/api/claude/analyze-patterns?studentId=${DEMO_STUDENT_ID}`)
+    fetch(`/api/claude/analyze-patterns?studentId=${userId ?? ''}`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (data?.insight?.id) setInsight(data.insight);
@@ -212,14 +214,14 @@ export default function DashboardPage() {
       .catch(() => {});
 
     // Fetch streak / activity — pass local date so streak counts in user's timezone
-    fetch(`/api/sessions/streak?studentId=${DEMO_STUDENT_ID}&localDate=${toLocalDateKey()}`)
+    fetch(`/api/sessions/streak?studentId=${userId ?? ''}&localDate=${toLocalDateKey()}`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (data?.currentStreak !== undefined) setStreak(data.currentStreak);
         if (Array.isArray(data?.dailyActivity)) setDailyActivity(data.dailyActivity);
       })
       .catch(() => {});
-  }, []);
+  }, [userId]);
 
   const weeklyGoals = [
     { id: 1, label: 'Complete 5 study sessions this week', target: 5, current: weekSessions },

@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { SkillMap } from '@/components/skill-map';
-import { SUB_SKILLS, getMasteryLevel , DEMO_STUDENT_ID } from '@/lib/constants';
+import { SUB_SKILLS, getMasteryLevel } from '@/lib/constants';
+import { useAuth } from '@/components/auth-provider';
 import type { SkillRating, MasteryLevel } from '@/types';
 
 
@@ -170,18 +171,19 @@ function SkillTreeSVG({ skillRatings }: { skillRatings: SkillRating[] }) {
 
 export default function SkillsPage() {
   const router = useRouter();
+  const { userId } = useAuth();
   const [skillRatings, setSkillRatings] = useState<SkillRating[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/api/sessions?studentId=${DEMO_STUDENT_ID}&skillRatings=true`)
+    fetch(`/api/sessions?studentId=${userId ?? ''}&skillRatings=true`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         if (data?.skill_ratings) setSkillRatings(data.skill_ratings);
       })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, []);
+  }, [userId]);
 
   if (loading) {
     return (

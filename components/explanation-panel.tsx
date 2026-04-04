@@ -19,7 +19,7 @@ import {
   Loader2,
   ThumbsDown,
 } from 'lucide-react';
-import { DEMO_STUDENT_ID } from '@/lib/constants';
+import { useAuth } from '@/components/auth-provider';
 import { renderMathText } from '@/lib/math-text';
 import { toast } from 'sonner';
 
@@ -121,6 +121,7 @@ export function ExplanationPanel({
   studentProfile,
   sessionHistory,
 }: ExplanationPanelProps) {
+  const { userId } = useAuth();
   const [messages, setMessages] = useState<ConversationMessage[]>([]);
   const [streamingText, setStreamingText] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
@@ -139,7 +140,7 @@ export function ExplanationPanel({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           question_id: question.question_id,
-          student_id: DEMO_STUDENT_ID,
+          student_id: userId ?? '',
           feedback_type: 'bad_explanation',
         }),
       });

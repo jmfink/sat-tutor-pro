@@ -16,7 +16,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import type { ReviewQueueItem, Question, Passage } from '@/types';
-import { SUB_SKILL_MAP , DEMO_STUDENT_ID } from '@/lib/constants';
+import { SUB_SKILL_MAP } from '@/lib/constants';
+import { useAuth } from '@/components/auth-provider';
 import { toLocalDateKey } from '@/lib/utils';
 
 
@@ -72,6 +73,7 @@ function ReviewQueueRow({ item }: { item: ReviewQueueItem & { question?: Questio
 
 export default function ReviewQueuePage() {
   const router = useRouter();
+  const { userId } = useAuth();
   const [queueItems, setQueueItems] = useState<ReviewQueueItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [mode, setMode] = useState<ReviewMode>('list');
@@ -94,7 +96,7 @@ export default function ReviewQueuePage() {
   useEffect(() => {
     // cache: 'no-store' ensures the browser never returns a stale count when
     // the user navigates away and back after completing a review session.
-    fetch(`/api/review?studentId=${DEMO_STUDENT_ID}`, { cache: 'no-store' })
+    fetch(`/api/review?studentId=${userId ?? ''}`, { cache: 'no-store' })
       .then((r) => (r.ok ? r.json() : []))
       .then((data) => {
         const items: ReviewQueueItem[] = Array.isArray(data) ? data : data?.items ?? [];
@@ -102,7 +104,7 @@ export default function ReviewQueuePage() {
       })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, []);
+  }, [userId]);
 
   const fetchQuestionForItem = useCallback(async (item: ReviewQueueItem) => {
     setLoadingQuestion(true);
@@ -158,7 +160,7 @@ export default function ReviewQueuePage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          student_id: DEMO_STUDENT_ID,
+          student_id: userId ?? '',
           review_item_id: item.id,
           question_id: item.question_id,
           is_correct: correct,
@@ -177,7 +179,7 @@ export default function ReviewQueuePage() {
       // Re-fetch the queue so the list view reflects the server's updated counts
       // (items rescheduled to future dates should no longer appear as "due").
       try {
-        const res = await fetch(`/api/review?studentId=${DEMO_STUDENT_ID}`, { cache: 'no-store' });
+        const res = await fetch(`/api/review?studentId=${userId ?? ''}`, { cache: 'no-store' });
         if (res.ok) {
           const data = await res.json();
           const items: ReviewQueueItem[] = Array.isArray(data) ? data : data?.items ?? [];

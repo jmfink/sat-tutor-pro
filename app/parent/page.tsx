@@ -27,7 +27,7 @@ import { Progress } from '@/components/ui/progress';
 import { QuestionUploader } from '@/components/question-uploader';
 import type { Session, WrongAnswerInsight, ScorePrediction } from '@/types';
 
-import { DEMO_STUDENT_ID } from '@/lib/constants';
+import { useAuth } from '@/components/auth-provider';
 
 interface QuestionFeedback {
   id: string;
@@ -143,6 +143,7 @@ function SessionRow({ session }: { session: Session }) {
 }
 
 export default function ParentPage() {
+  const { userId } = useAuth();
   const [pin, setPin] = useState('');
   const [showPin, setShowPin] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -164,7 +165,7 @@ export default function ParentPage() {
     setTestAlertSending(true);
     setTestAlertResult(null);
     try {
-      const res = await fetch(`/api/alerts/check?studentId=${DEMO_STUDENT_ID}&test=true`);
+      const res = await fetch(`/api/alerts/check?studentId=${userId ?? ''}&test=true`);
       const data = await res.json();
       setTestAlertResult({ sent: data.sent, error: data.error, to: data.to });
       if (data.sent) {
@@ -203,14 +204,14 @@ export default function ParentPage() {
     if (!isAuthenticated) return;
 
     Promise.all([
-      fetch(`/api/claude/predict-score?studentId=${DEMO_STUDENT_ID}`)
+      fetch(`/api/claude/predict-score?studentId=${userId ?? ''}`)
         .then((r) => (r.ok ? r.json() : null))
         .catch(() => null),
-      fetch(`/api/sessions?studentId=${DEMO_STUDENT_ID}&limit=20`)
+      fetch(`/api/sessions?studentId=${userId ?? ''}&limit=20`)
         .then((r) => (r.ok ? r.json() : []))
         .then((d) => Array.isArray(d) ? d : d?.sessions ?? [])
         .catch(() => []),
-      fetch(`/api/claude/analyze-patterns?studentId=${DEMO_STUDENT_ID}`)
+      fetch(`/api/claude/analyze-patterns?studentId=${userId ?? ''}`)
         .then((r) => (r.ok ? r.json() : null))
         .catch(() => null),
       fetch('/api/feedback?limit=30')
@@ -234,7 +235,7 @@ export default function ParentPage() {
       }, 0);
       setTimeStudiedHours(Math.round(totalMs / 3600000 * 10) / 10);
     }).finally(() => setDataLoading(false));
-  }, [isAuthenticated]);
+  }, [isAuthenticated, userId]);
 
   // Compute alerts
   const weekAgo = new Date();
@@ -620,7 +621,7 @@ export default function ParentPage() {
             onDismiss={() => setShowUploader(false)}
             onComplete={() => {
               // Refresh question count after successful upload
-              fetch('/api/questions?studentId=' + DEMO_STUDENT_ID)
+              fetch('/api/questions?studentId=' + (userId ?? ''))
                 .catch(() => {});
             }}
           />

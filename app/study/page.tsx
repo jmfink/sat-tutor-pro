@@ -19,7 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { SUB_SKILLS , DEMO_STUDENT_ID } from '@/lib/constants';
+import { SUB_SKILLS } from '@/lib/constants';
+import { useAuth } from '@/components/auth-provider';
 import type { SessionType, SubSkillId } from '@/types';
 import { toast } from 'sonner';
 
@@ -82,6 +83,7 @@ const SESSION_CARDS: SessionCard[] = [
 
 export default function StudyPage() {
   const router = useRouter();
+  const { userId } = useAuth();
   const [loading, setLoading] = useState<SessionType | null>(null);
   const [focusSkill, setFocusSkill] = useState<SubSkillId | ''>('');
 
@@ -100,7 +102,7 @@ export default function StudyPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        student_id: DEMO_STUDENT_ID,
+        student_id: userId ?? '',
         session_type: 'quick_drill',
         sub_skill_focus: preselectedSkill,
       }),
@@ -131,7 +133,7 @@ export default function StudyPage() {
     setLoading(type);
     try {
       const body: Record<string, unknown> = {
-        student_id: DEMO_STUDENT_ID,
+        student_id: userId ?? '',
         session_type: type,
       };
       if (type === 'quick_drill' && focusSkill) {

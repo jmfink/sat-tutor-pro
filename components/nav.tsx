@@ -13,8 +13,11 @@ import {
   ChevronRight,
   Zap,
   Users,
+  LogOut,
 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/components/auth-provider';
 
 interface NavProps {
   currentPath: string;
@@ -74,6 +77,13 @@ const NAV_ITEMS: NavItem[] = [
 export function Nav({ currentPath, studentId }: NavProps) {
   const [predictedScore, setPredictedScore] = useState<number | null>(null);
   const [scoreLoaded, setScoreLoaded] = useState(false);
+  const router = useRouter();
+  const { signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push('/login');
+  };
 
   useEffect(() => {
     if (!studentId) return;
@@ -204,6 +214,17 @@ export function Nav({ currentPath, studentId }: NavProps) {
           View progress
           <ChevronRight className="h-3 w-3" />
         </Link>
+      </div>
+
+      <Separator />
+      <div className="px-4 py-3">
+        <button
+          onClick={handleSignOut}
+          className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-slate-500 hover:bg-red-50 hover:text-red-600 transition-colors"
+        >
+          <LogOut className="h-4 w-4" />
+          Sign out
+        </button>
       </div>
     </nav>
   );

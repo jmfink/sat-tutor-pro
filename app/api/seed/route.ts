@@ -2,7 +2,9 @@ import { NextResponse } from 'next/server';
 import { createSupabaseServerClient } from '@/lib/supabase';
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { DEMO_STUDENT_ID } from '@/lib/constants';
+
+// Dev-only seed UUIDs
+const SEED_STUDENT_ID = '00000000-0000-0000-0000-000000000001';
 
 function errMsg(err: unknown): string {
   if (err instanceof Error) return err.message;
@@ -25,7 +27,7 @@ export async function POST(): Promise<Response> {
     const { error: studentError } = await supabase
       .from('students')
       .upsert({
-        id: DEMO_STUDENT_ID,
+        id: SEED_STUDENT_ID,
         name: 'Ethan',
         email: 'ethan@example.com',
         parent_email: 'parent@example.com',
@@ -49,7 +51,7 @@ export async function POST(): Promise<Response> {
 
     if (questionsError) throw questionsError;
 
-    return NextResponse.json({ student: DEMO_STUDENT_ID, seeded: data?.length || 0 });
+    return NextResponse.json({ student: SEED_STUDENT_ID, seeded: data?.length || 0 });
   } catch (err) {
     return NextResponse.json({ error: errMsg(err) }, { status: 500 });
   }

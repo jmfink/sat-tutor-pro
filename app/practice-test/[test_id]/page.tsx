@@ -22,7 +22,7 @@ import { DesmosEmbed } from '@/components/desmos-embed';
 import { AnnotationToolbar } from '@/components/annotation-toolbar';
 import type { Question, Passage } from '@/types';
 
-import { DEMO_STUDENT_ID } from '@/lib/constants';
+import { useAuth } from '@/components/auth-provider';
 import { renderTextWithTables } from '@/components/question-card';
 import { renderMathText } from '@/lib/math-text';
 
@@ -131,6 +131,7 @@ function QuestionGrid({
 export default function ActivePracticeTestPage() {
   useParams();
   const router = useRouter();
+  const { userId } = useAuth();
 
   const [moduleIndex, setModuleIndex] = useState(0);
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -188,7 +189,7 @@ export default function ActivePracticeTestPage() {
     Promise.all(
       Array.from({ length: currentModule.questions }, () =>
         fetch(
-          `/api/questions?studentId=${DEMO_STUDENT_ID}&section=${currentModule.section}${excludeParam}`
+          `/api/questions?studentId=${userId ?? ''}&section=${currentModule.section}${excludeParam}`
         )
           .then((r) => (r.ok ? r.json() : null))
           .then((data) => ({ q: data?.question ?? data, p: data?.passage ?? null }))

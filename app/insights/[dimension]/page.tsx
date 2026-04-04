@@ -28,7 +28,8 @@ import {
   ResponsiveContainer,
   Legend,
 } from 'recharts';
-import { INSIGHT_DIMENSIONS , DEMO_STUDENT_ID } from '@/lib/constants';
+import { INSIGHT_DIMENSIONS } from '@/lib/constants';
+import { useAuth } from '@/components/auth-provider';
 import type { WrongAnswerInsight, InsightDimension } from '@/types';
 
 
@@ -162,6 +163,7 @@ function renderChart(dimensionId: string, detail: InsightDimension) {
 export default function InsightDimensionPage() {
   const params = useParams();
   const router = useRouter();
+  const { userId } = useAuth();
   const dimensionId = params?.dimension as string;
 
   const [insight, setInsight] = useState<WrongAnswerInsight | null>(null);
@@ -192,7 +194,7 @@ export default function InsightDimensionPage() {
   };
 
   useEffect(() => {
-    fetch(`/api/claude/analyze-patterns?studentId=${DEMO_STUDENT_ID}`)
+    fetch(`/api/claude/analyze-patterns?studentId=${userId ?? ''}`)
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
         // The GET endpoint returns { insight: {...}, wrong_answers_count: N }
@@ -201,7 +203,7 @@ export default function InsightDimensionPage() {
       })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, []);
+  }, [userId]);
 
   if (loading) {
     return (

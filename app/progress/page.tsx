@@ -22,7 +22,8 @@ import type {
   SkillRating,
   SubSkillId,
 } from '@/types';
-import { SUB_SKILL_MAP, DEMO_STUDENT_ID, SESSION_TYPE_LABELS, SESSION_TYPE_COLORS } from '@/lib/constants';
+import { SUB_SKILL_MAP, SESSION_TYPE_LABELS, SESSION_TYPE_COLORS } from '@/lib/constants';
+import { useAuth } from '@/components/auth-provider';
 import { toLocalDateKey } from '@/lib/utils';
 import {
   PieChart,
@@ -98,6 +99,7 @@ function SessionHistoryRow({ session }: { session: Session }) {
 
 export default function ProgressPage() {
   const router = useRouter();
+  const { userId } = useAuth();
   const [predictions, setPredictions] = useState<ScorePrediction[]>([]);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [dailyActivity, setDailyActivity] = useState<DailyActivity[]>([]);
@@ -112,24 +114,24 @@ export default function ProgressPage() {
   useEffect(() => {
     Promise.all([
       // Score predictions history
-      fetch(`/api/claude/predict-score?studentId=${DEMO_STUDENT_ID}&history=true`)
+      fetch(`/api/claude/predict-score?studentId=${userId ?? ''}&history=true`)
         .then((r) => (r.ok ? r.json() : []))
         .then((data) => Array.isArray(data) ? data : [data].filter(Boolean))
         .catch(() => []),
 
       // Sessions
-      fetch(`/api/sessions?studentId=${DEMO_STUDENT_ID}&limit=50`)
+      fetch(`/api/sessions?studentId=${userId ?? ''}&limit=50`)
         .then((r) => (r.ok ? r.json() : []))
         .then((data) => Array.isArray(data) ? data : data?.sessions ?? [])
         .catch(() => []),
 
       // Streak / activity — pass local date so streak counts in user's timezone
-      fetch(`/api/sessions/streak?studentId=${DEMO_STUDENT_ID}&localDate=${toLocalDateKey()}`)
+      fetch(`/api/sessions/streak?studentId=${userId ?? ''}&localDate=${toLocalDateKey()}`)
         .then((r) => (r.ok ? r.json() : null))
         .catch(() => null),
 
       // Skill ratings
-      fetch(`/api/sessions?studentId=${DEMO_STUDENT_ID}&skillRatings=true`)
+      fetch(`/api/sessions?studentId=${userId ?? ''}&skillRatings=true`)
         .then((r) => (r.ok ? r.json() : null))
         .catch(() => null),
     ]).then(([preds, sess, streakData, skillData]) => {
@@ -141,7 +143,7 @@ export default function ProgressPage() {
       }
       if (skillData?.skill_ratings) setSkillRatings(skillData.skill_ratings);
     }).finally(() => setLoading(false));
-  }, []);
+  }, [userId]);
 
   if (loading) {
     return (

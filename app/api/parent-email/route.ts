@@ -1,14 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createSupabaseServerClient } from '@/lib/supabase';
-import { DEMO_STUDENT_ID } from '@/lib/constants';
+import { createSupabaseAdminClient, createSupabaseRouteHandlerClient } from '@/lib/supabase';
 
-/** GET /api/parent-email — return current parent_email for the demo student */
+/** GET /api/parent-email — return current parent_email for authenticated student */
 export async function GET() {
-  const supabase = createSupabaseServerClient();
-  const { data } = await supabase
+  const supabase = await createSupabaseRouteHandlerClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+  const admin = createSupabaseAdminClient();
+  const { data } = await admin
     .from('students')
     .select('parent_email')
-    .eq('id', DEMO_STUDENT_ID)
+    .eq('id', user.id)
     .single();
   return NextResponse.json({ parent_email: data?.parent_email ?? null });
 }
@@ -16,13 +19,16 @@ export async function GET() {
 /** PATCH /api/parent-email — update parent_email */
 export async function PATCH(req: NextRequest) {
   try {
-    const { parent_email } = await req.json();
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseRouteHandlerClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-    // Upsert student row in case it doesn't exist yet
-    await supabase
+    const { parent_email } = await req.json();
+    const admin = createSupabaseAdminClient();
+
+    await admin
       .from('students')
-      .upsert({ id: DEMO_STUDENT_ID, name: 'Student', parent_email }, { onConflict: 'id', ignoreDuplicates: false });
+      .upsert({ id: user.id, name: 'Student', parent_email }, { onConflict: 'id', ignoreDuplicates: false });
 
     return NextResponse.json({ success: true });
   } catch (err) {

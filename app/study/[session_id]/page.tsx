@@ -31,12 +31,13 @@ import type {
   ConversationMessage,
   SubSkillId,
 } from '@/types';
-import { SUB_SKILL_MAP, DEMO_STUDENT_ID, formatElapsed } from '@/lib/constants';
+import { SUB_SKILL_MAP, formatElapsed } from '@/lib/constants';
+import { useAuth } from '@/components/auth-provider';
 import { gridInAnswersMatch, toLocalDateKey } from '@/lib/utils';
 import { toast } from 'sonner';
 
 const DUMMY_PROFILE: StudentContextProfile = {
-  student_id: DEMO_STUDENT_ID,
+  student_id: '',
   session_number: 1,
   current_predicted_score: { total: 1200, rw: 600, math: 600 },
   skill_ratings: {} as StudentContextProfile['skill_ratings'],
@@ -70,6 +71,7 @@ function FrustrationBanner({ signal }: { signal: 'frustrated' | null }) {
 export default function ActiveStudySessionPage() {
   const params = useParams();
   const router = useRouter();
+  const { userId } = useAuth();
   const sessionId = params?.session_id as string;
 
   const [session, setSession] = useState<Session | null>(null);
@@ -147,7 +149,7 @@ export default function ActiveStudySessionPage() {
 
     try {
       const res = await fetch(
-        `/api/questions?studentId=${DEMO_STUDENT_ID}${excludeParam}${skillParam}&sessionMinutes=${sessionMins}`
+        `/api/questions?studentId=${userId ?? ''}${excludeParam}${skillParam}&sessionMinutes=${sessionMins}`
       );
       if (!res.ok) throw new Error('Failed to fetch question');
       const data = await res.json();
@@ -161,7 +163,7 @@ export default function ActiveStudySessionPage() {
     } finally {
       setQuestionLoading(false);
     }
-  }, [answeredIds, session]);
+  }, [answeredIds, session, userId]);
 
   // Auto-fetch first question once session loads
   const hasFetchedFirst = useRef(false);
@@ -222,7 +224,7 @@ export default function ActiveStudySessionPage() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              student_id: DEMO_STUDENT_ID,
+              student_id: userId ?? '',
               session_id: sessionId,
               question_id: question.question_id,
               student_answer: answer,
@@ -255,7 +257,7 @@ export default function ActiveStudySessionPage() {
       })();
       pendingAttemptSave.current = savePromise;
     },
-    [question, questionStartTime, consecutiveWrong, sessionId]
+    [question, questionStartTime, consecutiveWrong, sessionId, userId]
   );
 
   const handleEndSession = async () => {
@@ -283,7 +285,7 @@ export default function ActiveStudySessionPage() {
     fetch('/api/claude/predict-score', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ studentId: DEMO_STUDENT_ID }),
+      body: JSON.stringify({ studentId: userId ?? '' }),
     }).catch(() => {});
 
     // Wait for the last attempt to finish saving so the summary API
@@ -296,7 +298,7 @@ export default function ActiveStudySessionPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           session_id: sessionId,
-          student_id: DEMO_STUDENT_ID,
+          student_id: userId ?? '',
           questions_answered: questionCount,
           questions_correct: correctCount,
           mood_signals: [...new Set(moodSignals.current)],

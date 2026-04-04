@@ -9,7 +9,8 @@ import { Separator } from '@/components/ui/separator';
 import { Flag, CheckCircle2, XCircle, ThumbsDown } from 'lucide-react';
 import { ConfidenceSelector } from '@/components/confidence-selector';
 import type { ConfidenceLevel } from '@/types';
-import { getDifficultyLabel, getDifficultyColor, DEMO_STUDENT_ID } from '@/lib/constants';
+import { getDifficultyLabel, getDifficultyColor } from '@/lib/constants';
+import { useAuth } from '@/components/auth-provider';
 import { gridInAnswersMatch } from '@/lib/utils';
 import { renderMathText } from '@/lib/math-text';
 import { toast } from 'sonner';
@@ -125,6 +126,7 @@ export function QuestionCard({
   questionNumber,
   totalQuestions,
 }: QuestionCardProps) {
+  const { userId } = useAuth();
   const [isFlagged, setIsFlagged] = useState(false);
   const [pendingAnswer, setPendingAnswer] = useState<string | null>(null);
   const [confidence, setConfidence] = useState<ConfidenceLevel | null>(null);
@@ -140,7 +142,7 @@ export function QuestionCard({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           question_id: question.question_id,
-          student_id: DEMO_STUDENT_ID,
+          student_id: userId ?? '',
           feedback_type: 'bad_question',
         }),
       });
