@@ -5,8 +5,8 @@
 | Field | Value |
 |---|---|
 | Author | Tim |
-| Version | 1.2 |
-| Date | March 18, 2026 |
+| Version | 1.3 |
+| Date | April 4, 2026 |
 | Target User | Oren (16, rising junior) |
 | Tech Stack | Claude API (Sonnet 4.6 + Opus 4.6), Next.js, Supabase |
 | Build Tool | Claude Code |
@@ -18,6 +18,7 @@
 | 1.0 | Feb 23, 2026 | Initial specification |
 | 1.1 | Feb 23, 2026 | Added pacing analysis, parent alerts, session summary detail |
 | 1.2 | Mar 18, 2026 | Documented built features: thumbs-down feedback, pacing analysis implementation, parent email alerts (Resend), per-student env config, question quality exclusion system, automated re-parse tooling, Playwright E2E test suite |
+| 1.3 | Apr 4, 2026 | Dashboard redesign (hero Start Studying CTA + four action tiles in canonical order), navigation reorder (Study Session → Practice Test → Review Queue → Wrong Answer Insights → My Progress), feature-specific color system (amber=Insights, violet=Review Queue, emerald=My Progress, blue=Practice Test, orange=streak only), information hierarchy standardization across all pages, auth migrated to Supabase Auth + cookie sessions, Playwright test suite updated to 106 tests |
 
 ---
 
@@ -82,11 +83,31 @@ The app should feel like a patient, endlessly available tutor who knows exactly 
 Home (Dashboard)
 ├── Study Session (start adaptive practice)
 ├── Practice Test (timed full test simulation)
+├── Review Queue (spaced repetition)
 ├── Wrong Answer Insights ★ (pattern recognition module)
 ├── My Progress (analytics & score tracking)
-├── Review Queue (spaced repetition)
 └── Settings (preferences, parent access)
 ```
+
+This order is the canonical information hierarchy enforced across all navigation and feature lists: Study → Practice Test → Review Queue → Insights → Progress → Settings. It reflects natural workflow (practice first, then review mistakes, then track progress).
+
+### Feature Color System
+
+Each feature has exactly one color. Using a feature's color elsewhere is prohibited. This creates conditioned associations — the student's eye learns what each color means.
+
+| Color | Hex | Feature | Emotional Association |
+|---|---|---|---|
+| Brand Blue | `#1E3A5F` | Confidence selector (selected states), primary CTAs | Authority, trust |
+| Medium Blue | `#3B82F6` | Practice Test | Seriousness, focus |
+| Violet | `#7C3AED` | Review Queue | Memory, retention |
+| Amber | `#D97706` | Wrong Answer Insights ★ | Wisdom, caution |
+| Emerald | `#059669` | My Progress | Growth, achievement |
+| Orange | `#EA580C` | Streak counter only | Energy, urgency |
+| Green | `#16A34A` | Correct answers | Success (universal) |
+| Red | `#DC2626` | Incorrect answers | Alert (universal) |
+| Gray | `#6B7280` | Neutral / unattempted states | Absence of data |
+
+Session phase labels use colors outside this set (indigo for Consolidating, teal for Finishing Strong) to avoid collisions.
 
 ### Primary Navigation (Mobile — Phase 2)
 
@@ -571,22 +592,30 @@ Return as structured JSON.
 
 ### 7.1 Student Dashboard
 
+**Dashboard Layout:**
+- Hero CTA: large "Start Studying" button at top — the primary action on every visit
+- Four secondary action tiles (in canonical order): Practice Test (blue), Review Queue (violet), Insights ★ (amber), My Progress (emerald)
+- Streak/stats card: current day streak with "Study today to start" sub-label when 0; inline weekly stats (questions this week, accuracy this week)
+- Score prediction widget: shows predicted score once unlocked (20+ questions answered), or "Complete 20 questions to unlock" message before threshold
+- Review Queue badge: appears on the Review Queue tile only when there are cards due (never shows "0 due")
+
 **Score Prediction Widget:**
 - Predicted SAT score range (e.g., 1280-1340) updated after every session
 - Score breakdown: predicted Reading/Writing + predicted Math
 - Trend arrow: up/down/flat vs. last week
 
-**Skill Map:**
-- Visual grid of all sub-skills with color coding: red (developing), yellow (progressing), green (proficient), gold (mastered)
-- Click any sub-skill to see: rating history, recent questions, error rate, time to next mastery level
+**Skill Map (on My Progress page):**
+- Visual grid of all sub-skills with color coding: light blue = Developing (<1100), yellow = Progressing (1100–1300), green = Proficient (1300–1500), dark green ★ = Mastered (1500+)
+- Unattempted cells show the skill ID (e.g. "M-01") in a neutral gray state; the legend shows "Not practiced"
+- Click any sub-skill to drill it directly via Quick Drill
 
-**Session History:**
+**Session History (on My Progress page):**
 - Chronological list of all sessions with: date, duration, questions answered, accuracy, topics covered, AI-generated 3-sentence summary
 
 **Streak & Consistency:**
-- Current daily streak
-- Calendar heatmap showing study days (GitHub-contribution-style)
-- Weekly goal progress (e.g., "5 of 7 days this week")
+- Current daily streak displayed prominently with "day streak" label
+- 4-week activity heatmap (GitHub-contribution-style calendar)
+- Weekly question count and accuracy shown inline
 
 ### 7.2 Parent Dashboard
 
@@ -725,8 +754,8 @@ Session end (last 3 min):  2-3 questions at comfortable level — end on a win
 ### 9.1 Daily Streak
 
 - Track consecutive days with at least 1 completed session (minimum 10 questions)
-- Visual streak counter on dashboard
-- Milestone celebrations at 7, 14, 30, 60, 90 days
+- Visual streak counter on dashboard with "day streak" label; shows 0 with "Study today to start" prompt when no streak
+- Orange color is reserved exclusively for the streak counter — no other feature uses orange
 
 ### 9.2 Micro-Goals
 
@@ -1144,7 +1173,7 @@ sat-tutor-pro/
 │   ├── pattern-analyzer.md        # Pattern recognition prompt (Opus)
 │   ├── strategy-coach.md          # Strategy coaching prompt
 │   └── session-summary.md         # Summary generation prompt
-├── e2e/                           # Playwright end-to-end tests (9 files, 87 tests)
+├── e2e/                           # Playwright end-to-end tests (10 files, 106 tests)
 │   ├── 01-dashboard.spec.ts       # Dashboard page tests
 │   ├── 02-study.spec.ts           # Study session flow tests
 │   ├── 03-practice-test.spec.ts   # Full practice test tests
@@ -1153,7 +1182,8 @@ sat-tutor-pro/
 │   ├── 06-review-queue.spec.ts    # Review queue tests
 │   ├── 07-parent.spec.ts          # Parent dashboard tests
 │   ├── 08-settings.spec.ts        # Settings page tests
-│   └── 09-empty-states.spec.ts    # First-time user / empty state tests
+│   ├── 09-empty-states.spec.ts    # First-time user / empty state tests
+│   └── 10-auth.spec.ts            # Unauthenticated flows (login, signup, redirect)
 ├── scripts/                       # Development and data management scripts
 │   ├── reparse-all-tests.mjs      # Re-parse all 8 CB practice tests from PDFs
 │   ├── tag-has-figure.mjs         # Detect + tag questions requiring visual figures
@@ -1321,9 +1351,17 @@ For comparison: a human SAT tutor at 2 hrs/week × $150/hr = $1,200/month.
 
 ## 16. Per-Student Environment Configuration
 
-**Status: Implemented**
+**Status: Superseded by Supabase Auth**
 
-The app supports multiple distinct student identities on separate machines using environment variables. This enables, for example, a parent on one laptop and a student on another to maintain separate data without conflicts.
+This section describes the original anonymous/env-var–based student identity model, which has been replaced by proper Supabase Auth (email/password accounts with cookie-based sessions). Student identity is now derived from `auth.uid()` at runtime — no environment variables required. The legacy `NEXT_PUBLIC_DEFAULT_STUDENT_ID` and `NEXT_PUBLIC_STUDENT_NAME` variables are removed from the codebase.
+
+The original design is preserved below for historical context. Two orphaned legacy records (`ethan_001`, `jason_001`) still exist in the `students` table with hardcoded UUIDs and will be cleaned up when those students create real accounts.
+
+---
+
+*Original design (historical):*
+
+The app originally supported multiple distinct student identities on separate machines using environment variables. This enabled, for example, a parent on one laptop and a student on another to maintain separate data without conflicts.
 
 ### 16.1 Environment Variables
 
@@ -1461,7 +1499,10 @@ The app has a Playwright end-to-end test suite covering all major flows and firs
 | `07-parent.spec.ts` | Parent dashboard PIN entry, data sections | 6 |
 | `08-settings.spec.ts` | Settings page, toggles, parent email field, reset dialog | 11 |
 | `09-empty-states.spec.ts` | First-time user experience across all pages (mocked empty API responses) | 20 |
-| **Total** | | **87 tests** |
+| `10-auth.spec.ts` | Unauthenticated flows: login redirect, signup, password reset | 19 |
+| **Total** | | **106 tests** |
+
+Note: 7 tests are intentionally skipped with explanatory messages for features removed in the dashboard redesign (Recent Sessions panel, Score Prediction History chart) and tests that require seeded question history. These are not regressions — they document intentional design decisions.
 
 ### 18.2 Empty-State Testing Strategy
 

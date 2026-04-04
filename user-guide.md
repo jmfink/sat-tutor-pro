@@ -25,7 +25,7 @@
 ## 1. Start Here in 60 Seconds
 
 **The dashboard**
-When you sign in, the primary action is **Start Studying** — one large button at the top. Below it are four secondary cards: Insights, My Progress, Practice Test, and Review Queue. Your predicted score (once unlocked) and weekly activity summary appear below. The dashboard is intentionally minimal — the point is to start practicing, not to read a report.
+When you sign in, the primary action is **Start Studying** — one large button at the top. Below it are four secondary cards: Practice Test, Review Queue, Insights ★, and My Progress. Your predicted score (once unlocked) and weekly activity summary appear below. The dashboard is intentionally minimal — the point is to start practicing, not to read a report.
 
 **Default weekly plan (the "get into a great university" plan)**
 - 5 days/week: Study Session (25 minutes)
