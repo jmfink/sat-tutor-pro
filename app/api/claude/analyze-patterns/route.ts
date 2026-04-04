@@ -28,11 +28,11 @@ export async function POST(req: NextRequest) {
 
     if (attemptsError) throw attemptsError;
 
-    if (!attempts || attempts.length < 10) {
+    if (!attempts || attempts.length < 5) {
       return NextResponse.json({
         insufficient_data: true,
         wrong_answers_count: attempts?.length || 0,
-        needed: 10,
+        needed: 5,
       });
     }
 
@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       insight: newInsight,
       wrong_answers_count: attempts.length,
-      threshold: 10,
+      threshold: 5,
     });
   } catch (err) {
     console.error('analyze-patterns:', err);
@@ -122,6 +122,6 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({
     insight: data || null,
     wrong_answers_count: count || 0,
-    threshold: 10,
+    threshold: 5,
   });
 }

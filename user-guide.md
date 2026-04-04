@@ -104,7 +104,7 @@ Do not rush past misses. The score moves when you fix repeatable patterns.
 
 ## 6. Wrong Answer Insights ★
 
-After at least 10 wrong answers, the app analyzes your mistakes across 8 dimensions to surface patterns. This is where AI beats a basic app. It can learn from your entire history and quantify what is holding you back.
+After at least 5 wrong answers, the app analyzes your mistakes across 8 dimensions to surface patterns. This is where AI beats a basic app. It can learn from your entire history and quantify what is holding you back.
 
 **Weekly ritual**
 Once per week: open nav sidebar → Wrong Answer Insights. Pick 1 focus area for the week. Then use Study Session or Quick Drill to attack it.

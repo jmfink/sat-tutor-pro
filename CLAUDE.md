@@ -35,7 +35,7 @@ Colors are not decoration — they carry meaning and trigger emotional responses
 
 - **Brand Blue #1E3A5F** — authority, trust, intelligence. App name, primary headings, nav active states.
 - **Action Blue #2563EB** — focus, readiness, "let's go." Primary CTA buttons (Start Studying), key interactive elements.
-- **Amber/Gold #D97706** — discovery, revelation, insight. Wrong Answer Insights feature exclusively. The "aha moment" color.
+- **Yellow #EAB308** — discovery, revelation, insight. Wrong Answer Insights feature exclusively. The "aha moment" color.
 - **Emerald Green #059669** — growth, improvement, forward momentum. My Progress feature, correct answers, positive trends, mastery indicators.
 - **Medium Blue #3B82F6** — focus, seriousness, real conditions. Practice Test feature. Slightly lighter than brand blue to feel energizing rather than heavy.
 - **Violet #7C3AED** — memory, retention, depth. Review Queue feature exclusively. Spaced repetition is about building lasting memory.
@@ -97,6 +97,25 @@ npx playwright test --grep "dashboard"       # By test name
 - Environment variables are managed in the Vercel dashboard — never commit `.env.local`
 - Supabase migrations in `supabase/migrations/` must be run manually in the Supabase SQL editor
 
+### Vercel Cron Jobs
+
+`vercel.json` configures a daily cron job that fires at 9am UTC:
+
+```
+GET /api/cron/daily-alerts  →  app/api/cron/daily-alerts/route.ts
+```
+
+This iterates all students with a `parent_email` and calls `/api/alerts/check` for each, sending inactivity and skill-regression alert emails via Resend.
+
+**Required environment variables** (set in Vercel dashboard):
+
+| Variable | Description |
+|---|---|
+| `CRON_SECRET` | Any random secret string — Vercel sends this as `Authorization: Bearer <CRON_SECRET>` |
+| `NEXT_PUBLIC_APP_URL` | Production URL, e.g. `https://sat-tutor-pro.vercel.app` — used by the cron to call internal API routes |
+
+Note: Vercel cron jobs require a **Pro plan** or higher. On Hobby, the cron configuration is ignored and the job must be triggered manually.
+
 ## Security
 
 - **`.claude/` is in `.gitignore`** — never commit any files from this directory
@@ -155,7 +174,7 @@ npx playwright test --grep "dashboard"       # By test name
 
 ## Wrong Answer Intelligence
 
-- Minimum 10 wrong answers required before insights are generated
+- Minimum 5 wrong answers required before insights are generated
 - Pattern analysis runs after every 5 new wrong answers or at session start
 - Full analysis uses `claude-opus-4-20250514` via `/api/claude/analyze-patterns`
 
@@ -179,6 +198,6 @@ useEffect(() => {
 Global setup (`e2e/global-setup.ts`) logs in or creates the test account (`TEST_EMAIL` env var, default `playwright-test@sat-tutor.test`) and saves cookies to `e2e/.auth/user.json`. All test files inherit this auth state. Tests in `e2e/10-auth.spec.ts` override with `test.use({ storageState: { cookies: [], origins: [] } })` to test unauthenticated flows.
 
 The previously failing tests in specs 04, 06, and 09 have been fixed:
-- Insights tests skip gracefully when the account is in a pre-threshold state (< 10 wrong answers)
+- Insights tests skip gracefully when the account is in a pre-threshold state (< 5 wrong answers)
 - Review queue tests parse the numeric due count instead of matching text
 - Empty-state strict mode violation fixed with `.first()`

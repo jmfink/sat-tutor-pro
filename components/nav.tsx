@@ -61,7 +61,7 @@ const NAV_ITEMS: NavItem[] = [
     href: '/insights',
     icon: <Star className="h-4 w-4" />,
     badge: '★',
-    badgeStyle: 'bg-amber-100 text-amber-700 border-amber-200',
+    badgeStyle: 'text-yellow-400 text-sm ml-0.5',
   },
   {
     label: 'My Progress',
@@ -149,12 +149,7 @@ export function Nav({ currentPath, studentId }: NavProps) {
               </span>
               <span className="flex-1">{item.label}</span>
               {item.badge && (
-                <span
-                  className={`
-                    text-[11px] font-semibold px-1.5 py-0.5 rounded border
-                    ${item.badgeStyle ?? 'bg-slate-100 text-slate-500 border-slate-200'}
-                  `}
-                >
+                <span className={item.badgeStyle ?? 'text-[11px] font-semibold px-1.5 py-0.5 rounded border bg-slate-100 text-slate-500 border-slate-200'}>
                   {item.badge}
                 </span>
               )}

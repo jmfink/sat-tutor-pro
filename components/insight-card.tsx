@@ -25,15 +25,15 @@ const SEVERITY_STYLES = {
     ring: 'ring-orange-200',
   },
   low: {
-    badge: 'bg-amber-100 text-amber-700 border-amber-200',
-    border: 'border-amber-200',
-    glow: 'shadow-amber-100',
-    ring: 'ring-amber-200',
+    badge: 'bg-yellow-100 text-yellow-700 border-yellow-200',
+    border: 'border-yellow-200',
+    glow: 'shadow-yellow-100',
+    ring: 'ring-yellow-200',
   },
 } as const;
 
 const RANK_STYLES: Record<number, string> = {
-  1: 'bg-amber-500 text-white',
+  1: 'bg-yellow-500 text-white',
   2: 'bg-slate-400 text-white',
   3: 'bg-orange-300 text-white',
 };
@@ -119,7 +119,7 @@ export function InsightCard({ insight, rank, dimension, onDrill }: InsightCardPr
 
       {/* Recommendation */}
       <div className="flex items-start gap-2.5 bg-slate-50 rounded-lg px-3 py-2.5 border border-slate-100">
-        <Target className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />
+        <Target className="h-4 w-4 text-yellow-500 flex-shrink-0 mt-0.5" />
         <p className="text-xs text-slate-700 leading-relaxed">{insight.recommendation}</p>
       </div>
 
@@ -128,7 +128,7 @@ export function InsightCard({ insight, rank, dimension, onDrill }: InsightCardPr
         onClick={onDrill}
         variant="outline"
         size="sm"
-        className="w-full border-2 border-amber-200 text-amber-700 hover:bg-amber-50 hover:border-amber-400 font-semibold text-sm transition-colors"
+        className="w-full border-2 border-yellow-200 text-yellow-700 hover:bg-yellow-50 hover:border-yellow-400 font-semibold text-sm transition-colors"
       >
         Start a targeted drill
         <ChevronRight className="h-4 w-4 ml-1" />

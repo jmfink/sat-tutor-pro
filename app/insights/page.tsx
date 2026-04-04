@@ -21,7 +21,7 @@ import type { WrongAnswerInsight, InsightDimension } from '@/types';
 import { toast } from 'sonner';
 import Link from 'next/link';
 
-const THRESHOLD = 10;
+const THRESHOLD = 5;
 
 function DimensionCard({
   dimensionId,
@@ -47,7 +47,7 @@ function DimensionCard({
       href={`/insights/${dimensionId}`}
       className={`
         group flex flex-col gap-2 p-4 rounded-xl border-2 transition-all duration-150
-        hover:shadow-md hover:border-amber-300 no-underline ${severityStyle}
+        hover:shadow-md hover:border-yellow-300 no-underline ${severityStyle}
       `}
     >
       <div className="flex items-start justify-between">
@@ -79,7 +79,7 @@ function DimensionCard({
           <p className="text-xs text-slate-400 mt-0.5">No data yet</p>
         )}
       </div>
-      <div className="flex items-center gap-1 text-xs text-amber-600 font-medium group-hover:gap-2 transition-all">
+      <div className="flex items-center gap-1 text-xs text-yellow-600 font-medium group-hover:gap-2 transition-all">
         Deep dive <ChevronRight className="h-3.5 w-3.5" />
       </div>
     </Link>
@@ -177,7 +177,7 @@ export default function InsightsPage() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center space-y-3">
-          <Loader2 className="h-8 w-8 text-amber-500 animate-spin mx-auto" />
+          <Loader2 className="h-8 w-8 text-yellow-500 animate-spin mx-auto" />
           <p className="text-slate-500 text-sm">Loading insights...</p>
         </div>
       </div>
@@ -196,7 +196,7 @@ export default function InsightsPage() {
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <Star className="h-5 w-5 text-amber-500" fill="currentColor" />
+            <Star className="h-5 w-5 text-yellow-500" fill="currentColor" />
             <h1 className="text-2xl font-black text-slate-900">Wrong Answer Insights</h1>
           </div>
           <p className="text-slate-500 text-sm">
@@ -207,7 +207,7 @@ export default function InsightsPage() {
           variant="outline"
           onClick={handleRefresh}
           disabled={refreshing || !hasThreshold}
-          className="border-slate-200 text-slate-600 hover:border-amber-300"
+          className="border-slate-200 text-slate-600 hover:border-yellow-300"
         >
           {refreshing ? (
             <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
@@ -222,8 +222,8 @@ export default function InsightsPage() {
       {!hasThreshold && (
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-5">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center shrink-0">
-              <AlertCircle className="h-6 w-6 text-amber-600" />
+            <div className="w-12 h-12 rounded-xl bg-yellow-100 flex items-center justify-center shrink-0">
+              <AlertCircle className="h-6 w-6 text-yellow-600" />
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-900">
@@ -260,7 +260,7 @@ export default function InsightsPage() {
 
           <Button
             onClick={() => router.push('/study')}
-            className="bg-amber-600 hover:bg-amber-700 text-white font-semibold"
+            className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold"
           >
             Start Practicing
             <ChevronRight className="h-4 w-4 ml-1" />
@@ -298,8 +298,8 @@ export default function InsightsPage() {
       {hasThreshold && !insight && (
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-4">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center shrink-0">
-              <TrendingUp className="h-6 w-6 text-amber-600" />
+            <div className="w-12 h-12 rounded-xl bg-yellow-100 flex items-center justify-center shrink-0">
+              <TrendingUp className="h-6 w-6 text-yellow-600" />
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-900">Ready to Analyze Your Patterns</h2>
@@ -377,7 +377,7 @@ export default function InsightsPage() {
               Explore All Dimensions
             </h2>
             {Object.keys(insight.dimension_details).length === 0 ? (
-              <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
+              <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 text-sm text-yellow-800">
                 Dimension data is empty — try clicking <span className="font-semibold">Refresh Insights</span> again to regenerate the analysis.
               </div>
             ) : (

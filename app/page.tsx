@@ -182,7 +182,7 @@ export default function DashboardPage() {
           href="/review"
         />
         <ActionCard
-          icon={<Lightbulb className="h-10 w-10 text-amber-600" strokeWidth={1.5} />}
+          icon={<Lightbulb className="h-10 w-10 text-yellow-500" strokeWidth={1.5} />}
           title="Insights ★"
           description="Wrong answer patterns"
           href="/insights"
