@@ -47,7 +47,7 @@ function DimensionCard({
       href={`/insights/${dimensionId}`}
       className={`
         group flex flex-col gap-2 p-4 rounded-xl border-2 transition-all duration-150
-        hover:shadow-md hover:border-blue-300 no-underline ${severityStyle}
+        hover:shadow-md hover:border-amber-300 no-underline ${severityStyle}
       `}
     >
       <div className="flex items-start justify-between">
@@ -79,7 +79,7 @@ function DimensionCard({
           <p className="text-xs text-slate-400 mt-0.5">No data yet</p>
         )}
       </div>
-      <div className="flex items-center gap-1 text-xs text-blue-600 font-medium group-hover:gap-2 transition-all">
+      <div className="flex items-center gap-1 text-xs text-amber-600 font-medium group-hover:gap-2 transition-all">
         Deep dive <ChevronRight className="h-3.5 w-3.5" />
       </div>
     </Link>
@@ -177,7 +177,7 @@ export default function InsightsPage() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center space-y-3">
-          <Loader2 className="h-8 w-8 text-blue-500 animate-spin mx-auto" />
+          <Loader2 className="h-8 w-8 text-amber-500 animate-spin mx-auto" />
           <p className="text-slate-500 text-sm">Loading insights...</p>
         </div>
       </div>
@@ -207,7 +207,7 @@ export default function InsightsPage() {
           variant="outline"
           onClick={handleRefresh}
           disabled={refreshing || !hasThreshold}
-          className="border-slate-200 text-slate-600 hover:border-blue-300"
+          className="border-slate-200 text-slate-600 hover:border-amber-300"
         >
           {refreshing ? (
             <Loader2 className="h-4 w-4 mr-1.5 animate-spin" />
@@ -260,7 +260,7 @@ export default function InsightsPage() {
 
           <Button
             onClick={() => router.push('/study')}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+            className="bg-amber-600 hover:bg-amber-700 text-white font-semibold"
           >
             Start Practicing
             <ChevronRight className="h-4 w-4 ml-1" />
@@ -298,8 +298,8 @@ export default function InsightsPage() {
       {hasThreshold && !insight && (
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-4">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center shrink-0">
-              <TrendingUp className="h-6 w-6 text-blue-600" />
+            <div className="w-12 h-12 rounded-xl bg-amber-100 flex items-center justify-center shrink-0">
+              <TrendingUp className="h-6 w-6 text-amber-600" />
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-900">Ready to Analyze Your Patterns</h2>

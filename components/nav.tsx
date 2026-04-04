@@ -8,7 +8,7 @@ import {
   ClipboardList,
   Star,
   TrendingUp,
-  Clock,
+  RefreshCw,
   Settings,
   ChevronRight,
   Zap,
@@ -52,6 +52,11 @@ const NAV_ITEMS: NavItem[] = [
     icon: <ClipboardList className="h-4 w-4" />,
   },
   {
+    label: 'Review Queue',
+    href: '/review',
+    icon: <RefreshCw className="h-4 w-4" />,
+  },
+  {
     label: 'Wrong Answer Insights',
     href: '/insights',
     icon: <Star className="h-4 w-4" />,
@@ -62,11 +67,6 @@ const NAV_ITEMS: NavItem[] = [
     label: 'My Progress',
     href: '/progress',
     icon: <TrendingUp className="h-4 w-4" />,
-  },
-  {
-    label: 'Review Queue',
-    href: '/review',
-    icon: <Clock className="h-4 w-4" />,
   },
   {
     label: 'Settings',

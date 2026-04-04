@@ -107,7 +107,7 @@ Do not rush past misses. The score moves when you fix repeatable patterns.
 After at least 10 wrong answers, the app analyzes your mistakes across 8 dimensions to surface patterns. This is where AI beats a basic app. It can learn from your entire history and quantify what is holding you back.
 
 **Weekly ritual**
-Once per week: open Navigation → Wrong Answer Insights. Pick 1 focus area for the week. Then use Study Session or Quick Drill to attack it.
+Once per week: open nav sidebar → Wrong Answer Insights. Pick 1 focus area for the week. Then use Study Session or Quick Drill to attack it.
 
 **What it measures (in plain English)**
 - What kinds of mistakes you make (concept, careless, trap, misread)
@@ -171,7 +171,7 @@ Click "Forgot password?" on the login page. A reset link will be sent to your em
 | Daily practice | Dashboard → Start Studying |
 | Quick drill | Dashboard → Start Studying → Quick Drill → choose a skill |
 | Full practice test | Dashboard → Practice Test |
-| Check patterns | Navigation → Wrong Answer Insights |
+| Check patterns | nav sidebar → Wrong Answer Insights |
 | Reset your password | Login page → Forgot password? |
 | Update your name | Settings → Profile |
 | Flag a bad question | Click 👎 on any question card |

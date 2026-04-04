@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  Clock,
+  RefreshCw,
   CheckCircle2,
   XCircle,
   ChevronRight,
@@ -204,7 +204,7 @@ export default function ReviewQueuePage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="h-8 w-8 text-blue-500 animate-spin" />
+        <Loader2 className="h-8 w-8 text-violet-500 animate-spin" />
       </div>
     );
   }
@@ -225,18 +225,18 @@ export default function ReviewQueuePage() {
         {/* Stats banner */}
         <div className={`rounded-xl p-5 border-2 ${
           dueCount > 0
-            ? 'bg-amber-50 border-amber-200'
-            : 'bg-green-50 border-green-200'
+            ? 'bg-violet-50 border-violet-200'
+            : 'bg-emerald-50 border-emerald-200'
         }`}>
           <div className="flex items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <Clock className={`h-5 w-5 ${dueCount > 0 ? 'text-amber-600' : 'text-green-600'}`} />
-                <p className={`text-2xl font-black ${dueCount > 0 ? 'text-amber-700' : 'text-green-700'}`}>
+                <RefreshCw className={`h-5 w-5 ${dueCount > 0 ? 'text-violet-600' : 'text-emerald-600'}`} />
+                <p className={`text-2xl font-black ${dueCount > 0 ? 'text-violet-700' : 'text-emerald-700'}`}>
                   {dueCount} {dueCount === 1 ? 'card' : 'cards'} due
                 </p>
               </div>
-              <p className={`text-sm ${dueCount > 0 ? 'text-amber-700' : 'text-green-700'}`}>
+              <p className={`text-sm ${dueCount > 0 ? 'text-violet-700' : 'text-emerald-700'}`}>
                 {dueCount > 0
                   ? `Est. ${Math.ceil(dueCount * 0.5)} min.`
                   : "You're all caught up."}
@@ -245,7 +245,7 @@ export default function ReviewQueuePage() {
             {dueCount > 0 && (
               <Button
                 onClick={startReview}
-                className="bg-amber-600 hover:bg-amber-700 text-white font-semibold shadow-sm shrink-0"
+                className="bg-violet-600 hover:bg-violet-700 text-white font-semibold shadow-sm shrink-0"
               >
                 <Repeat className="h-4 w-4 mr-1.5" />
                 Start Review Session
@@ -255,8 +255,8 @@ export default function ReviewQueuePage() {
         </div>
 
         {/* About spaced repetition */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-xs text-blue-700 leading-relaxed">
-          <p className="font-semibold text-blue-800 mb-1">How it works</p>
+        <div className="bg-violet-50 border border-violet-200 rounded-xl p-4 text-xs text-violet-700 leading-relaxed">
+          <p className="font-semibold text-violet-800 mb-1">How it works</p>
           Get a card right and it comes back later. Miss it and it comes back sooner. Each card appears at the optimal time for long-term retention.
         </div>
 
@@ -300,7 +300,7 @@ export default function ReviewQueuePage() {
         {/* Top bar */}
         <div className="shrink-0 flex items-center gap-4 px-6 py-3 bg-white border-b border-slate-200 shadow-sm">
           <div className="flex items-center gap-2 flex-1">
-            <Repeat className="h-4 w-4 text-amber-600" />
+            <Repeat className="h-4 w-4 text-violet-600" />
             <span className="text-sm font-bold text-slate-800">Review Session</span>
           </div>
           <div className="flex items-center gap-3">
@@ -331,7 +331,7 @@ export default function ReviewQueuePage() {
             <div className="space-y-4">
               {/* Question header */}
               <div className="flex items-center gap-2">
-                <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200 text-xs">
+                <Badge variant="outline" className="bg-violet-50 text-violet-700 border-violet-200 text-xs">
                   Review Card
                 </Badge>
                 {currentQuestion.sub_skill_id && SUB_SKILL_MAP[currentQuestion.sub_skill_id] && (
@@ -414,7 +414,7 @@ export default function ReviewQueuePage() {
                     </div>
                     <Button
                       onClick={handleNext}
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+                      className="bg-violet-600 hover:bg-violet-700 text-white font-semibold"
                     >
                       {currentItemIndex < sessionTotal_count - 1 ? (
                         <>Next Card <ChevronRight className="h-4 w-4 ml-1" /></>
@@ -445,8 +445,8 @@ export default function ReviewQueuePage() {
   return (
     <div className="flex items-center justify-center min-h-screen p-6">
       <div className="max-w-md w-full bg-white rounded-2xl border border-slate-200 shadow-lg p-8 text-center space-y-5">
-        <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto">
-          <Trophy className="h-8 w-8 text-green-600" />
+        <div className="w-16 h-16 rounded-full bg-violet-100 flex items-center justify-center mx-auto">
+          <Trophy className="h-8 w-8 text-violet-600" />
         </div>
         <div>
           <h2 className="text-2xl font-black text-slate-900">Review Complete!</h2>
@@ -474,7 +474,7 @@ export default function ReviewQueuePage() {
           <Button variant="outline" onClick={() => router.push('/')} className="flex-1 border-slate-200">
             Dashboard
           </Button>
-          <Button onClick={() => router.push('/review')} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold">
+          <Button onClick={() => router.push('/review')} className="flex-1 bg-violet-600 hover:bg-violet-700 text-white font-semibold">
             Keep Studying
           </Button>
         </div>

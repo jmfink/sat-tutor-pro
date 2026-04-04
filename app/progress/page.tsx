@@ -172,10 +172,10 @@ export default function ProgressPage() {
 
       {/* Stat cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl p-4 text-white shadow-sm">
-          <p className="text-blue-200 text-xs font-semibold uppercase tracking-wide mb-1">Predicted Score</p>
+        <div className="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-xl p-4 text-white shadow-sm">
+          <p className="text-emerald-200 text-xs font-semibold uppercase tracking-wide mb-1">Predicted Score</p>
           <p className="text-3xl font-black">{latestScore ?? '—'}</p>
-          <p className="text-blue-200 text-xs mt-1">out of 1600</p>
+          <p className="text-emerald-200 text-xs mt-1">out of 1600</p>
         </div>
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
           <p className="text-slate-500 text-xs font-semibold uppercase tracking-wide mb-1">Questions Answered</p>
@@ -214,7 +214,7 @@ export default function ProgressPage() {
           </h2>
           <Link
             href="/progress/skills"
-            className="text-xs text-blue-500 hover:text-blue-700 font-medium flex items-center gap-0.5 no-underline"
+            className="text-xs text-emerald-600 hover:text-emerald-700 font-medium flex items-center gap-0.5 no-underline"
           >
             Full skill tree <ChevronRight className="h-3 w-3" />
           </Link>

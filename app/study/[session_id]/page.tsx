@@ -60,9 +60,9 @@ function getSessionPhase(questionCount: number, elapsedSeconds: number): { label
   const minutes = elapsedSeconds / 60;
   if (questionCount < 4 || minutes < 5) return { label: 'Warming up', color: 'text-sky-500' };
   if (questionCount < 9 || minutes < 15) return { label: 'Building momentum', color: 'text-blue-500' };
-  if (questionCount < 16 || minutes < 30) return { label: 'Peak zone', color: 'text-green-600' };
-  if (questionCount < 22 || minutes < 40) return { label: 'Consolidating', color: 'text-amber-600' };
-  return { label: 'Finishing strong', color: 'text-purple-600' };
+  if (questionCount < 16 || minutes < 30) return { label: 'Peak zone', color: 'text-emerald-600' };
+  if (questionCount < 22 || minutes < 40) return { label: 'Consolidating', color: 'text-indigo-500' };
+  return { label: 'Finishing strong', color: 'text-teal-600' };
 }
 
 function FrustrationBanner({ signal }: { signal: 'frustrated' | null }) {

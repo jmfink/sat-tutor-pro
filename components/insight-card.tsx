@@ -25,10 +25,10 @@ const SEVERITY_STYLES = {
     ring: 'ring-orange-200',
   },
   low: {
-    badge: 'bg-blue-100 text-blue-700 border-blue-200',
-    border: 'border-blue-200',
-    glow: 'shadow-blue-100',
-    ring: 'ring-blue-200',
+    badge: 'bg-amber-100 text-amber-700 border-amber-200',
+    border: 'border-amber-200',
+    glow: 'shadow-amber-100',
+    ring: 'ring-amber-200',
   },
 } as const;
 
@@ -119,7 +119,7 @@ export function InsightCard({ insight, rank, dimension, onDrill }: InsightCardPr
 
       {/* Recommendation */}
       <div className="flex items-start gap-2.5 bg-slate-50 rounded-lg px-3 py-2.5 border border-slate-100">
-        <Target className="h-4 w-4 text-blue-500 flex-shrink-0 mt-0.5" />
+        <Target className="h-4 w-4 text-amber-500 flex-shrink-0 mt-0.5" />
         <p className="text-xs text-slate-700 leading-relaxed">{insight.recommendation}</p>
       </div>
 
@@ -128,7 +128,7 @@ export function InsightCard({ insight, rank, dimension, onDrill }: InsightCardPr
         onClick={onDrill}
         variant="outline"
         size="sm"
-        className="w-full border-2 border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-400 font-semibold text-sm transition-colors"
+        className="w-full border-2 border-amber-200 text-amber-700 hover:bg-amber-50 hover:border-amber-400 font-semibold text-sm transition-colors"
       >
         Start a targeted drill
         <ChevronRight className="h-4 w-4 ml-1" />

@@ -29,6 +29,35 @@ Rules that apply everywhere — app UI copy, user guide, session summaries, erro
 
 When writing any copy — button labels, section headers, empty states, session summaries, user guide sections — run it through these rules before committing.
 
+## Color System
+
+Colors are not decoration — they carry meaning and trigger emotional responses. Use them consistently and intentionally.
+
+- **Brand Blue #1E3A5F** — authority, trust, intelligence. App name, primary headings, nav active states.
+- **Action Blue #2563EB** — focus, readiness, "let's go." Primary CTA buttons (Start Studying), key interactive elements.
+- **Amber/Gold #D97706** — discovery, revelation, insight. Wrong Answer Insights feature exclusively. The "aha moment" color.
+- **Emerald Green #059669** — growth, improvement, forward momentum. My Progress feature, correct answers, positive trends, mastery indicators.
+- **Medium Blue #3B82F6** — focus, seriousness, real conditions. Practice Test feature. Slightly lighter than brand blue to feel energizing rather than heavy.
+- **Violet #7C3AED** — memory, retention, depth. Review Queue feature exclusively. Spaced repetition is about building lasting memory.
+- **Orange #EA580C** — energy, momentum, heat. Streak counter only. Sustained daily effort.
+- **Red #DC2626** — alert, wrong, needs attention. Wrong answers, errors, regression warnings.
+- **Slate/Gray** — neutral, inactive, not yet started. Unattempted skills, disabled states, secondary text.
+
+Never use gray for primary actions or features — it communicates inactivity and dampens motivation. Never use multiple colors for the same feature across different parts of the app.
+
+## Information Hierarchy
+
+The order of features in navigation, dashboards, and any list must reflect the student's natural learning workflow — not arbitrary choices. The canonical order is:
+
+1. **Study Session** — primary daily action, always first
+2. **Practice Test** — formal assessment, second most important
+3. **Review Queue** — follow-up on mistakes after studying
+4. **Wrong Answer Insights** — periodic pattern analysis
+5. **My Progress** — weekly overview and skill tracking
+6. **Settings / User Guide / Parent Dashboard** — utility, always last
+
+This order must be consistent everywhere: nav sidebar, dashboard tiles, any page that lists features or links. A student should be able to predict where something is based on its position in the workflow.
+
 ## Standing Instructions
 
 - After building any new feature or making any significant change, update `sat-tutor-pro-spec.md` to reflect what was built — keep the PRD as the source of truth.

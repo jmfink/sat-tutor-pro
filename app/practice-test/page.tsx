@@ -28,8 +28,8 @@ function ModuleChip({ label }: { label: string }) {
     <span
       className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium border ${
         isMath
-          ? 'bg-purple-50 text-purple-700 border-purple-200'
-          : 'bg-blue-50 text-blue-700 border-blue-200'
+          ? 'bg-blue-100 text-blue-800 border-blue-300'
+          : 'bg-sky-50 text-sky-700 border-sky-200'
       }`}
     >
       {isMath ? <Calculator className="h-3 w-3" /> : <BookOpen className="h-3 w-3" />}
@@ -90,8 +90,8 @@ export default function PracticeTestPage() {
               className="flex flex-col md:flex-row gap-4 bg-white rounded-xl border border-slate-200 p-6 shadow-sm hover:border-blue-300 hover:shadow-md transition-all duration-150"
             >
               {/* Icon */}
-              <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center shrink-0">
-                <ClipboardList className="h-6 w-6 text-purple-600" />
+              <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center shrink-0">
+                <ClipboardList className="h-6 w-6 text-blue-600" />
               </div>
 
               {/* Content */}
@@ -134,7 +134,7 @@ export default function PracticeTestPage() {
               <div className="flex items-center md:items-end md:flex-col gap-2 shrink-0">
                 <Button
                   onClick={() => router.push(`/practice-test/${test.id}`)}
-                  className="bg-purple-600 hover:bg-purple-700 text-white font-semibold shadow-sm"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-sm"
                 >
                   Start Test
                   <ChevronRight className="h-4 w-4 ml-1" />
@@ -154,7 +154,7 @@ export default function PracticeTestPage() {
             text: 'Full tests take over 2 hours. Clear your schedule and minimize distractions.',
           },
           {
-            icon: <Calculator className="h-5 w-5 text-purple-500" />,
+            icon: <Calculator className="h-5 w-5 text-blue-500" />,
             title: 'Use the tools',
             text: 'The Desmos calculator and formula sheet are available during math modules — just like the real test.',
           },

@@ -169,29 +169,29 @@ export default function DashboardPage() {
       {/* Secondary actions */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <ActionCard
-          icon={<Lightbulb className="h-10 w-10 text-amber-400" strokeWidth={1.5} />}
-          title="Insights ★"
-          description="Wrong answer patterns"
-          href="/insights"
-        />
-        <ActionCard
-          icon={<TrendingUp className="h-10 w-10 text-blue-500" strokeWidth={1.5} />}
-          title="My Progress"
-          description="Skill map and analytics"
-          href="/progress"
-        />
-        <ActionCard
-          icon={<ClipboardList className="h-10 w-10 text-slate-400" strokeWidth={1.5} />}
+          icon={<ClipboardList className="h-10 w-10 text-blue-500" strokeWidth={1.5} />}
           title="Practice Test"
           description="Full SAT simulation"
           href="/practice-test"
         />
         <ActionCard
-          icon={<RefreshCw className="h-10 w-10 text-purple-400" strokeWidth={1.5} />}
+          icon={<RefreshCw className="h-10 w-10 text-violet-600" strokeWidth={1.5} />}
           title="Review Queue"
           description="Spaced repetition"
           badge={reviewCount > 0 ? `${reviewCount}` : undefined}
           href="/review"
+        />
+        <ActionCard
+          icon={<Lightbulb className="h-10 w-10 text-amber-600" strokeWidth={1.5} />}
+          title="Insights ★"
+          description="Wrong answer patterns"
+          href="/insights"
+        />
+        <ActionCard
+          icon={<TrendingUp className="h-10 w-10 text-emerald-600" strokeWidth={1.5} />}
+          title="My Progress"
+          description="Skill map and analytics"
+          href="/progress"
         />
       </div>
 

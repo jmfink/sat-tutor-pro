@@ -11,17 +11,17 @@ const OPTIONS: { value: ConfidenceLevel; label: string; activeClass: string }[] 
   {
     value: 'guessing',
     label: 'Guessing',
-    activeClass: 'bg-red-100 border-red-400 text-red-700 font-semibold',
+    activeClass: 'bg-[#1E3A5F] border-[#1E3A5F] text-white font-semibold',
   },
   {
     value: 'okay',
     label: 'Okay',
-    activeClass: 'bg-yellow-100 border-yellow-400 text-yellow-700 font-semibold',
+    activeClass: 'bg-[#1E3A5F] border-[#1E3A5F] text-white font-semibold',
   },
   {
     value: 'confident',
     label: 'Confident',
-    activeClass: 'bg-green-100 border-green-400 text-green-700 font-semibold',
+    activeClass: 'bg-[#1E3A5F] border-[#1E3A5F] text-white font-semibold',
   },
 ];
 
