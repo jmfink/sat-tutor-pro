@@ -178,7 +178,7 @@ export default function SettingsPage() {
           <Settings className="h-6 w-6 text-slate-700" />
           <div>
             <h1 className="text-2xl font-black text-slate-900">Settings</h1>
-            <p className="text-slate-500 text-sm mt-0.5">Customize your learning experience.</p>
+            <p className="text-slate-500 text-sm mt-0.5">Your preferences.</p>
           </div>
         </div>
         <Button
@@ -224,7 +224,7 @@ export default function SettingsPage() {
               className="text-sm bg-slate-50 text-slate-500 cursor-not-allowed"
             />
             <p className="text-xs text-slate-400">
-              Email changes are handled through Supabase Auth and cannot be edited here.
+              Email can&apos;t be changed here.
             </p>
           </div>
         </div>
@@ -282,14 +282,13 @@ export default function SettingsPage() {
           checked={socraticMode}
           onChange={setSocraticMode}
           label="Socratic Mode"
-          description="When on, the tutor guides you to discover the answer through questions rather than telling you directly. Best for students who want to develop deeper understanding."
+          description="The AI asks questions instead of explaining. Builds deeper understanding — takes longer per question."
         />
 
         <div className="bg-blue-50 border border-blue-200 rounded-lg px-3 py-2.5 flex items-start gap-2">
           <Info className="h-4 w-4 text-blue-500 shrink-0 mt-0.5" />
           <p className="text-xs text-blue-700 leading-relaxed">
-            You can also toggle Socratic mode within each explanation session. This setting sets the
-            default.
+            You can also toggle this within any explanation. This setting is the default.
           </p>
         </div>
       </SettingsSection>
@@ -303,7 +302,7 @@ export default function SettingsPage() {
           checked={darkMode}
           onChange={setDarkMode}
           label="Dark Mode"
-          description="Use a dark color scheme. (Preference is saved — full dark mode implementation coming soon.)"
+          description="Use a dark color scheme. (Full dark theme coming soon.)"
         />
         {darkMode && (
           <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 text-xs text-amber-700">
@@ -321,7 +320,7 @@ export default function SettingsPage() {
           <div>
             <p className="text-sm font-semibold text-slate-800">Parent Dashboard</p>
             <p className="text-xs text-slate-500 mt-0.5">
-              Parents can view your progress, session history, and upload practice tests.
+              View your progress, session history, and upload practice tests.
             </p>
           </div>
           <Link href="/parent">
@@ -334,7 +333,7 @@ export default function SettingsPage() {
         <div>
           <p className="text-sm font-semibold text-slate-700 mb-1">Parent Email</p>
           <p className="text-xs text-slate-500 mb-2">
-            Alert emails about inactivity or skill regression will be sent here.
+            Inactivity and skill regression alerts go here.
           </p>
           <Input
             type="email"
@@ -361,8 +360,7 @@ export default function SettingsPage() {
             <div>
               <p className="text-sm font-semibold text-slate-800">Reset All Progress</p>
               <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
-                Permanently delete all session history, skill ratings, review queue, and insights.
-                This action cannot be undone.
+                Deletes all sessions, skill ratings, review queue, and insights. Cannot be undone.
               </p>
             </div>
             <Button
@@ -410,8 +408,7 @@ export default function SettingsPage() {
               </div>
               <h2 className="text-lg font-bold text-slate-900">Reset All Progress?</h2>
               <p className="text-slate-500 text-sm mt-1 leading-relaxed">
-                This will permanently delete all your sessions, skill ratings, and insights. This
-                cannot be undone.
+                All progress will be permanently deleted. This cannot be undone.
               </p>
             </div>
             <div className="flex gap-3">

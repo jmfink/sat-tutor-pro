@@ -200,7 +200,7 @@ export default function InsightsPage() {
             <h1 className="text-2xl font-black text-slate-900">Wrong Answer Insights</h1>
           </div>
           <p className="text-slate-500 text-sm">
-            AI-powered pattern analysis across your mistake history.
+            Pattern analysis across your mistake history.
           </p>
         </div>
         <Button
@@ -231,10 +231,10 @@ export default function InsightsPage() {
               </h2>
               <p className="text-sm text-slate-500 mt-1 leading-relaxed">
                 {effectiveWrongCount === 0
-                  ? "Every question you get wrong is a step toward understanding your weak spots. Start practicing and we'll track your patterns automatically!"
+                  ? "Start practicing. Every wrong answer builds your insight profile."
                   : effectiveWrongCount < 5
-                  ? `Nice start! ${THRESHOLD - effectiveWrongCount} more wrong answers and we'll begin identifying your patterns.`
-                  : `Almost there — just ${THRESHOLD - effectiveWrongCount} more wrong answers needed to unlock your personalized insights!`}
+                  ? `${THRESHOLD - effectiveWrongCount} more wrong answers to unlock pattern analysis.`
+                  : `${THRESHOLD - effectiveWrongCount} more wrong answers to unlock.`}
               </p>
             </div>
           </div>
@@ -250,11 +250,11 @@ export default function InsightsPage() {
           </div>
 
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-            <p className="text-sm font-semibold text-blue-800 mb-1">How to unlock insights faster:</p>
+            <p className="text-sm font-semibold text-blue-800 mb-1">Get there faster:</p>
             <ul className="space-y-1 text-xs text-blue-700">
-              <li>• Answer more questions during study sessions</li>
-              <li>• Take a full practice test</li>
-              <li>• Review your spaced repetition queue regularly</li>
+              <li>• Do a Study Session or Quick Drill</li>
+              <li>• Take a Full Practice Test</li>
+              <li>• Work through your Review Queue</li>
             </ul>
           </div>
 

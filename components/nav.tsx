@@ -229,7 +229,7 @@ export function Nav({ currentPath, studentId }: NavProps) {
             <span className="text-sm text-slate-400 mb-0.5">/ 1600</span>
           </div>
         ) : scoreLoaded ? (
-          <p className="text-sm text-slate-400">Answer 20+ questions to unlock</p>
+          <p className="text-xs text-slate-400 leading-relaxed">Complete 20 questions to unlock</p>
         ) : (
           <div className="h-8 bg-slate-100 rounded-md animate-pulse" />
         )}

@@ -42,7 +42,7 @@ const SESSION_CARDS: SessionCard[] = [
     type: 'quick_drill',
     icon: <Zap className="h-6 w-6 text-green-600" />,
     title: 'Quick Drill',
-    description: 'Focused practice on a single skill. Great for targeting specific weaknesses in a short burst.',
+    description: '10 questions, one skill. Attack a specific weakness.',
     duration: '10 min',
     questionCount: '10 questions',
     color: 'border-green-200 hover:border-green-400',
@@ -53,7 +53,7 @@ const SESSION_CARDS: SessionCard[] = [
     type: 'study_session',
     icon: <BookOpen className="h-6 w-6 text-blue-600" />,
     title: 'Study Session',
-    description: 'Interleaved Math and R&W questions — mixing subjects builds the mental flexibility the real SAT requires. AI adjusts difficulty based on your performance.',
+    description: 'Adaptive questions across Math and R&W. Difficulty adjusts as you go.',
     duration: '25–45 min',
     questionCount: 'Ends when you stop',
     color: 'border-blue-200 hover:border-blue-400',
@@ -63,7 +63,7 @@ const SESSION_CARDS: SessionCard[] = [
     type: 'timed_section',
     icon: <Timer className="h-6 w-6 text-orange-600" />,
     title: 'Timed Section',
-    description: 'Full SAT section under realistic time pressure. No hints or explanations during the session.',
+    description: 'Full SAT section under real time pressure. No hints.',
     duration: '32–35 min',
     questionCount: '22–27 questions',
     color: 'border-orange-200 hover:border-orange-400',
@@ -166,7 +166,7 @@ export default function StudyPage() {
       <div className="mb-8">
         <h1 className="text-2xl font-black text-slate-900">Start a Study Session</h1>
         <p className="text-slate-500 text-sm mt-1">
-          Choose the type of practice that fits your goals today.
+          Choose your session type.
         </p>
       </div>
 
@@ -274,13 +274,13 @@ export default function StudyPage() {
 
       {/* Tips */}
       <div className="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-4">
-        <h3 className="text-sm font-bold text-blue-800 mb-2">Study Tips</h3>
+        <h3 className="text-sm font-bold text-blue-800 mb-2">Quick tips</h3>
         <ul className="space-y-1.5">
           {[
-            'Quick Drills work best when targeting a specific skill from your Insights page.',
-            'Study Sessions adapt to your performance — stay focused for the best results.',
-            'Timed Sections build real test stamina. Simulate actual SAT conditions.',
-            'Full Practice Tests should be taken every 2–3 weeks to track score progress.',
+            'Start a Quick Drill from your Insights page to target your weakest skill.',
+            'Study Sessions adapt in real time — the harder you push, the harder they get.',
+            'Timed Sections build the pacing and stamina the real test demands.',
+            'Take a Full Practice Test every 2–3 weeks to measure your score progress.',
           ].map((tip, i) => (
             <li key={i} className="flex items-start gap-2 text-xs text-blue-700">
               <span className="w-4 h-4 rounded-full bg-blue-200 text-blue-800 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">

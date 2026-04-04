@@ -25,7 +25,7 @@
 ## 1. Start Here in 60 Seconds
 
 **The dashboard**
-When you sign in, you'll see four action cards: Start Studying, Insights, My Progress, and Review Queue. These are your primary entry points into the app.
+When you sign in, the primary action is **Start Studying** — one large button at the top. Below it are four secondary cards: Insights, My Progress, Practice Test, and Review Queue. Your predicted score (once unlocked) and weekly activity summary appear below. The dashboard is intentionally minimal — the point is to start practicing, not to read a report.
 
 **Default weekly plan (the "get into a great university" plan)**
 - 5 days/week: Study Session (25 minutes)
@@ -121,15 +121,20 @@ Once per week: open Navigation → Wrong Answer Insights. Pick 1 focus area for 
 
 ## 7. Progress and Motivation
 
-**Predicted Score**
-- Updates after every session
-- Early range is wide. After 5–10 sessions it tightens
-- Track the trend, not the day-to-day noise
+**My Progress page**
+Three stat cards at the top: Predicted Score, Questions Answered, and Overall Accuracy — your progress at a glance. Below: a 4-week activity heatmap and your Skill Map.
 
-**Skill Map, Daily Streak, Review Queue**
-- Skill Map: see what is weak and what is improving. Each skill cell shows its Elo rating number once you've practiced it — making your progress concrete and measurable
-- Daily Streak: consistency beats intensity. Quick Drill counts
-- Review Queue: spaced repetition. This converts old mistakes into permanent points
+**Predicted Score**
+- Complete 20 questions to unlock
+- Early on, the range is wide — it tightens after 5–10 sessions
+- Track the trend, not the day-to-day number
+
+**Skill Map**
+Each skill cell shows its Elo rating once you've practiced it. Color indicates mastery level: light blue = Developing, yellow = Progressing, green = Proficient, dark green ★ = Mastered. Click any cell to drill that skill directly.
+
+**Daily Streak and Review Queue**
+- Streak: consistency beats intensity. Quick Drill counts.
+- Review Queue: converts past wrong answers into permanent memory. Check it daily.
 
 ---
 
@@ -163,8 +168,8 @@ Click "Forgot password?" on the login page. A reset link will be sent to your em
 | What you want to do | How to do it |
 |---|---|
 | Sign in | Go to sat-tutor-pro.vercel.app |
-| Daily practice | Dashboard → Study Session |
-| Quick drill | Dashboard → Quick Drill → choose a skill |
+| Daily practice | Dashboard → Start Studying |
+| Quick drill | Dashboard → Start Studying → Quick Drill → choose a skill |
 | Full practice test | Dashboard → Practice Test |
 | Check patterns | Navigation → Wrong Answer Insights |
 | Reset your password | Login page → Forgot password? |

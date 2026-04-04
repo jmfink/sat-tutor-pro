@@ -4,7 +4,6 @@ import type { DailyActivity } from '@/types';
 import { useMemo } from 'react';
 import { toLocalDateKey } from '@/lib/utils';
 import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
 import {
   Tooltip,
   TooltipContent,
@@ -18,18 +17,6 @@ interface StreakCounterProps {
   weeklyGoal: number;
 }
 
-const MILESTONE_THRESHOLDS = [3, 7, 14, 30, 60, 100];
-
-function getMilestoneLabel(days: number): string {
-  if (days >= 100) return '100-day Legend';
-  if (days >= 60) return '60-day Master';
-  if (days >= 30) return '30-day Expert';
-  if (days >= 14) return '2-week Scholar';
-  if (days >= 7) return '1-week Star';
-  if (days >= 3) return '3-day Starter';
-  return '';
-}
-
 function getActivityLevel(questions: number): string {
   if (questions === 0) return 'none';
   if (questions < 5) return 'light';
@@ -39,19 +26,19 @@ function getActivityLevel(questions: number): string {
 }
 
 const ACTIVITY_BG: Record<string, string> = {
-  none: 'bg-slate-100',
-  light: 'bg-green-200',
+  none:     'bg-slate-100',
+  light:    'bg-green-200',
   moderate: 'bg-green-400',
-  strong: 'bg-green-600',
-  intense: 'bg-green-800',
+  strong:   'bg-green-600',
+  intense:  'bg-green-800',
 };
 
 function getDatesForGrid(): Date[] {
-  // Build 12-week grid (84 days) ending today
+  // 4-week grid (28 days) ending today
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const dates: Date[] = [];
-  for (let i = 83; i >= 0; i--) {
+  for (let i = 27; i >= 0; i--) {
     const d = new Date(today);
     d.setDate(d.getDate() - i);
     dates.push(d);
@@ -82,9 +69,8 @@ export function StreakCounter({
 
   // Pad the start so the grid aligns to week columns
   const firstDay = gridDates[0].getDay(); // 0=Sun
-  const paddedBefore = firstDay; // empty cells at start
+  const paddedBefore = firstDay;
 
-  // Build week columns: each column is a week (7 days), left = oldest
   const weeks: (Date | null)[][] = [];
   let col: (Date | null)[] = Array(paddedBefore).fill(null);
   for (const d of gridDates) {
@@ -103,7 +89,7 @@ export function StreakCounter({
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const weekStart = new Date(today);
-  weekStart.setDate(today.getDate() - today.getDay()); // Sunday
+  weekStart.setDate(today.getDate() - today.getDay());
 
   let daysThisWeek = 0;
   for (let i = 0; i < 7; i++) {
@@ -115,77 +101,39 @@ export function StreakCounter({
   }
   const weekProgressPct = Math.min(100, Math.round((daysThisWeek / weeklyGoal) * 100));
 
-  // Milestones earned
-  const earnedMilestones = MILESTONE_THRESHOLDS.filter((m) => currentStreak >= m);
-  const nextMilestone = MILESTONE_THRESHOLDS.find((m) => m > currentStreak);
-
   return (
     <div className="space-y-5">
       {/* Streak display */}
       <div className="flex items-start gap-6">
         <div className="text-center">
-          <div className="flex items-center gap-2 justify-center">
-            <span className="text-5xl font-black text-orange-500">{currentStreak}</span>
-          </div>
+          <span className="text-5xl font-black text-orange-500">{currentStreak}</span>
           <p className="text-sm font-semibold text-slate-600 mt-0.5">Day Streak</p>
           <p className="text-xs text-slate-400">
             {currentStreak === 0
-              ? 'Start today!'
-              : currentStreak === 1
-              ? 'Keep it going!'
-              : `${currentStreak} days strong`}
+              ? 'Study today to start'
+              : 'Study today to extend it'}
           </p>
         </div>
 
-        <div className="flex-1 space-y-3">
-          {/* Weekly progress */}
-          <div className="space-y-1">
-            <div className="flex items-center justify-between text-xs">
-              <span className="font-medium text-slate-600">This week</span>
-              <span className="text-slate-500">
-                {daysThisWeek}/{weeklyGoal} days
-              </span>
-            </div>
-            <Progress value={weekProgressPct} className="h-2" />
+        <div className="flex-1 space-y-1">
+          <div className="flex items-center justify-between text-xs">
+            <span className="font-medium text-slate-600">This week</span>
+            <span className="text-slate-500">{daysThisWeek}/{weeklyGoal} days</span>
           </div>
-
-          {/* Next milestone */}
-          {nextMilestone && (
-            <p className="text-xs text-slate-500">
-              <span className="font-semibold text-orange-600">
-                {nextMilestone - currentStreak} day{nextMilestone - currentStreak !== 1 ? 's' : ''}
-              </span>{' '}
-              until {getMilestoneLabel(nextMilestone)}
-            </p>
-          )}
-
-          {/* Milestone badges */}
-          {earnedMilestones.length > 0 && (
-            <div className="flex flex-wrap gap-1">
-              {earnedMilestones.map((m) => (
-                <Badge
-                  key={m}
-                  variant="outline"
-                  className="text-xs bg-orange-50 border-orange-200 text-orange-700 px-2 py-0.5"
-                >
-                  {getMilestoneLabel(m)}
-                </Badge>
-              ))}
-            </div>
-          )}
+          <Progress value={weekProgressPct} className="h-2" />
         </div>
       </div>
 
-      {/* Calendar heatmap */}
+      {/* 4-week activity grid */}
       <div>
         <p className="text-xs font-semibold text-slate-500 mb-2 uppercase tracking-wide">
-          12-Week Activity
+          4-Week Activity
         </p>
         <div className="overflow-x-auto">
           <div className="flex gap-1 min-w-fit">
             {/* Day labels column */}
             <div className="flex flex-col gap-1 mr-0.5">
-              <div className="h-4" /> {/* Spacer for month labels */}
+              <div className="h-4" />
               {DAY_LABELS.map((day, i) => (
                 <div
                   key={day}
@@ -202,25 +150,19 @@ export function StreakCounter({
             {/* Week columns */}
             <TooltipProvider delayDuration={100}>
               {weeks.map((week, wi) => {
-                // Month label for this column
                 const firstReal = week.find((d) => d !== null);
-                const showMonth =
-                  firstReal &&
-                  (wi === 0 || firstReal.getDate() <= 7);
+                const showMonth = firstReal && (wi === 0 || firstReal.getDate() <= 7);
                 const monthLabel = showMonth
                   ? firstReal!.toLocaleString('default', { month: 'short' })
                   : '';
 
                 return (
                   <div key={wi} className="flex flex-col gap-1">
-                    {/* Month label */}
                     <div className="h-4 text-[10px] text-slate-400 flex items-center">
                       {monthLabel}
                     </div>
                     {week.map((date, di) => {
-                      if (!date) {
-                        return <div key={di} className="w-4 h-4" />;
-                      }
+                      if (!date) return <div key={di} className="w-4 h-4" />;
                       const key = toDateKey(date);
                       const activity = activityMap.get(key);
                       const questions = activity?.questions_answered ?? 0;
@@ -252,9 +194,6 @@ export function StreakCounter({
                                 <p>{questions} questions answered</p>
                               ) : (
                                 <p className="text-slate-400">No activity</p>
-                              )}
-                              {activity?.streak_qualifying && (
-                                <p className="text-green-600 font-medium">Streak day!</p>
                               )}
                             </div>
                           </TooltipContent>

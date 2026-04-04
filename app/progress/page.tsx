@@ -12,7 +12,6 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ProgressChart } from '@/components/progress-chart';
 import { StreakCounter } from '@/components/streak-counter';
 import { SkillMap } from '@/components/skill-map';
 import type {
@@ -167,7 +166,7 @@ export default function ProgressPage() {
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-2xl font-black text-slate-900">My Progress</h1>
-          <p className="text-slate-500 text-sm mt-0.5">Track your score trajectory and skill development.</p>
+          <p className="text-slate-500 text-sm mt-0.5">Your score and skill progress.</p>
         </div>
       </div>
 
@@ -193,14 +192,6 @@ export default function ProgressPage() {
           }`}>{overallAccuracy !== null ? `${overallAccuracy}%` : '—'}</p>
           <p className="text-slate-400 text-xs mt-1">{totalQuestionsAnswered > 0 ? `${totalCorrect} correct` : 'No data yet'}</p>
         </div>
-      </div>
-
-      {/* Score prediction chart */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
-        <h2 className="text-sm font-bold text-slate-700 uppercase tracking-wide mb-4">
-          Score Prediction History
-        </h2>
-        <ProgressChart predictions={predictions} />
       </div>
 
       {/* Streak */}

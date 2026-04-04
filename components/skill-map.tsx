@@ -15,30 +15,29 @@ interface SkillMapProps {
 }
 
 const MASTERY_BG = {
-  developing: 'bg-red-100 border-red-300 hover:bg-red-200',
-  progressing: 'bg-yellow-100 border-yellow-300 hover:bg-yellow-200',
-  proficient: 'bg-green-100 border-green-300 hover:bg-green-200',
-  mastered: 'bg-amber-100 border-amber-300 hover:bg-amber-200',
+  developing:  'bg-blue-50   border-blue-200   hover:bg-blue-100',
+  progressing: 'bg-yellow-50 border-yellow-200 hover:bg-yellow-100',
+  proficient:  'bg-green-50  border-green-200  hover:bg-green-100',
+  mastered:    'bg-green-100 border-green-400  hover:bg-green-200',
 } as const;
 
 const MASTERY_DOT = {
-  developing: 'bg-red-500',
+  developing:  'bg-blue-400',
   progressing: 'bg-yellow-500',
-  proficient: 'bg-green-500',
-  mastered: 'bg-amber-500',
+  proficient:  'bg-green-500',
+  mastered:    'bg-green-700',
 } as const;
 
 const MASTERY_LABEL_COLOR = {
-  developing: 'text-red-700',
+  developing:  'text-blue-600',
   progressing: 'text-yellow-700',
-  proficient: 'text-green-700',
-  mastered: 'text-amber-700',
+  proficient:  'text-green-700',
+  mastered:    'text-green-800',
 } as const;
 
-// Styles for skills that have never been attempted — neutral gray, no mastery implied
+// Styles for skills that have never been attempted — neutral gray
 const NOT_PRACTICED_BG = 'bg-slate-50 border-slate-200 hover:bg-slate-100';
 const NOT_PRACTICED_DOT = 'bg-slate-300';
-const NOT_PRACTICED_LABEL = 'text-slate-400';
 
 const DEFAULT_ELO = 1000;
 
@@ -73,8 +72,6 @@ export function SkillMap({ skillRatings, onSkillClick }: SkillMapProps) {
     const isPracticed = attempted > 0;
     const bgClass = isPracticed ? MASTERY_BG[mastery] : NOT_PRACTICED_BG;
     const dotClass = isPracticed ? MASTERY_DOT[mastery] : NOT_PRACTICED_DOT;
-    const labelClass = isPracticed ? MASTERY_LABEL_COLOR[mastery] : NOT_PRACTICED_LABEL;
-    const labelText = isPracticed ? mastery : 'Not yet practiced';
 
     return (
       <TooltipProvider key={skill.id} delayDuration={200}>
@@ -97,13 +94,13 @@ export function SkillMap({ skillRatings, onSkillClick }: SkillMapProps) {
                 />
               </div>
               <div className="flex items-center justify-between mt-auto">
-                <span className={`text-xs font-medium capitalize ${labelClass}`}>
-                  {labelText}
-                </span>
                 {isPracticed ? (
                   <span className="text-[10px] font-mono text-slate-500 tabular-nums">{elo}</span>
                 ) : (
                   <span className="text-xs text-slate-400">{skill.id}</span>
+                )}
+                {mastery === 'mastered' && isPracticed && (
+                  <span className={`text-xs font-bold ${MASTERY_LABEL_COLOR[mastery]}`}>★</span>
                 )}
               </div>
             </button>
@@ -167,14 +164,14 @@ export function SkillMap({ skillRatings, onSkillClick }: SkillMapProps) {
       <span className="text-xs text-slate-500 font-medium">Mastery:</span>
       <div className="flex items-center gap-1.5">
         <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
-        <span className="text-xs text-slate-600">Not yet practiced</span>
+        <span className="text-xs text-slate-600">Not practiced</span>
       </div>
       {(
         [
-          ['developing', 'bg-red-500', 'Developing (<1100)'],
-          ['progressing', 'bg-yellow-500', 'Progressing (1100+)'],
-          ['proficient', 'bg-green-500', 'Proficient (1300+)'],
-          ['mastered', 'bg-amber-500', 'Mastered (1500+)'],
+          ['developing',  'bg-blue-400',   'Developing (<1100)'],
+          ['progressing', 'bg-yellow-500', 'Progressing (1100–1300)'],
+          ['proficient',  'bg-green-500',  'Proficient (1300–1500)'],
+          ['mastered',    'bg-green-700',  'Mastered ★ (1500+)'],
         ] as const
       ).map(([key, dot, label]) => (
         <div key={key} className="flex items-center gap-1.5">

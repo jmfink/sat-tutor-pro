@@ -217,7 +217,7 @@ export default function ReviewQueuePage() {
           <div>
             <h1 className="text-2xl font-black text-slate-900">Review Queue</h1>
             <p className="text-slate-500 text-sm mt-0.5">
-              Spaced repetition — review what you&apos;ve learned before you forget it.
+              Review before you forget it.
             </p>
           </div>
         </div>
@@ -238,8 +238,8 @@ export default function ReviewQueuePage() {
               </div>
               <p className={`text-sm ${dueCount > 0 ? 'text-amber-700' : 'text-green-700'}`}>
                 {dueCount > 0
-                  ? `Reviewing now keeps your memory strong. Est. ${Math.ceil(dueCount * 0.5)} min.`
-                  : 'You\'re all caught up! Check back tomorrow.'}
+                  ? `Est. ${Math.ceil(dueCount * 0.5)} min.`
+                  : "You're all caught up."}
               </p>
             </div>
             {dueCount > 0 && (
@@ -256,9 +256,8 @@ export default function ReviewQueuePage() {
 
         {/* About spaced repetition */}
         <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-xs text-blue-700 leading-relaxed">
-          <p className="font-semibold text-blue-800 mb-1">How it works:</p>
-          Cards you get correct appear less frequently (longer interval). Cards you miss appear sooner.
-          This SM-2 algorithm ensures you review at the optimal time to maximize retention.
+          <p className="font-semibold text-blue-800 mb-1">How it works</p>
+          Get a card right and it comes back later. Miss it and it comes back sooner. Each card appears at the optimal time for long-term retention.
         </div>
 
         {/* Queue list */}
@@ -267,7 +266,7 @@ export default function ReviewQueuePage() {
             <BookOpen className="h-10 w-10 text-slate-300 mx-auto mb-3" />
             <p className="text-slate-600 font-semibold mb-1">Queue is empty</p>
             <p className="text-slate-400 text-sm mb-4">
-              Answer more questions during study sessions to build your review queue.
+              Wrong answers from study sessions appear here for review.
             </p>
             <Button
               onClick={() => router.push('/study')}
@@ -452,7 +451,7 @@ export default function ReviewQueuePage() {
         <div>
           <h2 className="text-2xl font-black text-slate-900">Review Complete!</h2>
           <p className="text-slate-500 text-sm mt-1">
-            Great work maintaining your knowledge retention.
+            Retention scores updated.
           </p>
         </div>
         <div className="grid grid-cols-3 gap-3">
