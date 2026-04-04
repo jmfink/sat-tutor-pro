@@ -96,10 +96,12 @@ test.describe('Progress page — empty state', () => {
   });
 
   test('Skill map: "Not yet practiced" label appears for unattempted skills', async ({ page }) => {
-    const bodyText = await page.locator('body').textContent() ?? '';
-    const count = (bodyText.match(/not yet practiced/gi) ?? []).length;
-    // 40+ sub-skills → many cells labeled "Not yet practiced"
-    expect(count, 'Unattempted skills should show "Not yet practiced"').toBeGreaterThan(10);
+    // Skill map redesign: unattempted cells now show the skill ID (e.g. "M-01") rather
+    // than the text "Not yet practiced". The legend still shows "Not practiced".
+    // Wait for the skill map section to be present, then verify the legend entry.
+    await expect(page.locator('text=Skill Map').first()).toBeVisible({ timeout: 10000 });
+    const legendEntry = page.locator('text=Not practiced').first();
+    await expect(legendEntry).toBeVisible({ timeout: 5000 });
   });
 
   test('Error Type Distribution: chart is hidden, placeholder text shown', async ({ page }) => {
@@ -114,15 +116,9 @@ test.describe('Progress page — empty state', () => {
   });
 
   test('Score Prediction History: no 4-digit SAT score shown when no data', async ({ page }) => {
-    await expect(page.locator('text=Score Prediction History').first()).toBeVisible();
-    const card = page.locator('div.bg-white', { has: page.locator('text=Score Prediction History') });
-    const text = await card.textContent() ?? '';
-    // SAT scores are 4-digit numbers in 800–1600 range
-    const scoreMatch = text.match(/\b(8[0-9]{2}|9[0-9]{2}|1[0-5][0-9]{2}|1600)\b/);
-    expect(
-      scoreMatch,
-      `Score Prediction card should not display a number when no data exists; found: ${scoreMatch?.[0]}`
-    ).toBeNull();
+    // Progress page redesign: Score Prediction History chart removed.
+    // Score is now a "Predicted Score" stat card showing "—" when no data.
+    test.skip(true, 'Score Prediction History section removed in redesign — score shown as stat card with "—" placeholder');
   });
 
   test('Session History: "No sessions yet" message shown', async ({ page }) => {
@@ -186,10 +182,10 @@ test.describe('Review Queue — empty state', () => {
 
   test('"0 cards due" banner includes a friendly message (not a bare zero count)', async ({ page }) => {
     // The UI shows "0 cards due" — verify it is accompanied by the friendly
-    // "You're all caught up!" message so the zero is contextualised, not confusing.
+    // "You're all caught up." message so the zero is contextualised, not confusing.
     const zeroBanner = page.locator('text=0 cards due');
     await expect(zeroBanner).toBeVisible({ timeout: 5000 });
-    await expect(page.locator("text=You're all caught up!")).toBeVisible({ timeout: 5000 });
+    await expect(page.locator("text=You're all caught up.")).toBeVisible({ timeout: 5000 });
   });
 
   test('Start Review Session button is absent when queue is empty', async ({ page }) => {
@@ -217,11 +213,12 @@ test.describe('Dashboard — empty state', () => {
     await page.waitForTimeout(500);
   });
 
-  test('Streak shows 0 with "Start today!" sub-label', async ({ page }) => {
-    // StreakCounter renders the streak number and contextual text
-    const streakNum = page.locator('span.text-5xl');
+  test('Streak shows 0 with "Study today to start" sub-label', async ({ page }) => {
+    // Dashboard redesign: streak number uses text-4xl (not text-5xl); sub-label copy
+    // changed from "Start today!" to "Study today to start"
+    const streakNum = page.locator('span.text-4xl').first();
     await expect(streakNum).toHaveText('0', { timeout: 5000 });
-    await expect(page.locator('text=Start today!')).toBeVisible({ timeout: 5000 });
+    await expect(page.locator('text=Study today to start')).toBeVisible({ timeout: 5000 });
   });
 
   test('Review Queue card has no badge when count is 0', async ({ page }) => {
@@ -229,15 +226,16 @@ test.describe('Dashboard — empty state', () => {
     await expect(page.locator('text=0 due')).toHaveCount(0);
   });
 
-  test('Score prediction widget shows "—" placeholder and unlock message', async ({ page }) => {
-    await expect(page.locator('text=—')).toBeVisible({ timeout: 10000 });
-    // "Answer 20+ questions to unlock" appears in both the score widget and the nav bar
-    // predicted-score display — use .first() to avoid a strict-mode multi-element error.
-    await expect(page.locator('text=Answer 20+ questions to unlock').first()).toBeVisible({ timeout: 5000 });
+  test('Score prediction widget shows unlock message', async ({ page }) => {
+    // Dashboard redesign: no "—" placeholder — widget shows unlock copy directly.
+    // Copy updated to "Complete 20 questions to unlock" (active voice).
+    await expect(page.locator('text=Complete 20 questions to unlock').first()).toBeVisible({ timeout: 10000 });
   });
 
   test('Recent Sessions panel shows "No sessions yet"', async ({ page }) => {
-    await expect(page.locator('text=No sessions yet')).toBeVisible({ timeout: 10000 });
+    // Dashboard redesign: "Recent Sessions" panel removed from dashboard.
+    // Weekly question count and accuracy are shown inline in the streak/stats widget.
+    test.skip(true, 'Recent Sessions panel removed from dashboard in redesign — weekly stats shown inline in streak widget');
   });
 
   test('Page loads without crash', async ({ page }) => {

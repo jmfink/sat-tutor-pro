@@ -20,8 +20,9 @@ test.describe('Progress Page (/progress)', () => {
   });
 
   test('Score Prediction History section is visible', async ({ page }) => {
-    const section = page.locator('text=Score Prediction History').first();
-    await expect(section).toBeVisible();
+    // Progress page redesign: score prediction history chart removed; score is now
+    // shown as a single stat card ("Predicted Score") at the top of the page.
+    test.skip(true, 'Score Prediction History chart removed in progress page redesign — score shown as stat card');
   });
 
   test('chart container renders (SVG or recharts container)', async ({ page }) => {

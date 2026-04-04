@@ -34,18 +34,22 @@ test.describe('Dashboard (/)', () => {
   });
 
   test('Study Streak section is visible', async ({ page }) => {
-    const streakSection = page.locator('text=Study Streak').first();
-    await expect(streakSection).toBeVisible();
+    // Dashboard redesign: streak is shown inline with "day streak" label, no section heading
+    const streakLabel = page.locator('text=day streak').first();
+    await expect(streakLabel).toBeVisible();
   });
 
   test('Quick Actions section is visible', async ({ page }) => {
-    const quickActions = page.locator('text=Quick Actions').first();
-    await expect(quickActions).toBeVisible();
+    // Dashboard redesign: "Quick Actions" heading removed; action tiles are shown directly.
+    // Verify one of the canonical secondary action tiles is present.
+    const practiceTestTile = page.locator('text=Practice Test').first();
+    await expect(practiceTestTile).toBeVisible();
   });
 
   test('Recent Sessions section is visible', async ({ page }) => {
-    const sessions = page.locator('text=Recent Sessions').first();
-    await expect(sessions).toBeVisible();
+    // Dashboard redesign: "Recent Sessions" section was removed from the dashboard.
+    // Weekly stats (questions count, accuracy) are shown inline in the streak widget.
+    test.skip(true, 'Recent Sessions section removed from dashboard in redesign — stats shown inline in streak widget');
   });
 
   test('Review Queue card is visible in Quick Actions', async ({ page }) => {
