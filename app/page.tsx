@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation';
 import {
   BookOpen,
   ClipboardList,
-  Star,
+  Lightbulb,
   TrendingUp,
-  Clock,
+  RefreshCw,
   ChevronRight,
   CheckCircle2,
 } from 'lucide-react';
@@ -23,25 +23,23 @@ function ActionCard({
   description,
   badge,
   href,
-  color,
 }: {
   icon: React.ReactNode;
   title: string;
   description: string;
   badge?: string;
   href: string;
-  color: string;
 }) {
   return (
     <Link
       href={href}
-      className="group flex flex-col gap-2 p-3 bg-white rounded-xl border border-slate-200 hover:border-blue-300 hover:shadow-sm transition-all duration-150 no-underline"
+      className="group flex flex-col items-center justify-center text-center gap-2.5 py-6 px-3 bg-white rounded-xl border border-slate-200 hover:border-blue-300 hover:shadow-sm transition-all duration-150 no-underline"
     >
-      <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${color}`}>
+      <div className="flex items-center justify-center">
         {icon}
       </div>
       <div>
-        <div className="flex items-center gap-1.5 mb-0.5">
+        <div className="flex items-center justify-center gap-1.5 mb-0.5">
           <p className="text-sm font-bold text-slate-800 group-hover:text-blue-700 transition-colors leading-tight">
             {title}
           </p>
@@ -171,33 +169,29 @@ export default function DashboardPage() {
       {/* Secondary actions */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <ActionCard
-          icon={<Star className="h-4 w-4 text-amber-600" />}
+          icon={<Lightbulb className="h-10 w-10 text-amber-400" strokeWidth={1.5} />}
           title="Insights ★"
           description="Wrong answer patterns"
           href="/insights"
-          color="bg-amber-100"
         />
         <ActionCard
-          icon={<TrendingUp className="h-4 w-4 text-green-600" />}
+          icon={<TrendingUp className="h-10 w-10 text-blue-500" strokeWidth={1.5} />}
           title="My Progress"
           description="Skill map and analytics"
           href="/progress"
-          color="bg-green-100"
         />
         <ActionCard
-          icon={<ClipboardList className="h-4 w-4 text-purple-600" />}
+          icon={<ClipboardList className="h-10 w-10 text-slate-400" strokeWidth={1.5} />}
           title="Practice Test"
           description="Full SAT simulation"
           href="/practice-test"
-          color="bg-purple-100"
         />
         <ActionCard
-          icon={<Clock className="h-4 w-4 text-slate-500" />}
+          icon={<RefreshCw className="h-10 w-10 text-purple-400" strokeWidth={1.5} />}
           title="Review Queue"
           description="Spaced repetition"
           badge={reviewCount > 0 ? `${reviewCount}` : undefined}
           href="/review"
-          color="bg-slate-100"
         />
       </div>
 
@@ -255,7 +249,7 @@ export default function DashboardPage() {
           href="/review"
           className="flex items-center gap-3 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 no-underline hover:bg-amber-100 transition-colors"
         >
-          <Clock className="h-4 w-4 text-amber-600 shrink-0" />
+          <RefreshCw className="h-4 w-4 text-amber-600 shrink-0" />
           <p className="text-sm font-semibold text-amber-800 flex-1">
             {reviewCount} card{reviewCount !== 1 ? 's' : ''} due for review
           </p>

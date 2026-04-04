@@ -114,8 +114,8 @@ export function Nav({ currentPath, studentId }: NavProps) {
           <Zap className="h-4 w-4 text-white" />
         </div>
         <div>
-          <p className="text-sm font-black text-slate-800 leading-none">SAT Tutor</p>
-          <p className="text-[10px] text-slate-400 font-medium mt-0.5">Pro</p>
+          <p className="text-sm font-black text-slate-800 leading-none">SAT Tutor Pro</p>
+          <p className="text-[10px] text-slate-400 italic mt-0.5">Your AI coach</p>
         </div>
       </div>
 
