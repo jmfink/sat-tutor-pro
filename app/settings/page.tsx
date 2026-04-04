@@ -11,15 +11,19 @@ import {
   ChevronRight,
   Info,
   Check,
+  UserCircle,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Dialog,
   DialogContent,
 } from '@/components/ui/dialog';
 import { toast } from 'sonner';
+import { useAuth } from '@/components/auth-provider';
+import { createSupabaseBrowserClient } from '@/lib/supabase';
 
 type ExplanationStyle = 'visual' | 'algebraic' | 'analogy' | 'elimination';
 
@@ -101,6 +105,7 @@ function SettingsSection({
 }
 
 export default function SettingsPage() {
+  const { userId, name, user } = useAuth();
   const [explanationStyle, setExplanationStyle] = useState<ExplanationStyle>('algebraic');
   const [socraticMode, setSocraticMode] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
@@ -109,6 +114,14 @@ export default function SettingsPage() {
   const [saved, setSaved] = useState(false);
   const [parentEmail, setParentEmail] = useState('');
   const [parentEmailLoading, setParentEmailLoading] = useState(true);
+  const [displayName, setDisplayName] = useState('');
+
+  // Initialise display name from auth context once the name loads in
+  const [nameInitialised, setNameInitialised] = useState(false);
+  if (!nameInitialised && name) {
+    setDisplayName(name);
+    setNameInitialised(true);
+  }
 
   useEffect(() => {
     fetch('/api/parent-email')
@@ -119,11 +132,22 @@ export default function SettingsPage() {
 
   const handleSave = async () => {
     try {
+      // Save display name to students table
+      if (userId && displayName.trim()) {
+        const supabase = createSupabaseBrowserClient();
+        await supabase
+          .from('students')
+          .update({ name: displayName.trim() })
+          .eq('id', userId);
+      }
+
+      // Save parent email
       await fetch('/api/parent-email', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ parent_email: parentEmail }),
       });
+
       setSaved(true);
       toast.success('Settings saved!');
       setTimeout(() => setSaved(false), 2000);
@@ -166,6 +190,40 @@ export default function SettingsPage() {
           )}
         </Button>
       </div>
+
+      {/* Profile */}
+      <SettingsSection
+        title="Profile"
+        icon={<UserCircle className="h-4 w-4 text-blue-600" />}
+      >
+        <div className="space-y-3">
+          <div className="space-y-1.5">
+            <Label htmlFor="displayName">Display name</Label>
+            <Input
+              id="displayName"
+              type="text"
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+              placeholder="Your name"
+              className="text-sm"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="profileEmail">Email address</Label>
+            <Input
+              id="profileEmail"
+              type="email"
+              value={user?.email ?? ''}
+              readOnly
+              disabled
+              className="text-sm bg-slate-50 text-slate-500 cursor-not-allowed"
+            />
+            <p className="text-xs text-slate-400">
+              Email changes are handled through Supabase Auth and cannot be edited here.
+            </p>
+          </div>
+        </div>
+      </SettingsSection>
 
       {/* Learning Preferences */}
       <SettingsSection
