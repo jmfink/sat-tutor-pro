@@ -37,6 +37,7 @@ When writing any copy — button labels, section headers, empty states, session 
 - Run the Playwright test suite after significant changes and report results.
 - After building any feature that changes user-facing behavior, update user-guide.md directly — do not just flag what should change. Make the actual edits to the relevant sections. Then note what was updated in your response summary.
 - The user guide source of truth is `user-guide.md` in the repo root. When features change user-facing behavior, update `user-guide.md`. To regenerate the Word doc, run: `node scripts/generate-user-guide.mjs`. The Word doc styling is driven by the branding colors defined at the top of `user-guide.md` — if app colors change, update those values and regenerate.
+- After any change that affects UI copy, layout, navigation, or user-facing behavior, run the full Playwright test suite before committing. If tests fail due to the changes (not pre-existing failures), fix the tests to match the new correct UI before pushing. Never push UI changes that leave new Playwright failures unresolved. In your response summary, report the test results and what was fixed.
 
 ## Commands
 
