@@ -35,6 +35,17 @@ npx playwright test --grep "dashboard"       # By test name
 - Environment variables are managed in the Vercel dashboard — never commit `.env.local`
 - Supabase migrations in `supabase/migrations/` must be run manually in the Supabase SQL editor
 
+## Security
+
+- **`.claude/` is in `.gitignore`** — never commit any files from this directory
+- **Supabase admin key format**: the app now uses Supabase's new Secret API key format (`sb_secret_...`) instead of the legacy JWT-based service_role key (`eyJ...`). Never log, hardcode, or store API keys in tracked files.
+- Never commit `.env.local` or any file containing secrets
+
+## GitHub Actions / CI
+
+- **Playwright CI** runs automatically on every push to `main` and every pull request (`.github/workflows/playwright.yml`)
+- Required GitHub Secrets: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `ANTHROPIC_API_KEY`, `RESEND_API_KEY`, `TEST_EMAIL`, `TEST_PASSWORD`
+
 ## Architecture Overview
 
 **Next.js 15 App Router** — client components use `'use client'`. Pages live in `app/`, API routes in `app/api/`. Layout at `app/layout.tsx` wraps everything in `AuthProvider` + `AppShell`.
@@ -103,4 +114,9 @@ useEffect(() => {
 
 ## Playwright Tests
 
-Global setup (`e2e/global-setup.ts`) logs in or creates the test account (`TEST_EMAIL` env var, default `playwright-test@sat-tutor.test`) and saves cookies to `e2e/.auth/user.json`. All test files inherit this auth state. Tests in `e2e/10-auth.spec.ts` override with `test.use({ storageState: { cookies: [], origins: [] } })` to test unauthenticated flows. Five tests in specs 04, 06, 09 have pre-existing failures that require seeded question history — they are not regressions.
+Global setup (`e2e/global-setup.ts`) logs in or creates the test account (`TEST_EMAIL` env var, default `playwright-test@sat-tutor.test`) and saves cookies to `e2e/.auth/user.json`. All test files inherit this auth state. Tests in `e2e/10-auth.spec.ts` override with `test.use({ storageState: { cookies: [], origins: [] } })` to test unauthenticated flows.
+
+The previously failing tests in specs 04, 06, and 09 have been fixed:
+- Insights tests skip gracefully when the account is in a pre-threshold state (< 10 wrong answers)
+- Review queue tests parse the numeric due count instead of matching text
+- Empty-state strict mode violation fixed with `.first()`
