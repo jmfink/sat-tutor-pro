@@ -10,6 +10,7 @@ interface AuthContextValue {
   name: string | null;
   loading: boolean;
   signOut: () => Promise<void>;
+  refreshName: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue>({
@@ -18,6 +19,7 @@ const AuthContext = createContext<AuthContextValue>({
   name: null,
   loading: true,
   signOut: async () => {},
+  refreshName: async () => {},
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -39,6 +41,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       .single();
     setName(data?.name ?? null);
   }, [supabase]);
+
+  // Exposed so Settings can refresh the cached name after a profile update
+  const refreshName = useCallback(async () => {
+    const { data: { user: currentUser } } = await supabase.auth.getUser();
+    if (currentUser) await fetchName(currentUser.id);
+  }, [supabase, fetchName]);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
@@ -65,7 +73,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <AuthContext.Provider value={{ user, userId: user?.id ?? null, name, loading, signOut }}>
+    <AuthContext.Provider value={{ user, userId: user?.id ?? null, name, loading, signOut, refreshName }}>
       {children}
     </AuthContext.Provider>
   );

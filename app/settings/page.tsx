@@ -23,7 +23,6 @@ import {
 } from '@/components/ui/dialog';
 import { toast } from 'sonner';
 import { useAuth } from '@/components/auth-provider';
-import { createSupabaseBrowserClient } from '@/lib/supabase';
 
 type ExplanationStyle = 'visual' | 'algebraic' | 'analogy' | 'elimination';
 
@@ -105,7 +104,7 @@ function SettingsSection({
 }
 
 export default function SettingsPage() {
-  const { userId, name, user } = useAuth();
+  const { name, user, refreshName } = useAuth();
   const [explanationStyle, setExplanationStyle] = useState<ExplanationStyle>('algebraic');
   const [socraticMode, setSocraticMode] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
@@ -132,13 +131,19 @@ export default function SettingsPage() {
 
   const handleSave = async () => {
     try {
-      // Save display name to students table
-      if (userId && displayName.trim()) {
-        const supabase = createSupabaseBrowserClient();
-        await supabase
-          .from('students')
-          .update({ name: displayName.trim() })
-          .eq('id', userId);
+      // Save display name via API route (uses admin client, bypasses RLS)
+      if (displayName.trim()) {
+        const res = await fetch('/api/student/profile', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: displayName.trim() }),
+        });
+        if (!res.ok) {
+          const { error } = await res.json();
+          throw new Error(error ?? 'Failed to update name');
+        }
+        // Update the cached name in AuthProvider so the dashboard reflects it immediately
+        await refreshName();
       }
 
       // Save parent email
@@ -151,8 +156,8 @@ export default function SettingsPage() {
       setSaved(true);
       toast.success('Settings saved!');
       setTimeout(() => setSaved(false), 2000);
-    } catch {
-      toast.error('Failed to save settings.');
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : 'Failed to save settings.');
     }
   };
 
