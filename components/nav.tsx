@@ -14,6 +14,7 @@ import {
   Zap,
   Users,
   LogOut,
+  HelpCircle,
 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { useRouter } from 'next/navigation';
@@ -163,6 +164,31 @@ export function Nav({ currentPath, studentId }: NavProps) {
         })}
 
         <Separator className="my-2" />
+
+        {/* Help link */}
+        <Link
+          href="/help"
+          className={`
+            group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium
+            transition-all duration-100 no-underline
+            ${
+              currentPath === '/help'
+                ? 'bg-blue-50 text-blue-700 shadow-sm'
+                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+            }
+          `}
+        >
+          <span
+            className={`transition-colors ${
+              currentPath === '/help'
+                ? 'text-blue-600'
+                : 'text-slate-400 group-hover:text-slate-600'
+            }`}
+          >
+            <HelpCircle className="h-4 w-4" />
+          </span>
+          <span className="flex-1">User Guide</span>
+        </Link>
 
         {/* Parent dashboard link */}
         <Link
