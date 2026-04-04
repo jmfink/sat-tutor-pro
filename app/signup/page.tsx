@@ -45,7 +45,7 @@ export default function SignupPage() {
         .from('students')
         .upsert(
           { id: data.user.id, name: name || email.split('@')[0] },
-          { onConflict: 'id', ignoreDuplicates: true }
+          { onConflict: 'id', ignoreDuplicates: false }
         );
       if (studentError) {
         console.error('Failed to create student record:', studentError);

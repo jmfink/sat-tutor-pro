@@ -24,8 +24,6 @@ import { SESSION_TYPE_LABELS, SESSION_TYPE_COLORS, calcAccuracy } from '@/lib/co
 import { useAuth } from '@/components/auth-provider';
 import { toLocalDateKey } from '@/lib/utils';
 
-const STUDENT_NAME = process.env.NEXT_PUBLIC_STUDENT_NAME ?? 'Student';
-
 function ScorePredictionWidget({ prediction, loading }: { prediction: ScorePrediction | null; loading: boolean }) {
   if (!prediction) {
     return (
@@ -160,7 +158,7 @@ function SessionRow({ session }: { session: Session }) {
 
 export default function DashboardPage() {
   const router = useRouter();
-  const { userId } = useAuth();
+  const { userId, name } = useAuth();
   const [prediction, setPrediction] = useState<ScorePrediction | null>(null);
   const [predLoading, setPredLoading] = useState(true);
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -234,7 +232,7 @@ export default function DashboardPage() {
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-2xl font-black text-slate-900">
-            Good {getGreeting()}, {STUDENT_NAME}!
+            Good {getGreeting()}, {name ?? 'Student'}!
           </h1>
           <p className="text-slate-500 text-sm mt-0.5">Ready to crush today&apos;s goals?</p>
         </div>

@@ -229,7 +229,7 @@ export async function GET(req: NextRequest) {
 
   const shouldSend = isTest || isInactive || regressions.length > 0;
   const parentEmail = student?.parent_email ?? null;
-  const studentName = student?.name ?? (process.env.NEXT_PUBLIC_STUDENT_NAME ?? 'Student');
+  const studentName = student?.name ?? 'Student';
 
   const alertSubject = isTest
     ? `[Test] SAT Tutor Pro — Alert check for ${studentName}`

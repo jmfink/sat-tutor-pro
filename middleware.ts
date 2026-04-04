@@ -34,6 +34,7 @@ export async function middleware(request: NextRequest) {
   const isPublicRoute =
     pathname === '/login' ||
     pathname === '/signup' ||
+    pathname === '/forgot-password' ||
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api/') ||
     pathname === '/favicon.ico';

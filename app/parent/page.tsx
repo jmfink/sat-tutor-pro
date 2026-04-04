@@ -44,7 +44,6 @@ interface QuestionFeedback {
 }
 
 const DEMO_PIN = process.env.NEXT_PUBLIC_PARENT_PIN ?? '1234';
-const STUDENT_NAME = 'Ethan';
 
 function StatCard({
   label,
@@ -143,7 +142,7 @@ function SessionRow({ session }: { session: Session }) {
 }
 
 export default function ParentPage() {
-  const { userId } = useAuth();
+  const { userId, name: studentName } = useAuth();
   const [pin, setPin] = useState('');
   const [showPin, setShowPin] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -272,7 +271,7 @@ export default function ParentPage() {
             </div>
             <h1 className="text-xl font-black text-slate-900">Parent Dashboard</h1>
             <p className="text-slate-500 text-sm mt-1">
-              Enter your PIN to access {STUDENT_NAME}&apos;s progress.
+              Enter your PIN to access {studentName ?? 'Student'}&apos;s progress.
             </p>
           </div>
 
@@ -353,7 +352,7 @@ export default function ParentPage() {
             <Users className="h-5 w-5 text-purple-600" />
             <h1 className="text-2xl font-black text-slate-900">Parent Dashboard</h1>
           </div>
-          <p className="text-slate-500 text-sm">Tracking {STUDENT_NAME}&apos;s SAT prep progress.</p>
+          <p className="text-slate-500 text-sm">Tracking {studentName ?? 'Student'}&apos;s SAT prep progress.</p>
         </div>
         <Button
           variant="outline"
@@ -602,7 +601,7 @@ export default function ParentPage() {
               Upload Practice Questions
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Upload SAT practice test PDFs to add questions to {STUDENT_NAME}&apos;s question bank.
+              Upload SAT practice test PDFs to add questions to {studentName ?? 'Student'}&apos;s question bank.
             </p>
           </div>
           <Button
@@ -617,7 +616,7 @@ export default function ParentPage() {
         </div>
         {showUploader && (
           <QuestionUploader
-            studentName={STUDENT_NAME}
+            studentName={studentName ?? 'Student'}
             onDismiss={() => setShowUploader(false)}
             onComplete={() => {
               // Refresh question count after successful upload
