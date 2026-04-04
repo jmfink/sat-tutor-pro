@@ -13,6 +13,22 @@ The user is a motivated high-school student (15–17) preparing for the SAT. Eve
 - **End on a win** — session summaries, streaks, and feedback should leave the student feeling capable, not graded.
 - **Delight in details** — phase labels ("Peak zone"), micro-transitions, and contextual encouragement are not polish — they're the product.
 
+## Voice and Tone
+
+The app and user guide should feel like they were written by the same person. That person is a sharp, encouraging coach — not a textbook author, not a startup bro, not a children's app.
+
+Rules that apply everywhere — app UI copy, user guide, session summaries, error messages, empty states, tooltips:
+
+- **Short over long.** If it can be said in 4 words, don't use 8. "Adaptive practice session" not "An adaptive practice session that selects questions based on your skill levels and focuses on your weakest areas."
+- **Active over passive.** "Start studying" not "A study session can be started here."
+- **Direct over hedging.** "Complete 20 questions to unlock" not "Answer 20+ questions to unlock your personalized score prediction."
+- **Confident over apologetic.** Never say "try to" or "you may want to" or "it's recommended that."
+- **Specific over vague.** "8 dimensions" not "multiple dimensions." "Elo 970" not "below average." "3 days until your next milestone" not "keep going."
+- **Teenager-appropriate but never dumbed down.** This student is smart and working hard toward a real goal. Treat them that way. No exclamation points on every line. No emoji in serious moments. Encouragement should feel earned, not automatic.
+- **Consistency between app and guide.** If the app calls something "Quick Drill," the user guide calls it "Quick Drill" — not "quick drill" or "a drill session." Labels, feature names, and nav items must match exactly across both.
+
+When writing any copy — button labels, section headers, empty states, session summaries, user guide sections — run it through these rules before committing.
+
 ## Standing Instructions
 
 - After building any new feature or making any significant change, update `sat-tutor-pro-spec.md` to reflect what was built — keep the PRD as the source of truth.
