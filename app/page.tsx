@@ -262,34 +262,73 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Quick actions */}
-      <div>
-        <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3">
-          Quick Actions
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <QuickActionCard
-            icon={<BookOpen className="h-5 w-5 text-blue-600" />}
-            title="Start Study Session"
-            description="Adaptive questions tailored to your weaknesses"
-            href="/study"
-            color="bg-blue-100"
-          />
-          <QuickActionCard
-            icon={<ClipboardList className="h-5 w-5 text-purple-600" />}
-            title="Practice Test"
-            description="Full SAT simulation with timed modules"
-            href="/practice-test"
-            color="bg-purple-100"
-          />
-          <QuickActionCard
-            icon={<Clock className="h-5 w-5 text-amber-600" />}
-            title="Review Queue"
-            description="Spaced repetition cards due for review"
-            badge={reviewCount > 0 ? `${reviewCount} due` : undefined}
-            href="/review"
-            color="bg-amber-100"
-          />
+      {/* Quick actions 2×2 grid + This Week stats */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="lg:col-span-2 space-y-3">
+          <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wide">
+            What do you want to do?
+          </h2>
+          <div className="grid grid-cols-2 gap-3">
+            <QuickActionCard
+              icon={<BookOpen className="h-5 w-5 text-blue-600" />}
+              title="Start Studying"
+              description="Adaptive practice session"
+              href="/study"
+              color="bg-blue-100"
+            />
+            <QuickActionCard
+              icon={<TrendingUp className="h-5 w-5 text-amber-600" />}
+              title="Insights ★"
+              description="Wrong answer intelligence"
+              href="/insights"
+              color="bg-amber-100"
+            />
+            <QuickActionCard
+              icon={<ClipboardList className="h-5 w-5 text-green-600" />}
+              title="My Progress"
+              description="Analytics and skill map"
+              href="/progress"
+              color="bg-green-100"
+            />
+            <QuickActionCard
+              icon={<Clock className="h-5 w-5 text-purple-600" />}
+              title="Review Queue"
+              description="Spaced repetition"
+              badge={reviewCount > 0 ? `${reviewCount} due` : undefined}
+              href="/review"
+              color="bg-purple-100"
+            />
+          </div>
+        </div>
+
+        {/* This Week stats */}
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+          <h2 className="text-sm font-bold text-slate-800 mb-4">This Week</h2>
+          <div className="space-y-4">
+            <div>
+              <div className="flex justify-between items-end mb-1.5">
+                <span className="text-xs text-slate-500">Study sessions</span>
+                <span className="text-sm font-bold text-slate-800">{weekSessions} <span className="text-xs font-normal text-slate-400">/ 5</span></span>
+              </div>
+              <Progress value={Math.min(100, (weekSessions / 5) * 100)} className="h-1.5" />
+            </div>
+            <div>
+              <div className="flex justify-between items-end mb-1.5">
+                <span className="text-xs text-slate-500">Questions answered</span>
+                <span className="text-sm font-bold text-slate-800">{weekQuestions} <span className="text-xs font-normal text-slate-400">/ 50</span></span>
+              </div>
+              <Progress value={Math.min(100, (weekQuestions / 50) * 100)} className="h-1.5" />
+            </div>
+            <div className="pt-1">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl font-black text-slate-900">{streak}</span>
+                <div>
+                  <p className="text-xs font-semibold text-slate-700">day streak</p>
+                  <p className="text-[10px] text-slate-400">{streak === 0 ? 'Start today!' : streak === 1 ? 'Keep it up!' : 'On fire 🔥'}</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -100,7 +100,11 @@ export function SkillMap({ skillRatings, onSkillClick }: SkillMapProps) {
                 <span className={`text-xs font-medium capitalize ${labelClass}`}>
                   {labelText}
                 </span>
-                <span className="text-xs text-slate-400">{skill.id}</span>
+                {isPracticed ? (
+                  <span className="text-[10px] font-mono text-slate-500 tabular-nums">{elo}</span>
+                ) : (
+                  <span className="text-xs text-slate-400">{skill.id}</span>
+                )}
               </div>
             </button>
           </TooltipTrigger>

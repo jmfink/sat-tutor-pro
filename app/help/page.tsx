@@ -179,7 +179,7 @@ export default function HelpPage() {
           {/* Section 1 */}
           <section>
             <SectionHeader id="section-1" number={1} title="Start Here in 60 Seconds" />
-            <SubHead>Default weekly plan (the &quot;get into a great university&quot; plan)</SubHead>
+            <SubHead>Default weekly plan (the &ldquo;get into a great university&rdquo; plan)</SubHead>
             <BulletList items={[
               '5 days/week: Study Session (25 minutes)',
               '2 days/week: Timed Section (1 section)',

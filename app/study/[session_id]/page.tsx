@@ -56,6 +56,15 @@ const DUMMY_PROFILE: StudentContextProfile = {
   },
 };
 
+function getSessionPhase(questionCount: number, elapsedSeconds: number): { label: string; color: string } {
+  const minutes = elapsedSeconds / 60;
+  if (questionCount < 4 || minutes < 5) return { label: 'Warming up', color: 'text-sky-500' };
+  if (questionCount < 9 || minutes < 15) return { label: 'Building momentum', color: 'text-blue-500' };
+  if (questionCount < 16 || minutes < 30) return { label: 'Peak zone', color: 'text-green-600' };
+  if (questionCount < 22 || minutes < 40) return { label: 'Consolidating', color: 'text-amber-600' };
+  return { label: 'Finishing strong', color: 'text-purple-600' };
+}
+
 function FrustrationBanner({ signal }: { signal: 'frustrated' | null }) {
   if (!signal) return null;
   return (
@@ -338,6 +347,9 @@ export default function ActiveStudySessionPage() {
     session?.session_type === 'quick_drill' && questionCount >= QUICK_DRILL_LIMIT;
 
   const accuracy = questionCount > 0 ? Math.round((correctCount / questionCount) * 100) : 0;
+  const sessionPhase = session?.session_type !== 'quick_drill'
+    ? getSessionPhase(questionCount, elapsedSeconds)
+    : null;
   const skillName = session?.sub_skill_focus
     ? (SUB_SKILL_MAP[session.sub_skill_focus as SubSkillId]?.name ?? session.sub_skill_focus)
     : null;
@@ -362,6 +374,11 @@ export default function ActiveStudySessionPage() {
           {skillName && (
             <span className="text-xs text-slate-500 truncate">
               Focus: <span className="font-medium text-slate-700">{skillName}</span>
+            </span>
+          )}
+          {sessionPhase && (
+            <span className={`text-xs font-semibold ${sessionPhase.color} hidden sm:block`}>
+              {sessionPhase.label}
             </span>
           )}
         </div>

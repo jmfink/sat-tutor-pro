@@ -2,6 +2,17 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Product Philosophy
+
+The user is a motivated high-school student (15–17) preparing for the SAT. Every design decision should serve their confidence and score.
+
+- **Icons + words together** — never icons alone. Students learn the interface faster when text accompanies every icon.
+- **Direct, confident language** — no hedging. "Answer 20 questions to unlock" not "You may be able to see your score after answering some questions."
+- **Whitespace earns trust** — dense UIs feel like homework. Generous spacing makes hard work feel achievable.
+- **Surface the intelligence** — the AI is doing real work; make it visible. Show Elo ratings, phase indicators, pattern counts. Students should feel the system learning them.
+- **End on a win** — session summaries, streaks, and feedback should leave the student feeling capable, not graded.
+- **Delight in details** — phase labels ("Peak zone"), micro-transitions, and contextual encouragement are not polish — they're the product.
+
 ## Standing Instructions
 
 - After building any new feature or making any significant change, update `sat-tutor-pro-spec.md` to reflect what was built — keep the PRD as the source of truth.

@@ -155,6 +155,12 @@ export default function ProgressPage() {
 
   const selectedSkillData = selectedSkill ? SUB_SKILL_MAP[selectedSkill] : null;
   const selectedRating = skillRatings.find((r) => r.sub_skill_id === selectedSkill);
+  const latestScore = predictions[0]?.total_score_mid ?? null;
+  const totalQuestionsAnswered = sessions.reduce((sum, s) => sum + (s.questions_answered ?? 0), 0);
+  const totalCorrect = sessions.reduce((sum, s) => sum + (s.questions_correct ?? 0), 0);
+  const overallAccuracy = totalQuestionsAnswered > 0
+    ? Math.round((totalCorrect / totalQuestionsAnswered) * 100)
+    : null;
 
   return (
     <div className="p-6 max-w-6xl mx-auto w-full space-y-6">
@@ -162,6 +168,30 @@ export default function ProgressPage() {
         <div>
           <h1 className="text-2xl font-black text-slate-900">My Progress</h1>
           <p className="text-slate-500 text-sm mt-0.5">Track your score trajectory and skill development.</p>
+        </div>
+      </div>
+
+      {/* Stat cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl p-4 text-white shadow-sm">
+          <p className="text-blue-200 text-xs font-semibold uppercase tracking-wide mb-1">Predicted Score</p>
+          <p className="text-3xl font-black">{latestScore ?? '—'}</p>
+          <p className="text-blue-200 text-xs mt-1">out of 1600</p>
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+          <p className="text-slate-500 text-xs font-semibold uppercase tracking-wide mb-1">Questions Answered</p>
+          <p className="text-3xl font-black text-slate-900">{totalQuestionsAnswered.toLocaleString()}</p>
+          <p className="text-slate-400 text-xs mt-1">across all sessions</p>
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+          <p className="text-slate-500 text-xs font-semibold uppercase tracking-wide mb-1">Overall Accuracy</p>
+          <p className={`text-3xl font-black ${
+            overallAccuracy === null ? 'text-slate-400'
+            : overallAccuracy >= 80 ? 'text-green-600'
+            : overallAccuracy >= 60 ? 'text-yellow-600'
+            : 'text-red-600'
+          }`}>{overallAccuracy !== null ? `${overallAccuracy}%` : '—'}</p>
+          <p className="text-slate-400 text-xs mt-1">{totalQuestionsAnswered > 0 ? `${totalCorrect} correct` : 'No data yet'}</p>
         </div>
       </div>
 

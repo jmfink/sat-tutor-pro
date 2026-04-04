@@ -4,12 +4,15 @@ import { usePathname } from 'next/navigation';
 import { NavWrapper } from '@/components/nav-wrapper';
 
 const AUTH_ROUTES = ['/login', '/signup'];
+// Routes where the sidebar is hidden for distraction-free focus
+const FOCUS_ROUTE_PREFIXES = ['/study/', '/practice-test/'];
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAuthRoute = AUTH_ROUTES.includes(pathname);
+  const isFocusRoute = FOCUS_ROUTE_PREFIXES.some((p) => pathname.startsWith(p));
 
-  if (isAuthRoute) {
+  if (isAuthRoute || isFocusRoute) {
     return <>{children}</>;
   }
 

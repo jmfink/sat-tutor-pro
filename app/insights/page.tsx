@@ -268,6 +268,32 @@ export default function InsightsPage() {
         </div>
       )}
 
+      {/* Locked dimension preview — shown only in pre-threshold state */}
+      {!hasThreshold && (
+        <div className="space-y-3">
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide px-1">
+            What the AI is analyzing
+          </p>
+          <div className="grid grid-cols-2 gap-3">
+            {INSIGHT_DIMENSIONS.map((dim) => (
+              <div
+                key={dim.id}
+                className="flex items-start gap-3 p-4 bg-white rounded-xl border border-slate-200 opacity-60 select-none"
+              >
+                <span className="text-2xl">{dim.icon}</span>
+                <div>
+                  <p className="text-sm font-bold text-slate-700">{dim.label}</p>
+                  <p className="text-xs text-slate-400 mt-0.5">Locked</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-slate-400 text-center pt-1">
+            The AI analyzes your mistakes across these 8 dimensions. Keep practicing to unlock your insights.
+          </p>
+        </div>
+      )}
+
       {/* Ready to generate — threshold met but no insight yet */}
       {hasThreshold && !insight && (
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-4">
