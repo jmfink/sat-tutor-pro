@@ -50,3 +50,6 @@ e2e/.auth/user.json
 
 # Claude Code local settings
 .claude/
+
+# Generated output files
+/outputs/

@@ -8,6 +8,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Always run `npx next lint && npx next build` before committing. Fix all errors; the two pre-existing warnings in `e2e/` files are acceptable.
 - Always commit and push at the end of every task.
 - Run the Playwright test suite after significant changes and report results.
+- After building any feature that changes user-facing behavior, add a note at the end of your response flagging what in the user guide may need updating. Reference the specific section by number (e.g. "User guide impact: Section 4 Session Types should be updated to reflect..."). After building any change to visual design, colors, fonts, or branding, flag what in the user guide styling should be updated to match.
+- The user guide source of truth is `user-guide.md` in the repo root. When features change user-facing behavior, update `user-guide.md`. To regenerate the Word doc, run: `node scripts/generate-user-guide.mjs`. The Word doc styling is driven by the branding colors defined at the top of `user-guide.md` — if app colors change, update those values and regenerate.
 
 ## Commands
 

@@ -1,0 +1,171 @@
+# SAT Tutor Pro — User Guide
+
+> Your AI-powered personal SAT tutor. Built to turn practice into measurable score gains.
+
+## Branding & Visual Design Notes
+<!-- Keep this section in sync with the app's visual design -->
+<!-- Primary color: Blue (#1E3A5F) -->
+<!-- Accent color: Gold (#B8860B) -->
+<!-- Font: Arial / system sans-serif -->
+<!-- When regenerating as a Word doc, match these colors in headings and callout boxes -->
+
+## Contents
+1. Start Here in 60 Seconds
+2. What Makes This Different
+3. Getting Started
+4. Session Types
+5. How to Learn Fast (during sessions)
+6. Wrong Answer Insights ★
+7. Progress and Motivation
+8. Troubleshooting (Beta)
+9. Quick Reference
+
+---
+
+## 1. Start Here in 60 Seconds
+
+**Default weekly plan (the "get into a great university" plan)**
+- 5 days/week: Study Session (25 minutes)
+- 2 days/week: Timed Section (1 section)
+- Every 2–3 weeks: Full Practice Test (2+ hours)
+
+**3 rules that drive score gains**
+- Confidence every time. Guessing / Okay / Confident
+- Wrong answer equals points. 60 seconds in Guide me (Socratic), then use Just tell me if needed
+- No tilt spiral. Reset, then continue
+
+> **30-second reset (Tilt Protocol)**
+> In 4 seconds. Out 6 seconds. Twice. Then say: "New question. Clean slate."
+
+---
+
+## 2. What Makes This Different
+
+Basic apps give generic practice. Human tutors can be great, but they only see a slice of your work. SAT Tutor Pro compounds because it learns you. It uses your full practice history to adapt what you see next and how it teaches.
+
+- Real-time personalization: questions and focus areas adjust as you go
+- Better learning loop: Socratic coaching builds durable skill, not memorized answers
+- Pattern detection: finds repeatable mistakes that are hard to see yourself
+
+**About "AI remembers" and "tracks your answers"**
+
+This is personalization, not surveillance. It keeps your practice history and your in-session context so you get tighter coaching and better recommendations.
+
+---
+
+## 3. Getting Started
+
+**Launch the app**
+- Go to sat-tutor-pro.vercel.app in your browser
+- Sign in with your email and password
+- If you don't have an account, click Sign Up and create one
+
+> 💡 *The app runs in your browser — no installation needed. Works on any laptop or desktop.*
+
+---
+
+## 4. Session Types
+
+**Study Session — Default**
+25–45 minutes. Adaptive across skills. Explanations after every question. Use this most often.
+
+**Quick Drill**
+10 questions. About 10 minutes. One skill. Great when time is tight.
+
+**Timed Section**
+One section. Test conditions. Builds pacing and stamina. Use 1–2x/week.
+
+**Full Practice Test**
+Full 2+ hour simulation. Best measurement tool. Use every 2–3 weeks. Desktop or laptop recommended.
+
+---
+
+## 5. How to Learn Fast (during sessions)
+
+**Confidence selector**
+Always set confidence before submitting your answer. It tells the tutor whether you truly know it, got lucky, or are guessing. That makes the next questions and coaching smarter.
+
+**Wrong answers**
+Do not rush past misses. The score moves when you fix repeatable patterns.
+- Guide me (Socratic Mode): try first. It builds skill that transfers to new questions
+- Just tell me (Direct Mode): use when stuck or short on time
+
+**Timed test habits that win points**
+- Two-pass approach: grab fast points first, return to sticky ones later
+- Eliminate before guessing: remove 1–2 choices, then answer and mark Guessing
+- Trap awareness: wrong answers are engineered to feel right when you rush
+
+---
+
+## 6. Wrong Answer Insights ★
+
+After at least 10 wrong answers, the app analyzes your mistakes across 8 dimensions to surface patterns. This is where AI beats a basic app. It can learn from your entire history and quantify what is holding you back.
+
+**Weekly ritual**
+Once per week: open Navigation → Wrong Answer Insights. Pick 1 focus area for the week. Then use Study Session or Quick Drill to attack it.
+
+**What it measures (in plain English)**
+- What kinds of mistakes you make (concept, careless, trap, misread)
+- Where you lose points (skills and formats)
+- When performance drops (timing, tilt, confidence)
+
+> **Nerd note (optional)**
+> The system maintains ratings per sub-skill and uses them to estimate your predicted score. More sessions equals better signal.
+
+---
+
+## 7. Progress and Motivation
+
+**Predicted Score**
+- Updates after every session
+- Early range is wide. After 5–10 sessions it tightens
+- Track the trend, not the day-to-day noise
+
+**Skill Map, Daily Streak, Review Queue**
+- Skill Map: see what is weak and what is improving
+- Daily Streak: consistency beats intensity. Quick Drill counts
+- Review Queue: spaced repetition. This converts old mistakes into permanent points
+
+---
+
+## 8. Troubleshooting (Beta)
+
+This is a beta product. Bugs and feedback are part of improving it. When something breaks, capture details.
+
+**App won't load**
+Try refreshing the browser. If the problem persists, clear your browser cache and try again. If it still doesn't work, contact your app administrator.
+
+**No questions available**
+Contact your app administrator — the question bank may need to be reloaded.
+
+**Question looks garbled or explanation seems wrong**
+Click the 👎 button on the question card or explanation panel to flag it for review. This helps improve the question bank.
+
+**Forgot your password**
+Click "Forgot password?" on the login page. A reset link will be sent to your email.
+
+**What to report so it gets fixed fast**
+- What you were doing (Study Session, Timed Section, etc.)
+- What you clicked right before it happened
+- What you expected vs what happened
+- Screenshot of the page
+- Time it happened
+
+---
+
+## 9. Quick Reference
+
+| What you want to do | How to do it |
+|---|---|
+| Sign in | Go to sat-tutor-pro.vercel.app |
+| Daily practice | Dashboard → Study Session |
+| Quick drill | Dashboard → Quick Drill → choose a skill |
+| Full practice test | Dashboard → Practice Test |
+| Check patterns | Navigation → Wrong Answer Insights |
+| Reset your password | Login page → Forgot password? |
+| Update your name | Settings → Profile |
+| Flag a bad question | Click 👎 on any question card |
+
+---
+
+*Every wrong answer is future points, if you learn the pattern behind it.*
