@@ -24,6 +24,9 @@
 
 ## 1. Start Here in 60 Seconds
 
+**The dashboard**
+When you sign in, you'll see four action cards: Start Studying, Insights, My Progress, and Review Queue. These are your primary entry points into the app.
+
 **Default weekly plan (the "get into a great university" plan)**
 - 5 days/week: Study Session (25 minutes)
 - 2 days/week: Timed Section (1 section)
@@ -78,6 +81,8 @@ One section. Test conditions. Builds pacing and stamina. Use 1–2x/week.
 **Full Practice Test**
 Full 2+ hour simulation. Best measurement tool. Use every 2–3 weeks. Desktop or laptop recommended.
 
+> **Focus mode** — once a Study Session or Practice Test begins, the navigation sidebar hides and the app enters a full-screen question interface. A minimal top bar shows your question progress, running accuracy, and current session phase (e.g. "Warming up", "Building momentum", "Peak zone"). The sidebar returns when you finish or exit the session.
+
 ---
 
 ## 5. How to Learn Fast (during sessions)
@@ -122,7 +127,7 @@ Once per week: open Navigation → Wrong Answer Insights. Pick 1 focus area for 
 - Track the trend, not the day-to-day noise
 
 **Skill Map, Daily Streak, Review Queue**
-- Skill Map: see what is weak and what is improving
+- Skill Map: see what is weak and what is improving. Each skill cell shows its Elo rating number once you've practiced it — making your progress concrete and measurable
 - Daily Streak: consistency beats intensity. Quick Drill counts
 - Review Queue: spaced repetition. This converts old mistakes into permanent points
 
