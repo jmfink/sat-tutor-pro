@@ -25,7 +25,7 @@ export default function SignupPage() {
     const supabase = createSupabaseBrowserClient();
 
     // Create auth account
-    const { data, error: authError } = await supabase.auth.signUp({
+    const { error: authError } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -39,18 +39,8 @@ export default function SignupPage() {
       return;
     }
 
-    // Create student record using auth UUID
-    if (data.user) {
-      const { error: studentError } = await supabase
-        .from('students')
-        .upsert(
-          { id: data.user.id, name: name || email.split('@')[0] },
-          { onConflict: 'id', ignoreDuplicates: false }
-        );
-      if (studentError) {
-        console.error('Failed to create student record:', studentError);
-      }
-    }
+    // Student record is created automatically by the handle_new_auth_user
+    // database trigger (migration 006) — no client-side insert needed.
 
     router.push('/');
     router.refresh();
