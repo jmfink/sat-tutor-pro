@@ -41,8 +41,8 @@ export default function ForgotPasswordPage() {
             <Zap className="h-5 w-5 text-white" />
           </div>
           <div>
-            <p className="text-lg font-black text-slate-800 leading-none">SAT Tutor</p>
-            <p className="text-[11px] text-slate-400 font-medium mt-0.5">Pro</p>
+            <p className="text-lg font-black text-slate-800 leading-none">SAT Tutor Pro</p>
+            <p className="text-[11px] text-slate-400 italic mt-0.5">Your AI coach</p>
           </div>
         </div>
 
