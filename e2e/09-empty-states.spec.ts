@@ -231,7 +231,9 @@ test.describe('Dashboard — empty state', () => {
 
   test('Score prediction widget shows "—" placeholder and unlock message', async ({ page }) => {
     await expect(page.locator('text=—')).toBeVisible({ timeout: 10000 });
-    await expect(page.locator('text=Answer 20+ questions to unlock')).toBeVisible({ timeout: 5000 });
+    // "Answer 20+ questions to unlock" appears in both the score widget and the nav bar
+    // predicted-score display — use .first() to avoid a strict-mode multi-element error.
+    await expect(page.locator('text=Answer 20+ questions to unlock').first()).toBeVisible({ timeout: 5000 });
   });
 
   test('Recent Sessions panel shows "No sessions yet"', async ({ page }) => {

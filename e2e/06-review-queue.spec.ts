@@ -30,10 +30,13 @@ test.describe('Review Queue (/review)', () => {
   });
 
   test('if cards are due: Start Review Session button is visible', async ({ page }) => {
-    const dueCountEl = page.locator('text=cards due').or(page.locator('text=card due'));
-    const hasDue = await dueCountEl.count();
+    // The banner always renders "{N} cards due" — check the numeric value, not just
+    // the presence of the text (since "0 cards due" would match text=cards due).
+    const bannerEl = page.locator('text=cards due').or(page.locator('text=card due')).first();
+    const bannerText = await bannerEl.textContent() ?? '';
+    const dueCount = parseInt(bannerText, 10);
 
-    if (hasDue > 0) {
+    if (dueCount > 0) {
       const startBtn = page.locator('button', { hasText: 'Start Review Session' });
       await expect(startBtn).toBeVisible();
     } else {
@@ -43,11 +46,14 @@ test.describe('Review Queue (/review)', () => {
   });
 
   test('if cards are due: can start review, see question and answer, then next card or finish', async ({ page }) => {
-    const dueCountEl = page.locator('text=cards due').or(page.locator('text=card due'));
-    const hasDue = await dueCountEl.count();
+    // The banner always renders "{N} cards due" — check the numeric value, not just
+    // the presence of the text (since "0 cards due" would match text=cards due).
+    const bannerEl = page.locator('text=cards due').or(page.locator('text=card due')).first();
+    const bannerText = await bannerEl.textContent() ?? '';
+    const dueCount = parseInt(bannerText, 10);
 
-    if (hasDue === 0) {
-      test.skip();
+    if (dueCount === 0) {
+      test.skip(true, 'No cards due — seeded review history required for this test');
       return;
     }
 
