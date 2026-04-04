@@ -34,6 +34,13 @@ test.describe('Authentication', () => {
     await expect(page.locator('button[type="submit"]')).toBeVisible();
   });
 
+  test('login page has Forgot password link pointing to /forgot-password', async ({ page }) => {
+    await page.goto('/login');
+    const link = page.locator('a[href="/forgot-password"]');
+    await expect(link).toBeVisible();
+    await expect(link).toContainText('Forgot password');
+  });
+
   test('signup page loads correctly', async ({ page }) => {
     await page.goto('/signup');
     await expect(page.locator('h1', { hasText: 'Create your account' })).toBeVisible();
@@ -97,7 +104,7 @@ test.describe('Authentication', () => {
     await expect(page.locator('body')).not.toContainText('Application error');
   });
 
-  test('signup with new email creates student record and lands on dashboard', async ({ page }) => {
+  test('signup with new email creates student record and shows name on dashboard', async ({ page }) => {
     const uniqueEmail = `test-${Date.now()}@sat-tutor.test`;
     const testName = 'Playwright Tester';
 
@@ -111,8 +118,8 @@ test.describe('Authentication', () => {
     await page.waitForURL('/', { timeout: 20000 });
     await expect(page).toHaveURL('/');
 
-    // Dashboard should be visible
-    await expect(page.locator('text=Predicted Score').first()).toBeVisible({ timeout: 10000 });
+    // Dashboard greeting should contain the name entered at signup (not the fallback "Student")
+    await expect(page.locator('h1').first()).toContainText(testName, { timeout: 10000 });
   });
 
   test('Study Session starts without errors after login', async ({ page }) => {
@@ -132,20 +139,24 @@ test.describe('Authentication', () => {
     await expect(page.locator('h1', { hasText: 'Start a Study Session' })).toBeVisible();
   });
 
-  test('forgot password page loads and accepts email', async ({ page }) => {
+  test('forgot password page renders correctly', async ({ page }) => {
     await page.goto('/forgot-password');
-    // Either the page renders or redirects to login — either is acceptable for now
-    const isOnForgotPassword = page.url().includes('forgot-password');
-    const isOnLogin = page.url().includes('login');
-    expect(isOnForgotPassword || isOnLogin).toBe(true);
+    await page.waitForLoadState('networkidle');
+    await expect(page).toHaveURL('/forgot-password');
+    await expect(page.locator('h1', { hasText: 'Forgot password?' })).toBeVisible();
+    await expect(page.locator('input[type="email"]')).toBeVisible();
+    await expect(page.locator('button[type="submit"]')).toBeVisible();
+    // Back to sign in link present
+    await expect(page.locator('a[href="/login"]')).toBeVisible();
+  });
 
-    if (isOnForgotPassword) {
-      // If the page exists, check for email input
-      const emailInput = page.locator('input[type="email"]');
-      if (await emailInput.count() > 0) {
-        await emailInput.fill('test@example.com');
-        await expect(emailInput).toHaveValue('test@example.com');
-      }
-    }
+  test('forgot password page shows confirmation after submitting email', async ({ page }) => {
+    await page.goto('/forgot-password');
+    await page.waitForLoadState('networkidle');
+    await page.fill('input[type="email"]', 'reset-test@example.com');
+    await page.click('button[type="submit"]');
+    // Supabase returns success regardless of whether the email exists (prevents enumeration)
+    await expect(page.locator('h1', { hasText: 'Check your email' })).toBeVisible({ timeout: 8000 });
+    await expect(page.locator('text=reset-test@example.com')).toBeVisible();
   });
 });

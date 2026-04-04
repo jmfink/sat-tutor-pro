@@ -12,10 +12,19 @@ test.describe('Dashboard (/)', () => {
     await expect(page.locator('body')).not.toContainText('Application error');
   });
 
-  test('contains greeting or Dashboard heading', async ({ page }) => {
-    // Dashboard has a greeting like "Good morning, Ethan!" or nav element
+  test('contains greeting heading', async ({ page }) => {
     const heading = page.locator('h1').first();
     await expect(heading).toBeVisible();
+  });
+
+  test('greeting shows student name from database, not fallback "Student"', async ({ page }) => {
+    // The test account is created with name "Test Student" in global-setup.
+    // If the name is loaded correctly from the students table, the greeting will
+    // contain "Test Student". If it falls back, it shows just "Student" alone.
+    const heading = page.locator('h1').first();
+    await expect(heading).toBeVisible({ timeout: 10000 });
+    // Should contain the DB name, not the bare fallback
+    await expect(heading).toContainText('Test Student', { timeout: 10000 });
   });
 
   test('Predicted Score widget is visible', async ({ page }) => {

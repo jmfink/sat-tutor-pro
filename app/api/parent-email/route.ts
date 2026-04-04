@@ -28,7 +28,8 @@ export async function PATCH(req: NextRequest) {
 
     await admin
       .from('students')
-      .upsert({ id: user.id, name: 'Student', parent_email }, { onConflict: 'id', ignoreDuplicates: false });
+      .update({ parent_email })
+      .eq('id', user.id);
 
     return NextResponse.json({ success: true });
   } catch (err) {

@@ -72,3 +72,53 @@ test.describe('Settings Page (/settings)', () => {
     await expect(visualBtn).toHaveClass(/border-blue-500/);
   });
 });
+
+test.describe('Settings — Profile section', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/settings');
+    await page.waitForLoadState('networkidle');
+  });
+
+  test('Profile section is visible with name and email fields', async ({ page }) => {
+    await expect(page.locator('text=Profile').first()).toBeVisible();
+    await expect(page.locator('input#displayName')).toBeVisible();
+    await expect(page.locator('input#profileEmail')).toBeVisible();
+  });
+
+  test('name field is pre-populated with the student name from the database', async ({ page }) => {
+    const nameInput = page.locator('input#displayName');
+    await expect(nameInput).toBeVisible();
+    // The test account name is "Test Student" — field should not be empty or show the fallback
+    const value = await nameInput.inputValue();
+    expect(value.length).toBeGreaterThan(0);
+    expect(value).toBe('Test Student');
+  });
+
+  test('email field is read-only', async ({ page }) => {
+    const emailInput = page.locator('input#profileEmail');
+    await expect(emailInput).toBeVisible();
+    await expect(emailInput).toBeDisabled();
+    // Email should be populated from the auth user
+    const value = await emailInput.inputValue();
+    expect(value).toContain('@');
+  });
+
+  test('saving name shows Saved confirmation and persists across reload', async ({ page }) => {
+    const nameInput = page.locator('input#displayName');
+    await expect(nameInput).toBeVisible();
+
+    // Set name to "Test Student" (idempotent — this is the known test account name)
+    await nameInput.fill('Test Student');
+
+    const saveBtn = page.locator('button', { hasText: 'Save Settings' }).first();
+    await saveBtn.click();
+
+    // Confirmation button appears
+    await expect(page.locator('button', { hasText: 'Saved!' }).first()).toBeVisible({ timeout: 5000 });
+
+    // Reload and verify the name is still there (confirming the DB write succeeded)
+    await page.reload();
+    await page.waitForLoadState('networkidle');
+    await expect(page.locator('input#displayName')).toHaveValue('Test Student');
+  });
+});
