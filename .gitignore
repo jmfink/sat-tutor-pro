@@ -47,3 +47,6 @@ next-env.d.ts
 
 # Playwright auth state
 e2e/.auth/user.json
+
+# Claude Code local settings
+.claude/
