@@ -4,10 +4,11 @@ import * as path from 'path';
 const TEST_EMAIL = process.env.TEST_EMAIL ?? 'playwright-test@sat-tutor.test';
 const TEST_PASSWORD = process.env.TEST_PASSWORD ?? 'playwright-test-pw-123';
 
-// These tests manage their own auth state — do NOT use global storage state
-test.use({ storageState: { cookies: [], origins: [] } });
-
 test.describe('Authentication', () => {
+  // These tests manage their own auth state — do NOT use global storage state.
+  // Placed INSIDE the describe block so it does not bleed into subsequent spec files
+  // when Playwright runs all specs sequentially in a single worker.
+  test.use({ storageState: { cookies: [], origins: [] } });
   test('unauthenticated access to /progress redirects to /login', async ({ page }) => {
     await page.goto('/progress');
     await page.waitForURL('**/login', { timeout: 8000 });

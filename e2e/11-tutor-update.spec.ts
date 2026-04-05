@@ -4,6 +4,13 @@ import * as path from 'path';
 // Auth state file shared with the global config
 const AUTH_FILE = path.join(__dirname, '.auth', 'user.json');
 
+// File-level storageState reset. In Playwright 1.58.x, a describe-level test.use()
+// in spec 10 (auth tests) bleeds into this file even when this file's first describe
+// also declares test.use(). A file-level declaration takes precedence and prevents the
+// bleed. The second describe below overrides with empty cookies for its unauthenticated
+// public-page tests.
+test.use({ storageState: AUTH_FILE });
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 async function waitForPageLoad(page: Page) {

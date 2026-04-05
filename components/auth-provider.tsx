@@ -29,7 +29,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const supabase = createSupabaseBrowserClient();
 
   const signOut = useCallback(async () => {
-    await supabase.auth.signOut();
+    // scope: 'local' revokes only this device's session.
+    // The default 'global' would invalidate all sessions for the user (all devices),
+    // which breaks E2E tests that rely on a shared auth fixture.
+    await supabase.auth.signOut({ scope: 'local' });
     setName(null);
   }, [supabase]);
 
