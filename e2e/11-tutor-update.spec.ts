@@ -13,12 +13,14 @@ async function waitForPageLoad(page: Page) {
 
 test.describe('Tutor Update — Progress page', () => {
   test.beforeEach(async ({ page }) => {
-    // Clear saved tutor contact in localStorage before each test
-    await page.goto('/progress');
-    await page.evaluate(() => {
+    // addInitScript runs before any page JS (including React mount),
+    // so localStorage is empty when TutorUpdateButton first reads it.
+    // page.evaluate() would run *after* the component has already mounted.
+    await page.addInitScript(() => {
       localStorage.removeItem('tutor_contact');
       sessionStorage.removeItem('tutor_last_sent_at');
     });
+    await page.goto('/progress');
     await waitForPageLoad(page);
   });
 
@@ -42,15 +44,16 @@ test.describe('Tutor Update — Progress page', () => {
   });
 
   test('Returning flow: shows "Send update to [name]" when tutor is saved', async ({ page }) => {
-    // Seed localStorage with a saved tutor
-    await page.evaluate(() => {
+    // addInitScript persists across navigations and runs before page JS.
+    // Register this AFTER the beforeEach clear script so it runs second (set wins).
+    await page.addInitScript(() => {
       localStorage.setItem('tutor_contact', JSON.stringify({
         name: 'Mr. Smith',
         value: '555-123-4567',
         contactType: 'sms',
       }));
     });
-    // Reload so the component picks up localStorage
+    // Reload: both initScripts run in order (clear → set), component mounts with data
     await page.reload();
     await waitForPageLoad(page);
 
@@ -58,7 +61,7 @@ test.describe('Tutor Update — Progress page', () => {
   });
 
   test('Returning flow: shows "Change tutor" link', async ({ page }) => {
-    await page.evaluate(() => {
+    await page.addInitScript(() => {
       localStorage.setItem('tutor_contact', JSON.stringify({
         name: 'Ms. Jones',
         value: 'jones@example.com',

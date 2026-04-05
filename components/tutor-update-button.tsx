@@ -86,7 +86,7 @@ export function TutorUpdateButton() {
   const [loading, setLoading] = useState(false);
   const [quickSending, setQuickSending] = useState(false);
 
-  // Load saved contact + last_sent_at on mount
+  // Load saved contact and sent label on mount — no network calls needed
   useEffect(() => {
     const contact = loadSavedContact();
     setSavedContact(contact);
@@ -95,33 +95,10 @@ export function TutorUpdateButton() {
       setContactValue(contact.value);
     }
 
-    // Fetch last_sent_at from the API (may not exist yet)
-    const checkLastSent = async () => {
-      try {
-        const res = await fetch('/api/tutor-update/create', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({}),
-        });
-        if (res.ok) {
-          const data = await res.json() as { token?: string; share_url?: string; expires_at?: string };
-          // We don't surface the token on load — just check if we have a link
-          // last_sent_at is stored in the DB, not here. We use the stored contact's presence as proxy.
-          // For the "Sent X days ago" label, store it in sessionStorage after sending.
-          const storedSent = sessionStorage.getItem('tutor_last_sent_at');
-          if (storedSent) {
-            setSentLabel(getSentLabel(storedSent));
-          }
-          if (data.token) {
-            // No-op — link exists
-          }
-        }
-      } catch {
-        // Ignore — button still works
-      }
-    };
-
-    checkLastSent();
+    const storedSent = sessionStorage.getItem('tutor_last_sent_at');
+    if (storedSent) {
+      setSentLabel(getSentLabel(storedSent));
+    }
   }, []);
 
   const createAndSend = useCallback(async (
