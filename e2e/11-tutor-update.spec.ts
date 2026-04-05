@@ -1,4 +1,8 @@
 import { test, expect, type Page } from '@playwright/test';
+import * as path from 'path';
+
+// Auth state file shared with the global config
+const AUTH_FILE = path.join(__dirname, '.auth', 'user.json');
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -12,16 +16,17 @@ async function waitForPageLoad(page: Page) {
 // ── Suite: Progress page — Tutor Update button ────────────────────────────────
 
 test.describe('Tutor Update — Progress page', () => {
+  // Explicitly declare the auth storageState for this describe block.
+  // Without this, test.use({ storageState: { cookies: [], origins: [] } }) in the
+  // second describe can leak into this block in some environments (CI/Linux),
+  // causing middleware to redirect to /login.
+  test.use({ storageState: AUTH_FILE });
+
   test.beforeEach(async ({ page }) => {
-    // addInitScript runs before any page JS (including React mount),
-    // so localStorage is empty when TutorUpdateButton first reads it.
-    // page.evaluate() would run *after* the component has already mounted.
-    await page.addInitScript(() => {
-      localStorage.removeItem('tutor_contact');
-      sessionStorage.removeItem('tutor_last_sent_at');
-    });
     await page.goto('/progress');
     await waitForPageLoad(page);
+    // Each test gets a fresh browser context from storageState, so localStorage
+    // starts clean (no tutor_contact). No explicit clearing needed.
   });
 
   test('Send tutor update button is visible on progress page', async ({ page }) => {
@@ -44,16 +49,15 @@ test.describe('Tutor Update — Progress page', () => {
   });
 
   test('Returning flow: shows "Send update to [name]" when tutor is saved', async ({ page }) => {
-    // addInitScript persists across navigations and runs before page JS.
-    // Register this AFTER the beforeEach clear script so it runs second (set wins).
-    await page.addInitScript(() => {
+    // Set localStorage AFTER beforeEach's goto (same context, reload preserves it).
+    // No addInitScript needed — the context already starts with clean localStorage.
+    await page.evaluate(() => {
       localStorage.setItem('tutor_contact', JSON.stringify({
         name: 'Mr. Smith',
         value: '555-123-4567',
         contactType: 'sms',
       }));
     });
-    // Reload: both initScripts run in order (clear → set), component mounts with data
     await page.reload();
     await waitForPageLoad(page);
 
@@ -61,7 +65,7 @@ test.describe('Tutor Update — Progress page', () => {
   });
 
   test('Returning flow: shows "Change tutor" link', async ({ page }) => {
-    await page.addInitScript(() => {
+    await page.evaluate(() => {
       localStorage.setItem('tutor_contact', JSON.stringify({
         name: 'Ms. Jones',
         value: 'jones@example.com',
