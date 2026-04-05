@@ -1,0 +1,291 @@
+
+╔═══════════════════════════════════════════════════════╗
+║   SAT Tutor — Bulk Re-Parse All Practice Test PDFs    ║
+╚═══════════════════════════════════════════════════════╝
+
+Step 1 — Deleting existing uploaded_pdf and pt_N questions…
+  Warning deleting source=uploaded_pdf: update or delete on table "questions" violates foreign key constraint "question_attempts_question_id_fkey" on table "question_attempts"
+  Deleted 13 questions with source='pt_4'
+  Warning deleting passages: update or delete on table "passages" violates foreign key constraint "questions_passage_id_fkey" on table "questions"
+
+  Total questions deleted: 13
+
+  746 existing question texts loaded for dedup.
+
+
+────────────────────────────────────────────────────────────
+Bundle pt_4 — Practice Test 4
+────────────────────────────────────────────────────────────
+  Extracting text from PDFs…
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+  Questions PDF: 90997 chars | Scoring PDF: 14017 chars
+  Parsing answer key…
+  Answer key: 120 entries
+  Parsing questions via Claude (4 modules in parallel)…
+  Parsed: 120 questions
+  After dedup: 12 unique (108 dupes skipped)
+  Classifying 12 questions via Claude (batches of 8)…
+  Classification complete
+  Inserting into database…
+  ✓ Bundle pt_4 done: 12 inserted, 0 errors
+
+────────────────────────────────────────────────────────────
+Bundle pt_5 — Practice Test 5
+────────────────────────────────────────────────────────────
+  Extracting text from PDFs…
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+  Questions PDF: 92360 chars | Scoring PDF: 13918 chars
+  Parsing answer key…
+  Answer key: 120 entries
+  Parsing questions via Claude (4 modules in parallel)…
+  Parsed: 120 questions
+  After dedup: 16 unique (104 dupes skipped)
+  Classifying 16 questions via Claude (batches of 8)…
+  Classification complete
+  Inserting into database…
+  ✓ Bundle pt_5 done: 16 inserted, 0 errors
+
+────────────────────────────────────────────────────────────
+Bundle pt_6 — Practice Test 6
+────────────────────────────────────────────────────────────
+  Extracting text from PDFs…
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+  Questions PDF: 94181 chars | Scoring PDF: 13896 chars
+  Parsing answer key…
+  Answer key: 119 entries
+  Parsing questions via Claude (4 modules in parallel)…
+  Parsed: 120 questions
+  ⚠  1 questions have no correct_answer after merge
+  After dedup: 12 unique (108 dupes skipped)
+  Classifying 12 questions via Claude (batches of 8)…
+  Classification complete
+  Inserting into database…
+  ✓ Bundle pt_6 done: 12 inserted, 0 errors
+
+────────────────────────────────────────────────────────────
+Bundle pt_7 — Practice Test 7
+────────────────────────────────────────────────────────────
+  Extracting text from PDFs…
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+  Questions PDF: 90193 chars | Scoring PDF: 12653 chars
+  Parsing answer key…
+  Answer key: 119 entries
+  Parsing questions via Claude (4 modules in parallel)…
+  Parsed: 118 questions
+  ⚠  1 questions have no correct_answer after merge
+  After dedup: 9 unique (109 dupes skipped)
+  Classifying 9 questions via Claude (batches of 8)…
+  Classification complete
+  Inserting into database…
+  ✓ Bundle pt_7 done: 9 inserted, 0 errors
+
+────────────────────────────────────────────────────────────
+Bundle pt_8 — Practice Test 8
+────────────────────────────────────────────────────────────
+  Extracting text from PDFs…
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+  Questions PDF: 89322 chars | Scoring PDF: 12642 chars
+  Parsing answer key…
+  Answer key: 120 entries
+  Parsing questions via Claude (4 modules in parallel)…
+  Parsed: 118 questions
+  After dedup: 20 unique (98 dupes skipped)
+  Classifying 20 questions via Claude (batches of 8)…
+  Classification complete
+  Inserting into database…
+  ✓ Bundle pt_8 done: 20 inserted, 0 errors
+
+────────────────────────────────────────────────────────────
+Bundle pt_9 — Practice Test 9
+────────────────────────────────────────────────────────────
+  Extracting text from PDFs…
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+  Questions PDF: 89127 chars | Scoring PDF: 12589 chars
+  Parsing answer key…
+  Answer key: 119 entries
+  Parsing questions via Claude (4 modules in parallel)…
+  Parsed: 120 questions
+  ⚠  1 questions have no correct_answer after merge
+  After dedup: 24 unique (96 dupes skipped)
+  Classifying 24 questions via Claude (batches of 8)…
+  Classification complete
+  Inserting into database…
+  ✓ Bundle pt_9 done: 24 inserted, 0 errors
+
+────────────────────────────────────────────────────────────
+Bundle pt_10 — Practice Test 10
+────────────────────────────────────────────────────────────
+  Extracting text from PDFs…
+Warning: TT: undefined function: 32
+Warning: TT: undefined function: 32
+  Questions PDF: 88873 chars | Scoring PDF: 12627 chars
+  Parsing answer key…
+  Answer key: 120 entries
+  Parsing questions via Claude (4 modules in parallel)…
+  Parsed: 118 questions
+  After dedup: 8 unique (110 dupes skipped)
+  Classifying 8 questions via Claude (batches of 8)…
+  Classification complete
+  Inserting into database…
+  ✓ Bundle pt_10 done: 8 inserted, 0 errors
+
+────────────────────────────────────────────────────────────
+Bundle pt_11 — Practice Test 11
+────────────────────────────────────────────────────────────
+  Extracting text from PDFs…
+  Questions PDF: 82997 chars | Scoring PDF: 12683 chars
+  Parsing answer key…
+  Answer key: 120 entries
+  Parsing questions via Claude (4 modules in parallel)…
+  Parsed: 120 questions
+  After dedup: 24 unique (96 dupes skipped)
+  Classifying 24 questions via Claude (batches of 8)…
+  Classification complete
+  Inserting into database…
+  ✓ Bundle pt_11 done: 24 inserted, 0 errors
+
+────────────────────────────────────────────────────────────
+Step 3 — Running formatting audit (--apply)…
+
+=== SAT Tutor — Formatting Issues Audit ===
+Mode: APPLY (will tag affected questions)
+
+Fetching questions. 995 questions loaded.
+
+Questions by source:
+  uploaded_pdf         598
+  pt_6                 35
+  seed_data            148
+  pt_8                 38
+  pt_11                49
+  pt_5                 34
+  pt_7                 20
+  pt_10                13
+  pt_9                 48
+  pt_4                 12
+
+--- Results ---
+Total questions  : 995
+Affected         : 103 (10.4%)
+
+Breakdown by pattern:
+  caret_exponent         103  — Caret notation (x^2) — superscript lost during PDF extraction
+
+Sample affected questions (first 10):
+  [uploaded_pdf] q_uploaded_pdf_1772427203927_32h
+    Issues : caret_exponent
+    Text   : "In the xy-plane, a parabola has vertex (9, −14) and intersects the x-axis at two points. If the equa…"
+  [uploaded_pdf] q_uploaded_pdf_1772427205772_pt5
+    Issues : caret_exponent
+    Text   : "The function f is defined by f(x) = 270(0.1)^x. What is the value of f(0)?"
+  [pt_5] q_pt_5_1772433914880_hhz
+    Issues : caret_exponent
+    Text   : "The function g is defined by g(x) = x(x − 2)(x + 6)^2. The value of g(7 − w) is 0, where w is a cons…"
+  [uploaded_pdf] q_uploaded_pdf_1772427203442_fgg
+    Issues : caret_exponent
+    Text   : "The expression 4x^2 + bx − 45, where b is a constant, can be rewritten as (hx + k)(x + j), where h, …"
+  [pt_10] q_pt_10_1772434797755_1jz
+    Issues : caret_exponent
+    Text   : "Which expression is equivalent to (8x(x − 7) − 3(x − 7))/(x^2 − 14), where x > 7?"
+  [uploaded_pdf] q_uploaded_pdf_1772427203184_cn0
+    Issues : caret_exponent
+    Text   : "The expression 5^(5/6) · 5^(3x/8) · 5^(8/2x) is equivalent to 5^(ax^b), where a and b are positive c…"
+  [uploaded_pdf] q_uploaded_pdf_1772427467964_6ps
+    Issues : caret_exponent
+    Text   : "If 4^(2x) = 16, what is the value of 6x?"
+  [uploaded_pdf] q_uploaded_pdf_1772427468879_4h7
+    Issues : caret_exponent
+    Text   : "P(t) = 260(1.04)^((6/4)t). The function P models the population, in thousands, of a certain city t y…"
+  [uploaded_pdf] q_uploaded_pdf_1772427465141_dn9
+    Issues : caret_exponent
+    Text   : "Which of the following functions has(have) a minimum value at −3?  I. f(x) = −6(3)^x − 3 II. g(x) = …"
+  [uploaded_pdf] q_uploaded_pdf_1772427720197_vp3
+    Issues : caret_exponent
+    Text   : "Which expression is equivalent to (x + 11)(x^2 + (x − 5) + 5^2)?"
+  … and 93 more.
+
+Tagging 103 questions with 'formatting_issues'…
+
+--- Tagging complete ---
+  Newly tagged    : 10
+  Already tagged  : 93
+
+These questions will now be excluded from study sessions.
+To make the exclusion permanent via a DB column, apply:
+  supabase/migrations/002_add_formatting_issues_flag.sql
+
+
+────────────────────────────────────────────────────────────
+Step 4 — Running has_figure tagger (--apply)…
+
+=== SAT Tutor — Has-Figure Tag Script ===
+Mode: APPLY (will tag affected questions)
+
+Fetching questions. 995 questions loaded.
+
+--- Results ---
+Total questions  : 995
+Already tagged   : 149
+Newly detected   : 3
+
+Sample questions with figure references (first 10):
+  [pt_10] q_pt_10_1772434798024_yui
+    Text: "What is the y-intercept of the graph of y = f(x) in the xy-plane?"
+  [pt_11] q_pt_11_1772434976131_m2a
+    Text: "For the linear function f, the graph of y = f(x) in the xy-plane has a slope of 7 and passes through the point (0, 5). W…"
+  [pt_11] q_pt_11_1772434977048_bde
+    Text: "x + 5 = 14 y = 4x^2 + 4 At what point (x, y) do the graphs of the equations in the given system intersect?"
+
+Tagging 3 questions with 'has_figure'…
+
+--- Tagging complete ---
+  Newly tagged : 3
+
+These questions will now be excluded from study sessions.
+
+
+════════════════════════════════════════════════════════════
+FINAL REPORT
+════════════════════════════════════════════════════════════
+Bundle       Parsed    Dupes   Inserted   Errors
+────────────────────────────────────────────────────────────
+pt_4            120      108         12        0
+pt_5            120      104         16        0
+pt_6            120      108         12        0
+pt_7            118      109          9        0
+pt_8            118       98         20        0
+pt_9            120       96         24        0
+pt_10           118      110          8        0
+pt_11           120       96         24        0
+────────────────────────────────────────────────────────────
+TOTAL                              125
+════════════════════════════════════════════════════════════
+
+Database totals after run:
+  Total questions       : 995
+  Tagged has_figure     : 152
+  Tagged formatting_issues : 103
+  Serveable questions   : 740
+
