@@ -131,7 +131,9 @@ Note: Vercel cron jobs require a **Pro plan** or higher. On Hobby, the cron conf
 
 **Next.js 15 App Router** — client components use `'use client'`. Pages live in `app/`, API routes in `app/api/`. Layout at `app/layout.tsx` wraps everything in `AuthProvider` + `AppShell`.
 
-**Auth flow** — Supabase Auth with cookie-based sessions. `middleware.ts` protects all routes except `/login`, `/signup`, `/forgot-password`, and `/api/*`. After signup, a `SECURITY DEFINER` trigger (`migration 006`) auto-creates the `students` row from `auth.users`, reading name from `raw_user_meta_data`. Never insert into `students` from the browser client after signup — the trigger handles it.
+**Auth flow** — Supabase Auth with cookie-based sessions. `middleware.ts` protects all routes except `/login`, `/signup`, `/forgot-password`, `/help`, `/report/*`, and `/api/*`. After signup, a `SECURITY DEFINER` trigger (`migration 006`) auto-creates the `students` row from `auth.users`, reading name from `raw_user_meta_data`. Never insert into `students` from the browser client after signup — the trigger handles it.
+
+**Public pages** — routes that must be accessible without auth are allowlisted in `middleware.ts`. Currently: `/login`, `/signup`, `/forgot-password`, `/help`, and `/report/:path*` (token-based tutor update reports). When adding a new public page, add it to the `isPublicRoute` check in `middleware.ts` and document it here.
 
 **Three Supabase clients** (`lib/supabase.ts`):
 - `createSupabaseBrowserClient()` — anon key, RLS enforced. Use in client components and the `useAuth()` hook.
@@ -188,6 +190,12 @@ useEffect(() => {
   if (!loading && userId) fetch(`/api/...?studentId=${userId}`)...;
 }, [userId, loading]);
 ```
+
+**Client-side storage keys** — use a fixed set of keys; never invent new ones without documenting them here:
+- `localStorage['tutor_contact']` — `{ name: string, value: string, contactType: string }` — tutor contact info for the Tutor Update returning flow. Persists across sessions.
+- `sessionStorage['tutor_last_sent_at']` — ISO timestamp of the last tutor update send. Drives the "Sent X days ago" label; intentionally resets on tab/session close.
+
+**Shared lib for public + authenticated data access** — when a Next.js server page and an API route need the same data logic, extract it into `lib/` (e.g., `lib/tutor-report.ts`). The page calls the lib function directly (using `createSupabaseAdminClient`); the API route calls the same function. Do not call your own API routes from server components.
 
 **Sessions table** `session_type` values: `quick_drill`, `study_session`, `timed_section`, `full_practice_test`, `review`. `SubSkillId` values are defined in `lib/constants.ts` (`SUB_SKILLS` array, IDs like `M-01`…`M-19`, `RW-01`…`RW-11`).
 
