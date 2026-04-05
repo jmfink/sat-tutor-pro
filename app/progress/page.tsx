@@ -24,6 +24,7 @@ import type {
 import { SUB_SKILL_MAP, SESSION_TYPE_LABELS, SESSION_TYPE_COLORS } from '@/lib/constants';
 import { useAuth } from '@/components/auth-provider';
 import { toLocalDateKey } from '@/lib/utils';
+import { TutorUpdateButton } from '@/components/tutor-update-button';
 import {
   PieChart,
   Pie,
@@ -169,6 +170,9 @@ export default function ProgressPage() {
           <p className="text-slate-500 text-sm mt-0.5">Your score and skill progress.</p>
         </div>
       </div>
+
+      {/* Tutor Update */}
+      <TutorUpdateButton />
 
       {/* Stat cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

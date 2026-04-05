@@ -163,6 +163,44 @@ Click "Forgot password?" on the login page. A reset link will be sent to your em
 
 ---
 
+## 8. Sending Your Tutor an Update
+
+**Tutor Update** lets you share a read-only weekly progress report with your SAT tutor via a unique link. The report gives your tutor the data they need to run a sharper session — without exposing your session logs, mood signals, or anything beyond your skill performance.
+
+### What the report shows
+
+- Predicted score + change vs 4 weeks ago, with Reading & Writing and Math sub-scores
+- Days practiced and questions answered this week
+- Your 3 weakest skills right now, with accuracy % and a one-line description of the error pattern
+- The top pattern the AI flagged in your wrong answers, with a recommended focus area for your tutor
+- Your 3 most-improved skills, with before/after accuracy
+
+**What it does NOT show:** your session logs, how frustrated you got, your raw ELO ratings, or anything from the Parent Dashboard.
+
+### First-time setup
+
+1. Go to **My Progress** in the sidebar.
+2. Click **Send tutor update** at the top of the page.
+3. Enter your tutor's name (optional but helpful) and their phone number or email.
+4. Choose how to send:
+   - **Message** — opens your native SMS app with the link pre-loaded
+   - **WhatsApp** — opens WhatsApp with the message pre-filled
+   - **Email** — sends directly to their email address
+   - **Copy link** — copies the URL to your clipboard
+5. Your tutor's info is saved automatically for next time.
+
+### One-tap weekly send
+
+Once your tutor is saved, the button changes to **Send update to [Tutor Name]**. One tap sends the latest report automatically — no re-entering contact info. The sent status resets each Monday so you always have a fresh CTA at the start of the week.
+
+To change your tutor's contact info, click **Change tutor** below the button.
+
+### Link expiry
+
+Each report link is valid for 7 days. Within a week, the same link is reused — so sending it multiple times goes to the same page. After 7 days, a new link is generated automatically the next time you send.
+
+---
+
 ## 9. Quick Reference
 
 | What you want to do | How to do it |
@@ -175,6 +213,8 @@ Click "Forgot password?" on the login page. A reset link will be sent to your em
 | Reset your password | Login page → Forgot password? |
 | Update your name | Settings → Profile |
 | Flag a bad question | Click 👎 on any question card |
+| Send your tutor a weekly update | My Progress → Send tutor update |
+| Change your saved tutor contact | My Progress → Change tutor |
 
 ---
 
