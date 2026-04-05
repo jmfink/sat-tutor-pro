@@ -121,6 +121,7 @@ Note: Vercel cron jobs require a **Pro plan** or higher. On Hobby, the cron conf
 - **`.claude/` is in `.gitignore`** — never commit any files from this directory
 - **Supabase admin key format**: the app now uses Supabase's new Secret API key format (`sb_secret_...`) instead of the legacy JWT-based service_role key (`eyJ...`). Never log, hardcode, or store API keys in tracked files.
 - Never commit `.env.local` or any file containing secrets
+- **Never hardcode specific personal names** in code, comments, UI copy, prompts, or documentation. Use generic placeholders such as `[student name]`, `'the student'`, or `'Student Name'` in all examples. Any real names that appear in the spec or other reference documents are background context only and must not appear in the codebase or Claude Code prompts.
 
 ## GitHub Actions / CI
 
