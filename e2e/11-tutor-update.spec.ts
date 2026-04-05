@@ -85,20 +85,38 @@ test.describe('Tutor Update — Progress page', () => {
     await expect(page.locator('text=Change tutor')).toBeVisible();
   });
 
-  test('Copy link copies to clipboard and shows Copied! toast', async ({ page }) => {
+  test('Copy link copies to clipboard and transitions to returning flow', async ({ page }) => {
     // Grant clipboard permissions
     await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+
+    // Mock the create API for a reliable instant response (same as tests 7–9 below)
+    await page.route('/api/tutor-update/create', async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          token: 'test-copy-token',
+          share_url: 'http://localhost:3000/report/test-copy-token',
+          expires_at: new Date(Date.now() + 7 * 86_400_000).toISOString(),
+        }),
+      });
+    });
 
     await page.click('button:has-text("Send tutor update")');
     await page.locator('[role="dialog"]').waitFor({ state: 'visible' });
 
-    // Fill in contact so the modal is ready
+    // Fill in the tutor name
     await page.fill('input[placeholder="Your tutor\'s name"]', 'Dr. Lee');
-    // Click Copy link (no contact_value required for copy)
+    // Click Copy link
     await page.click('[role="dialog"] button:has-text("Copy link")');
 
-    // Toast should appear
-    await expect(page.locator('text=Copied!')).toBeVisible({ timeout: 5000 });
+    // Success: modal closes and UI transitions to returning flow with the saved tutor name.
+    // This only happens if the create API call succeeded AND the URL was copied to clipboard.
+    await expect(page.locator('button', { hasText: 'Send update to Dr. Lee' })).toBeVisible({ timeout: 5000 });
+
+    // Verify the correct URL was written to clipboard
+    const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
+    expect(clipboardText).toBe('http://localhost:3000/report/test-copy-token');
   });
 
   test('SMS deep link uses correct sms: scheme', async ({ page }) => {

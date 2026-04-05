@@ -77,7 +77,6 @@ export function TutorUpdateButton() {
   const [sentLabel, setSentLabel] = useState<string | null>(null);
 
   const [showModal, setShowModal] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
 
   // Form state
   const [tutorName, setTutorName] = useState('');
@@ -244,24 +243,16 @@ export function TutorUpdateButton() {
     }
   }, [savedContact, createAndSend]);
 
-  const openModal = () => {
-    setIsEditing(false);
-    setShowModal(true);
-  };
-
-  const openEditModal = () => {
-    setIsEditing(true);
-    setShowModal(true);
-  };
+  const openModal = () => setShowModal(true);
 
   // ── Returning flow ──────────────────────────────────────────────────────────
-  if (savedContact && !isEditing) {
+  if (savedContact) {
     return (
       <>
         <div className="flex flex-col items-start gap-1.5">
           <Button
             onClick={handleQuickSend}
-            disabled={quickSending}
+            disabled={quickSending || loading}
             className="bg-[#1E3A5F] hover:bg-[#162d4a] text-white font-semibold flex items-center gap-2"
           >
             {quickSending ? (
@@ -276,12 +267,22 @@ export function TutorUpdateButton() {
           {sentLabel && (
             <span className="text-xs text-slate-400 pl-1">{sentLabel}</span>
           )}
-          <button
-            onClick={openEditModal}
-            className="text-xs text-slate-400 hover:text-slate-600 pl-1 underline-offset-2 hover:underline transition-colors"
-          >
-            Change tutor
-          </button>
+          <div className="flex items-center gap-3 pl-1">
+            <button
+              onClick={() => handleCopyLink(savedContact.name, savedContact.value)}
+              disabled={loading || quickSending}
+              className="text-xs text-slate-400 hover:text-slate-600 underline-offset-2 hover:underline transition-colors disabled:opacity-50"
+            >
+              Copy link instead
+            </button>
+            <span className="text-slate-300 text-xs select-none">·</span>
+            <button
+              onClick={openModal}
+              className="text-xs text-slate-400 hover:text-slate-600 underline-offset-2 hover:underline transition-colors"
+            >
+              Change tutor
+            </button>
+          </div>
         </div>
 
         <TutorUpdateModal
@@ -291,14 +292,13 @@ export function TutorUpdateButton() {
           contactValue={contactValue}
           setContactValue={setContactValue}
           loading={loading}
-          onClose={() => { setShowModal(false); setIsEditing(false); }}
+          onClose={() => setShowModal(false)}
           onSend={createAndSend}
           onCopy={handleCopyLink}
           onClearTutor={() => {
             clearContact();
             setSavedContact(null);
             setShowModal(false);
-            setIsEditing(false);
           }}
         />
       </>
