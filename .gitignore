@@ -53,3 +53,5 @@ e2e/.auth/user.json
 
 # Generated output files
 /outputs/
+scripts/*.log.txt
+scripts/reparse-log.txt
