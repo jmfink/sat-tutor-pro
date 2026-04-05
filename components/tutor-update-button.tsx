@@ -177,11 +177,39 @@ export function TutorUpdateButton() {
       if (!createRes.ok) throw new Error('Failed to create link');
       const { share_url } = await createRes.json() as CreateResponse;
 
-      await navigator.clipboard.writeText(share_url);
+      // Log for production debugging — verifies NEXT_PUBLIC_APP_URL is set correctly
+      console.log('[TutorUpdate] copying URL:', share_url);
+
+      // Try the Clipboard API first; fall back to execCommand for browsers where
+      // navigator.clipboard is unavailable or the document isn't focused.
+      let copied = false;
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        try {
+          await navigator.clipboard.writeText(share_url);
+          copied = true;
+        } catch {
+          // Clipboard API failed — try execCommand fallback below
+        }
+      }
+      if (!copied) {
+        const el = document.createElement('input');
+        el.style.position = 'fixed';
+        el.style.opacity = '0';
+        el.value = share_url;
+        document.body.appendChild(el);
+        el.focus();
+        el.select();
+        try {
+          copied = document.execCommand('copy');
+        } finally {
+          document.body.removeChild(el);
+        }
+      }
+
+      if (!copied) throw new Error('Both clipboard methods failed');
 
       const now = new Date().toISOString();
       sessionStorage.setItem('tutor_last_sent_at', now);
-      // (last_sent_at stored in sessionStorage)
       setSentLabel(getSentLabel(now));
 
       const contact: TutorContact = { name, value, contactType: 'link' as TutorContact['contactType'] };
