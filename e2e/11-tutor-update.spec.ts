@@ -209,7 +209,7 @@ test.describe('Tutor Update — Public report page', () => {
 
   test('Report page shows "not found" message for invalid token', async ({ page }) => {
     await page.goto('/report/definitely-not-a-real-token-xyz987');
-    await expect(page.locator('text=Report not found').or(page.locator('text=invalid'))).toBeVisible({ timeout: 10000 });
+    await expect(page.getByRole('heading', { name: 'Report not found' })).toBeVisible({ timeout: 10000 });
   });
 
   test('Report page shows expiry message for expired token (mocked)', async ({ page }) => {

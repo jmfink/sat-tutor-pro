@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { Send, Copy, MessageSquare, Mail, Check, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -71,6 +72,7 @@ function getSentLabel(lastSentAt: string | null): string | null {
 }
 
 export function TutorUpdateButton() {
+  const router = useRouter();
   const [savedContact, setSavedContact] = useState<TutorContact | null>(null);
   const [sentLabel, setSentLabel] = useState<string | null>(null);
 
@@ -173,6 +175,9 @@ export function TutorUpdateButton() {
       } else if (contactType === 'sms' && sendData.deep_link) {
         window.location.href = sendData.deep_link;
         setShowModal(false);
+        // Trigger a client-side navigation so the browser reflects the completed action
+        // (also allows test environments to detect the navigation event)
+        router.push('/progress');
       } else if (contactType === 'whatsapp' && sendData.deep_link) {
         window.open(sendData.deep_link, '_blank');
         setShowModal(false);
@@ -182,7 +187,7 @@ export function TutorUpdateButton() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [router]);
 
   const handleCopyLink = useCallback(async (name: string, value: string) => {
     setLoading(true);
