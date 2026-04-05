@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
     const authClient = await createSupabaseRouteHandlerClient();
     const { data: { user }, error: authError } = await authClient.auth.getUser();
     if (authError || !user) {
+      console.error('tutor-update/create: auth failed', authError?.message ?? 'no user');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
     const studentId = user.id;

@@ -174,7 +174,11 @@ export function TutorUpdateButton() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tutor_name: name, tutor_contact: value, contact_type: 'link' }),
       });
-      if (!createRes.ok) throw new Error('Failed to create link');
+      if (!createRes.ok) {
+        const errBody = await createRes.json().catch(() => ({})) as { error?: string };
+        console.error('[TutorUpdate] create failed:', createRes.status, errBody);
+        throw new Error(`create ${createRes.status}: ${errBody.error ?? 'unknown'}`);
+      }
       const { share_url } = await createRes.json() as CreateResponse;
 
       // Log for production debugging — verifies NEXT_PUBLIC_APP_URL is set correctly
@@ -218,7 +222,8 @@ export function TutorUpdateButton() {
 
       toast.success('Copied!');
       setShowModal(false);
-    } catch {
+    } catch (err) {
+      console.error('[TutorUpdate] copy link error:', err);
       toast.error('Failed to copy link');
     } finally {
       setLoading(false);
